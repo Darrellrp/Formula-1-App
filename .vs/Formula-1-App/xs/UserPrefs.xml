@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{1C8B8D8A-84E1-483A-B3B8-0982301F9CD4}|Default">
+  <MonoDevelop.Ide.ItemProperties.Formula-1-API PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Formula-1-API/Models/LapTime.cs">
+    <Files>
+      <File FileName="Formula-1-API/Models/Standing.cs" Line="15" Column="10" />
+      <File FileName="Formula-1-API/Models/Pitstop.cs" Line="13" Column="37" />
+      <File FileName="Formula-1-API/Models/LapTime.cs" Line="11" Column="41" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Option id="ShowAllFiles" value="True" />
+          <Node name="Formula-1-App" expanded="True">
+            <Node name="Formula-1-API" expanded="True">
+              <Node name="Models" expanded="True">
+                <Node name="LapTime.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
