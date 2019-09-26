@@ -1,9 +1,14 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Formula_1_API.Models
 {
-    public class Qualification
+    public class Qualification : IIdentifier
     {
-        public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int? Id { get; set; }
         public int RaceId { get; set; }
         public int DriverId { get; set; }
         public int ConstructorId { get; set; }
