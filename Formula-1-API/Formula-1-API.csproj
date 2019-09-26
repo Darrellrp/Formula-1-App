@@ -12,6 +12,9 @@
       <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
+    <PackageReference Include="CsvHelper" Version="12.1.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,5 +22,19 @@
     <Folder Include="Services\" />
     <Folder Include="Repositories\" />
     <Folder Include="Data\" />
+    <Folder Include="Context\" />
+    <Folder Include="Repositories\Datasources\" />
+    <Folder Include="Repositories\Interfaces\" />
+    <Folder Include="Controllers\Abstracts\" />
+    <Folder Include="Controllers\Interfaces\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Utils\ClassMaps\" />
+    <Folder Include="Models\Interfaces\" />
+    <Folder Include="Seeders\" />
+    <Folder Include="Factories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Context\DbContext.cs" />
   </ItemGroup>
 </Project>
