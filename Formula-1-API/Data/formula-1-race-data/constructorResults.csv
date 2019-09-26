@@ -1,4 +1,4 @@
-constructorResultsId,raceId,constructorId,points,status
+id,raceId,constructorId,points,status
 1,18,1,14,NULL
 2,18,2,8,NULL
 3,18,3,9,NULL
