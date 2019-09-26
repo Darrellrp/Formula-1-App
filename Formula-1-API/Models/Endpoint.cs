@@ -6,8 +6,10 @@ namespace Formula_1_API.Models
         public string Name { get; set; }
         public string Url { get; set; }
 
-        public Endpoint()
+        public Endpoint(string name, string url)
         {
+            this.Name = name;
+            this.Url = url;
         }
     }
 }
