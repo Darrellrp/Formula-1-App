@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>Formula_1_API</RootNamespace>
+    <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>b5609920-25dd-421f-850f-cbb17fb42941</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,5 +38,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Context\DbContext.cs" />
+    <Compile Remove="Migrations\20190928021222_SeedLapTimesTable.Designer.cs" />
+    <Compile Remove="Migrations\20190928021222_SeedLapTimesTable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dbdata\ib_buffer_pool" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="appsettings %28copy%29.Development.json" />
   </ItemGroup>
 </Project>

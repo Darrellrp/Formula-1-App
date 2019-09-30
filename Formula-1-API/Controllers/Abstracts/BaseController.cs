@@ -4,11 +4,12 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Formula_1_API.Services;
+using Formula_1_API.Models;
 
 namespace Formula_1_API.Controllers
 {
     [ApiController]
-    public class BaseController<T> : ControllerBase, IApiController<T> where T : class
+    public class BaseController<T> : ControllerBase, IApiController<T> where T : class, IIdentifier
     {
         private readonly IService<T> _service;
 

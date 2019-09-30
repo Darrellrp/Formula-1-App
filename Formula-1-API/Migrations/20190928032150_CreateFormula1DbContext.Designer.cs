@@ -3,14 +3,16 @@ using System;
 using Formula_1_API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Formula_1_API.Migrations
 {
     [DbContext(typeof(Formula1DbContext))]
-    partial class Formula1DbContextModelSnapshot : ModelSnapshot
+    [Migration("20190928032150_CreateFormula1DbContext")]
+    partial class CreateFormula1DbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

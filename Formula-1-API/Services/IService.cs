@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Formula_1_API.Models;
 
 namespace Formula_1_API.Services
 {
-    public interface IService<T> where T : class
+    public interface IService<T> where T : IIdentifier
     {
         Task<List<T>> GetAll();
         Task<T> FindById(int id);

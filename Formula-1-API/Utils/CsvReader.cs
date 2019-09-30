@@ -30,7 +30,7 @@ namespace Formula_1_API.Utils
 
                 var records = csv.GetRecords<T>().ToList();                
 
-                return records.Take(10).ToList();
+                return records.ToList();
             }
         }
 
@@ -47,7 +47,7 @@ namespace Formula_1_API.Utils
 
                 var records = csv.GetRecords<T>().ToList();
 
-                return records.Take(10).ToList();
+                return records.ToList();
             }
         }
     }

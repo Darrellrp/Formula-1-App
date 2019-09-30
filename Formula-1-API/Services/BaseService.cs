@@ -8,7 +8,7 @@ using Formula_1_API.Services;
 
 namespace Formula_1_API.Services
 {
-    public class BaseService<T> : IService<T> where T : class
+    public class BaseService<T> : IService<T> where T : class, IIdentifier
     {
         protected readonly IRepository<T> repository;
 

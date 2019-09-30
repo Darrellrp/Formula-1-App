@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Formula_1_API.Models;
 using Formula_1_API.Services;
+using Formula_1_API.Factories;
 using System.IO;
 using Formula_1_API.Utils;
 using Formula_1_API.Utils.ClassMaps;
@@ -18,10 +19,10 @@ namespace Formula_1_API.Controllers
         private readonly IService<Season> service;
         private readonly BaseController<Season> baseController;
 
-        public SeasonsController(IService<Season> _service)
+        public SeasonsController(BaseControllerFactory controllerFactory, IService<Season> _service)
         {
             this.service = _service;
-            this.baseController = new BaseController<Season>(_service);
+            this.baseController = controllerFactory.Create(_service);
         }
 
         // GET api/values

@@ -15,6 +15,7 @@ using Formula_1_API.Repositories;
 using Formula_1_API.Models;
 using Formula_1_API.Services;
 using Microsoft.EntityFrameworkCore;
+using Formula_1_API.Factories;
 
 namespace Formula_1_API
 {
@@ -31,7 +32,7 @@ namespace Formula_1_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<Formula1DbContext>(options => Configuration.GetConnectionString("Formula1DB"));
+            services.AddDbContext<Formula1DbContext>(options => options.UseMySql(Configuration.GetConnectionString("Formula1DB")));
 
             services.AddScoped<IRepository<Circuit>, EFCircuitRepository>();
             services.AddScoped<IService<Circuit>, CircuitService>();
@@ -70,7 +71,9 @@ namespace Formula_1_API
             services.AddScoped<IService<ResultStatus>, ResultStatusService>();
 
             services.AddScoped<IRepository<Season>, EFSeasonRepository>();
-            services.AddScoped<IService<Season>, SeasonService>();                     
+            services.AddScoped<IService<Season>, SeasonService>();
+
+            services.AddScoped<BaseControllerFactory, BaseControllerFactory>();
 
             services.AddScoped<DbContext, Formula1DbContext>();
         }

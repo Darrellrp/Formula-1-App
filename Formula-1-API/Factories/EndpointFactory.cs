@@ -10,10 +10,8 @@ namespace Formula_1_API.Factories
     public static class EndpointFactory
     {
         public static IEnumerable<Endpoint> Create(string baseUrl, IEnumerable<string> endpoints)
-        {
-            var _endpoints = endpoints.Select(e => new Endpoint(e, baseUrl + "/" + e.ToLower()));
-
-            return _endpoints;
+        {            
+            return endpoints.Select(e => new Endpoint(e, baseUrl + "/" + e.ToLower()));
         }
 
     }

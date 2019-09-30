@@ -13,10 +13,15 @@ namespace Formula_1_API.Seeders
     {
         private static readonly string BasePath = "Data/formula-1-race-data";
 
-        public static ModelBuilder Seed<T>(string filename, ModelBuilder modelBuilder, bool setIds = false) where T : class, IIdentifier
+        public static ModelBuilder Seed<T>(string filename, ModelBuilder modelBuilder, int? limit = null, bool setIds = false) where T : class, IIdentifier
         {
             var reader = new CsvReader(BasePath);
-            var items = reader.Read<T>(filename).Take(10).ToList();
+            var items = reader.Read<T>(filename).ToList();
+
+            if(limit != null)
+            {
+                items = items.Take((int)limit).ToList();
+            }            
 
             if (setIds)
             {
@@ -28,10 +33,15 @@ namespace Formula_1_API.Seeders
             return modelBuilder;
         }
 
-        public static ModelBuilder Seed<T, Map>(string filename, ModelBuilder modelBuilder, bool setIds = false) where T : class, IIdentifier where Map : ClassMap
+        public static ModelBuilder Seed<T, Map>(string filename, ModelBuilder modelBuilder, int? limit = null, bool setIds = false) where T : class, IIdentifier where Map : ClassMap
         {
             var reader = new CsvReader(BasePath);
-            var items = reader.Read<T, Map>(filename).Take(10).ToList();
+            var items = reader.Read<T, Map>(filename).ToList();
+
+            if (limit != null)
+            {
+                items = items.Take((int)limit).ToList();
+            }
 
             if (setIds)
             {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Formula_1_API.Models;
 using Formula_1_API.Services;
+using Formula_1_API.Factories;
 
 namespace Formula_1_API.Controllers
 {
@@ -15,10 +16,10 @@ namespace Formula_1_API.Controllers
         private readonly IService<PitStop> service;
         private readonly BaseController<PitStop> baseController;
 
-        public CircuitsController(IService<PitStop> _service)
+        public CircuitsController(BaseControllerFactory controllerFactory, IService<PitStop> _service)
         {
             this.service = _service;
-            this.baseController = new BaseController<PitStop>(_service);
+            this.baseController = controllerFactory.Create(_service);
         }
 
         // GET api/values

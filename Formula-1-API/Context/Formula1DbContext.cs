@@ -14,7 +14,7 @@ namespace Formula_1_API.Context
     {
         public DbSet<Circuit> Circuits { get; set; }
         public DbSet<ConstructorResult> ConstructorResults { get; set; }
-        public DbSet<PitStop> Constructors { get; set; }
+        public DbSet<Constructor> Constructors { get; set; }
         public DbSet<ConstructorStanding> ConstructorStandings { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<DriverStanding> DriverStandings { get; set; }
@@ -30,26 +30,21 @@ namespace Formula_1_API.Context
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql("server=localhost;database=Formula1App_Database;user=root;");        
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            EFDatabaseSeeder.Seed<Circuit>("circuits.csv", modelBuilder);
-            EFDatabaseSeeder.Seed<ConstructorResult>("constructorResults.csv", modelBuilder);
-            EFDatabaseSeeder.Seed<Constructor>("constructors.csv", modelBuilder);
-            EFDatabaseSeeder.Seed<ConstructorStanding>("constructorStandings.csv", modelBuilder);
-            EFDatabaseSeeder.Seed<Driver>("drivers.csv", modelBuilder, setIds: true);
-            EFDatabaseSeeder.Seed<DriverStanding>("driverStandings.csv", modelBuilder);
-            EFDatabaseSeeder.Seed<LapTime, LapTimeMap>("lapTimes.csv", modelBuilder, setIds: true);
-            EFDatabaseSeeder.Seed<PitStop, PitStopMap>("pitStops.csv", modelBuilder, setIds: true);
-            EFDatabaseSeeder.Seed<Qualification>("qualifying.csv", modelBuilder);
-            EFDatabaseSeeder.Seed<Race>("races.csv", modelBuilder);
-            EFDatabaseSeeder.Seed<RaceResult, RaceResultMap>("results.csv", modelBuilder);
-            EFDatabaseSeeder.Seed<Season, SeasonMap>("seasons.csv", modelBuilder, setIds: true);
-            EFDatabaseSeeder.Seed<ResultStatus>("status.csv", modelBuilder);                       
+            EFDatabaseSeeder.Seed<Circuit>("circuits.csv", modelBuilder, limit: 50);
+            EFDatabaseSeeder.Seed<ConstructorResult>("constructorResults.csv", modelBuilder, limit: 50);
+            EFDatabaseSeeder.Seed<Constructor>("constructors.csv", modelBuilder, limit: 50);
+            EFDatabaseSeeder.Seed<ConstructorStanding>("constructorStandings.csv", modelBuilder, limit: 50);
+            EFDatabaseSeeder.Seed<Driver>("drivers.csv", modelBuilder, setIds: true, limit: 50);
+            EFDatabaseSeeder.Seed<DriverStanding>("driverStandings.csv", modelBuilder, limit: 50);
+            EFDatabaseSeeder.Seed<LapTime, LapTimeMap>("lapTimes.csv", modelBuilder, setIds: true, limit: 50);
+            EFDatabaseSeeder.Seed<PitStop, PitStopMap>("pitStops.csv", modelBuilder, setIds: true, limit: 50);
+            EFDatabaseSeeder.Seed<Qualification>("qualifying.csv", modelBuilder, limit: 50);
+            EFDatabaseSeeder.Seed<Race>("races.csv", modelBuilder, limit: 50);
+            EFDatabaseSeeder.Seed<RaceResult, RaceResultMap>("results.csv", modelBuilder, limit: 50);
+            EFDatabaseSeeder.Seed<Season, SeasonMap>("seasons.csv", modelBuilder, setIds: true, limit: 50);
+            EFDatabaseSeeder.Seed<ResultStatus>("status.csv", modelBuilder, limit: 50);
         }        
     }
 }
