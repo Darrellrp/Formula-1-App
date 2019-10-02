@@ -4,9 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Protocols;
 //using Formula_1_API.Context;
-using Formula_1_API.Models;
 
 namespace Formula_1_API.Repositories
 {
