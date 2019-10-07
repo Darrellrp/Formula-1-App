@@ -13,9 +13,19 @@ const vueTable = new Vue({
 
       var connection = new signalR.HubConnectionBuilder().withUrl(this.api_url + '/signalr').build();
 
-      connection.on("updateCircuit", function (entity) {
+      connection.on("addCircuit", function (entity) {
         self.data.push(entity);
         console.log(entity);
+      });
+
+      connection.on("updateCircuit", function (entity) {
+        // self.data.push(entity);
+        console.log(entity);
+      });
+
+      connection.on("removeCircuit", function (entityId) {
+        // self.data.push(entity);
+        console.log(entityId);
       });
 
       connection.start().then(function () {

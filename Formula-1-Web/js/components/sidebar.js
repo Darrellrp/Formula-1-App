@@ -6,8 +6,7 @@ const vueSidebar = new Vue({
   },
   created: function() {
     axios.get(this.api_url).then(response => {
-      this.endpoints = response.data.endpoints;
-      console.log(this.endpoints);
+      this.endpoints = response.data.endpoints;    
     });
   },
   // mounted: function() {
