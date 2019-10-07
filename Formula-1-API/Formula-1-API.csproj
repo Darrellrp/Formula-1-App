@@ -48,7 +48,6 @@
     <Compile Remove="Context\DbContext.cs" />
     <Compile Remove="Migrations\20190928021222_SeedLapTimesTable.Designer.cs" />
     <Compile Remove="Migrations\20190928021222_SeedLapTimesTable.cs" />
-    <Compile Remove="Repositories\EFCircuitRepository.cs" />
     <Compile Remove="Repositories\EFConstructorRepository.cs" />
     <Compile Remove="Repositories\EFCircuitRepository %28copy%29.cs" />
     <Compile Remove="Repositories\EFConstructorResultRepository.cs" />
@@ -62,7 +61,6 @@
     <Compile Remove="Repositories\EFRaceResultRepository.cs" />
     <Compile Remove="Repositories\EFResultStatusRepository.cs" />
     <Compile Remove="Repositories\EFSeasonRepository.cs" />
-    <Compile Remove="Services\CircuitService.cs" />
     <Compile Remove="Services\ConstructorService.cs" />
     <Compile Remove="Services\ConstructorResultService.cs" />
     <Compile Remove="Services\ConstructorStandingService.cs" />

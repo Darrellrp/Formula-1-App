@@ -46,9 +46,11 @@ namespace Formula_1_API
             services.AddScoped(typeof(IService<>), typeof(BaseService<>));
             services.AddScoped(typeof(ISubject<>), typeof(BaseSubject<>));
             services.AddScoped(typeof(BaseController<>), typeof(BaseController<>));
+            services.AddScoped(typeof(EntityFrameworkAdapter<>), typeof(EntityFrameworkAdapter<>));
+            services.AddScoped(typeof(MongoAdapter<>), typeof(MongoAdapter<>));
 
             //services.AddScoped<IRepository<Circuit>, EFCircuitRepository>();            
-           
+
 
             services.AddScoped<DbContext, Formula1DbContext>();
 

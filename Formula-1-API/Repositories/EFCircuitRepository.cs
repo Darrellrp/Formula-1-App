@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Formula_1_API.Models;
-using Formula_1_API.Repositories;
+using Formula_1_API.Repositories.Adapter;
 using Microsoft.EntityFrameworkCore;
 
 namespace Formula_1_API.Repositories
@@ -12,9 +12,9 @@ namespace Formula_1_API.Repositories
     {
         private readonly EntityFrameworkRepository<Circuit> repository;
 
-        public EFCircuitRepository(DbContext dbContext)
+        public EFCircuitRepository(EntityFrameworkAdapter<Circuit> adapter)
         {
-            this.repository = new EntityFrameworkRepository<Circuit>(dbContext);
+            this.repository = new BaseRepository(adapter);
         }        
 
         public async Task<Circuit> FindById(int id)
