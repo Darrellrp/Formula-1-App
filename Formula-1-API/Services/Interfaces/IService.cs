@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Formula_1_API.Models;
 
-namespace Formula_1_API.Repositories.Interfaces
+namespace Formula_1_API.Services.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IService<T> where T : IIdentifier
     {
+        Task<List<T>> GetAll();
         Task<T> FindById(int id);
         Task<List<T>> Where(Expression<Func<T, bool>> expression);
-        Task<List<T>> GetAll();
-        Task<T> Add(T entity);
-        Task<List<T>> AddMany(List<T> entities);
+        Task<T> Save(T entity);
+        Task<List<T>> Save(List<T> entities);
         Task<T> Update(T entity);
-        Task<T> Delete(T entity);
+        Task Delete(T entity);
     }
 }

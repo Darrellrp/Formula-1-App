@@ -19,6 +19,7 @@
     <PackageReference Include="CsvHelper" Version="12.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.9.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +28,7 @@
     <Folder Include="Repositories\" />
     <Folder Include="Data\" />
     <Folder Include="Context\" />
-    <Folder Include="Repositories\Datasources\" />
+    <Folder Include="Repositories\Adapters\" />
     <Folder Include="Repositories\Interfaces\" />
     <Folder Include="Controllers\Abstracts\" />
     <Folder Include="Controllers\Interfaces\" />
@@ -39,11 +40,42 @@
     <Folder Include="Factories\" />
     <Folder Include="Subjects\" />
     <Folder Include="Hubs\" />
+    <Folder Include="Factories\Interfaces\" />
+    <Folder Include="Services\Interfaces\" />
+    <Folder Include="Subjects\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Context\DbContext.cs" />
     <Compile Remove="Migrations\20190928021222_SeedLapTimesTable.Designer.cs" />
     <Compile Remove="Migrations\20190928021222_SeedLapTimesTable.cs" />
+    <Compile Remove="Repositories\EFCircuitRepository.cs" />
+    <Compile Remove="Repositories\EFConstructorRepository.cs" />
+    <Compile Remove="Repositories\EFCircuitRepository %28copy%29.cs" />
+    <Compile Remove="Repositories\EFConstructorResultRepository.cs" />
+    <Compile Remove="Repositories\EFConstructorStandingRepository.cs" />
+    <Compile Remove="Repositories\EFDriverRepository.cs" />
+    <Compile Remove="Repositories\EFDriverStandingRepository.cs" />
+    <Compile Remove="Repositories\EFLapTimeRepository.cs" />
+    <Compile Remove="Repositories\EFPitStopRepository.cs" />
+    <Compile Remove="Repositories\EFQualificationRepository.cs" />
+    <Compile Remove="Repositories\EFRaceRepository.cs" />
+    <Compile Remove="Repositories\EFRaceResultRepository.cs" />
+    <Compile Remove="Repositories\EFResultStatusRepository.cs" />
+    <Compile Remove="Repositories\EFSeasonRepository.cs" />
+    <Compile Remove="Services\CircuitService.cs" />
+    <Compile Remove="Services\ConstructorService.cs" />
+    <Compile Remove="Services\ConstructorResultService.cs" />
+    <Compile Remove="Services\ConstructorStandingService.cs" />
+    <Compile Remove="Services\DriverService.cs" />
+    <Compile Remove="Services\DriverStandingService.cs" />
+    <Compile Remove="Services\LapTimeService.cs" />
+    <Compile Remove="Services\PitStopService.cs" />
+    <Compile Remove="Services\QualificationService.cs" />
+    <Compile Remove="Services\RaceResultService.cs" />
+    <Compile Remove="Services\RaceService.cs" />
+    <Compile Remove="Services\ResultStatusService.cs" />
+    <Compile Remove="Services\SeasonService.cs" />
+    <Compile Remove="Factories\BaseControllerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="dbdata\ib_buffer_pool" />

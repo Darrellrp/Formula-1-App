@@ -19,6 +19,11 @@ using Formula_1_API.Factories;
 using Formula_1_API.Subjects;
 using Microsoft.AspNetCore.SignalR;
 using Formula_1_API.Hubs;
+using Formula_1_API.Controllers;
+using Formula_1_API.Repositories.Interfaces;
+using Formula_1_API.Repositories.Adapters;
+using Formula_1_API.Services.Interfaces;
+using Formula_1_API.Subjects.Interfaces;
 
 namespace Formula_1_API
 {
@@ -36,58 +41,14 @@ namespace Formula_1_API
         {            
             services.AddSignalR();
 
-            services.AddScoped<IRepository<Circuit>, EFCircuitRepository>();
-            services.AddScoped<IService<Circuit>, CircuitService>();            
+            services.AddScoped(typeof(IDatasourceAdapter<>), typeof(EntityFrameworkAdapter<>));
+            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IService<>), typeof(BaseService<>));
+            services.AddScoped(typeof(ISubject<>), typeof(BaseSubject<>));
+            services.AddScoped(typeof(BaseController<>), typeof(BaseController<>));
 
-            services.AddScoped<IRepository<Constructor>, EFConstructorRepository>();
-            services.AddScoped<IService<Constructor>, ConstructorService>();
-            //services.AddScoped<ISubject<Constructor>, ConstructorsSubject>();
-
-            services.AddScoped<IRepository<ConstructorResult>, EFConstructorResultRepository>();
-            services.AddScoped<IService<ConstructorResult>, ConstructorResultService>();
-            //services.AddScoped<IEntitySubject<ConstructorResult>, ConstructorResultsSubject>();
-
-            services.AddScoped<IRepository<ConstructorStanding>, EFConstructorStandingRepository>();
-            services.AddScoped<IService<ConstructorStanding>, ConstructorStandingService>();
-            //services.AddScoped<IEntitySubject<ConstructorStanding>, ConstructorStandingsSubject>();
-
-            services.AddScoped<IRepository<Driver>, EFDriverRepository>();
-            services.AddScoped<IService<Driver>, DriverService>();
-            //services.AddScoped<IEntitySubject<Driver>, DriversSubject>();
-
-            services.AddScoped<IRepository<DriverStanding>, EFDriverStandingRepository>();
-            services.AddScoped<IService<DriverStanding>, DriverStandingService>();
-            //services.AddScoped<IEntitySubject<DriverStanding>, DriverStandingsSubject>();
-
-            services.AddScoped<IRepository<LapTime>, EFLapTimeRepository>();
-            services.AddScoped<IService<LapTime>, LapTimeService>();
-            //services.AddScoped<IEntitySubject<LapTime>, LapTimesSubject>();
-
-            services.AddScoped<IRepository<PitStop>, EFPitStopRepository>();
-            services.AddScoped<IService<PitStop>, PitStopService>();
-            //services.AddScoped<IEntitySubject<PitStop>, PitStopsSubject>();
-
-            services.AddScoped<IRepository<Qualification>, EFQualificationRepository>();
-            services.AddScoped<IService<Qualification>, QualificationService>();
-            //services.AddScoped<IEntitySubject<Qualification>, QualificationsSubject>();
-
-            services.AddScoped<IRepository<Race>, EFRaceRepository>();
-            services.AddScoped<IService<Race>, RaceService>();
-            //services.AddScoped<IEntitySubject<Race>, RacesSubject>();
-
-            services.AddScoped<IRepository<RaceResult>, EFRaceResultRepository>();
-            services.AddScoped<IService<RaceResult>, RaceResultService>();
-            //services.AddScoped<IEntitySubject<RaceResult>, RaceResultsSubject>();
-
-            services.AddScoped<IRepository<ResultStatus>, EFResultStatusRepository>();
-            services.AddScoped<IService<ResultStatus>, ResultStatusService>();
-            //services.AddScoped<IEntitySubject<ResultStatus>, ResultStatusSubject>();
-
-            services.AddScoped<IRepository<Season>, EFSeasonRepository>();
-            services.AddScoped<IService<Season>, SeasonService>();
-            //services.AddScoped<IEntitySubject<Season>, SeasonsSubject>();
-
-            services.AddScoped<BaseControllerFactory, BaseControllerFactory>();
+            //services.AddScoped<IRepository<Circuit>, EFCircuitRepository>();            
+           
 
             services.AddScoped<DbContext, Formula1DbContext>();
 

@@ -2,12 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Formula_1_API.Models
 {
     public class Circuit : IIdentifier
     {
         [Key]
+        [BsonId]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int? Id { get; set; }
         public string Ref { get; set; }

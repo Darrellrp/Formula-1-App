@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Formula_1_API.Models;
 using Formula_1_API.Services;
 using Formula_1_API.Factories;
+using Formula_1_API.Services.Interfaces;
 
 namespace Formula_1_API.Controllers
 {
@@ -16,10 +17,10 @@ namespace Formula_1_API.Controllers
         private readonly IService<ConstructorResult> service;
         private readonly BaseController<ConstructorResult> baseController;
 
-        public ConstructorResultsController(BaseControllerFactory controllerFactory, IService<ConstructorResult> _service)
+        public ConstructorResultsController(BaseController<ConstructorResult> baseController, IService<ConstructorResult> service)
         {
-            this.service = _service;
-            this.baseController = controllerFactory.Create(_service);
+            this.baseController = baseController;
+            this.service = service;
         }
 
         // GET api/values

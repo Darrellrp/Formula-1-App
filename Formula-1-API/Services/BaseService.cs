@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Formula_1_API.Repositories;
 using Formula_1_API.Models;
-using Formula_1_API.Services;
+using Formula_1_API.Subjects;
+using Formula_1_API.Services.Interfaces;
+using Formula_1_API.Repositories.Adapters;
+using Formula_1_API.Subjects.Interfaces;
+using Formula_1_API.Repositories.Interfaces;
 
 namespace Formula_1_API.Services
 {
     public class BaseService<T> : IService<T> where T : class, IIdentifier
     {
         protected readonly IRepository<T> repository;
+        protected readonly ISubject<T> subject;
 
-        public BaseService(IRepository<T> _repository)
+        public BaseService(IRepository<T> _repository, ISubject<T> subject)
         {
             this.repository = _repository;
+            this.subject = subject;
         }
 
         public async Task<List<T>> GetAll()
@@ -34,17 +39,33 @@ namespace Formula_1_API.Services
 
         public async Task<T> Save(T entity)
         {
-            return await repository.Add(entity);
+            var newEntity = await repository.Add(entity);
+            await subject.NotifyAdd(newEntity);
+
+            return newEntity;
+        }
+
+        public async Task<List<T>> Save(List<T> entities)
+        {
+            var newEntities = await repository.AddMany(entities);
+            await subject.NotifyAddMany(newEntities);
+
+            return newEntities;
         }
 
         public async Task<T> Update(T entity)
         {
-            return await repository.Update(entity);
+            var updatedEntity = await repository.Update(entity);
+            await subject.NotifyUpdate(updatedEntity);
+
+            return updatedEntity;
         }
 
+        // TODO: Return ID
         public async Task Delete(T entity)
         {
-            await repository.Delete(entity);
+            var deletedEntity = await repository.Delete(entity);
+            await subject.NotifyRemove(deletedEntity);
         }
     }
 }

@@ -9,6 +9,7 @@ using System.IO;
 using Formula_1_API.Utils;
 using Formula_1_API.Utils.ClassMaps;
 using Formula_1_API.Factories;
+using Formula_1_API.Services.Interfaces;
 
 namespace Formula_1_API.Controllers
 {
@@ -19,10 +20,10 @@ namespace Formula_1_API.Controllers
         private readonly IService<ConstructorStanding> service;
         private readonly BaseController<ConstructorStanding> baseController;
 
-        public ConstructorStandingsController(BaseControllerFactory controllerFactory, IService<ConstructorStanding> _service)
+        public ConstructorStandingsController(BaseController<ConstructorStanding> baseController, IService<ConstructorStanding> service)
         {
-            this.service = _service;
-            this.baseController = controllerFactory.Create(_service);
+            this.baseController = baseController;
+            this.service = service;
         }
 
         // GET api/values

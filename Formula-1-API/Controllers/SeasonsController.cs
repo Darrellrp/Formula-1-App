@@ -9,6 +9,7 @@ using Formula_1_API.Factories;
 using System.IO;
 using Formula_1_API.Utils;
 using Formula_1_API.Utils.ClassMaps;
+using Formula_1_API.Services.Interfaces;
 
 namespace Formula_1_API.Controllers
 {
@@ -19,10 +20,10 @@ namespace Formula_1_API.Controllers
         private readonly IService<Season> service;
         private readonly BaseController<Season> baseController;
 
-        public SeasonsController(BaseControllerFactory controllerFactory, IService<Season> _service)
+        public SeasonsController(BaseController<Season> baseController, IService<Season> service)
         {
-            this.service = _service;
-            this.baseController = controllerFactory.Create(_service);
+            this.baseController = baseController;
+            this.service = service;
         }
 
         // GET api/values
