@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+    formula-1-api:
+        container_name: formula-1-api
+        image: ${DOCKER_REGISTRY-}formula1api
+        build:
+            context: .
+            dockerfile: Formula-1-API/Dockerfile
+        links:
+            - db
+        environment:
+            DBHOST: db
+            DBPORT: 3306
+            ASPNETCORE_ENVIRONMENT: Development
+        volumes:
+            - ./Formula-1-API/Data:/app/Data
+
+    db:    
+        container_name: formula-1-db            
+        image: mysql:latest
+        restart: always
+        command: --innodb-use-native-aio=0      
+        environment:
+            MYSQL_DATABASE: Formula1App_Database
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_PASSWORD: root
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./Formula-1-API/Data/mysql:/var/lib/mysql
+           
