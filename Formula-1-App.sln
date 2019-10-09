@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		create-database.sh = create-database.sh
 		README.md = README.md
 		.gitignore = .gitignore
+		create_database.sql = create_database.sql
 	EndProjectSection
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C16AAC91-4A66-4EDC-BBCB-9709BC3EC3E8}"

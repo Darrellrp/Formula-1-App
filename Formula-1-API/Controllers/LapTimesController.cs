@@ -29,14 +29,14 @@ namespace Formula_1_API.Controllers
         // GET api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LapTime>>> Get()
-        {
+        {            
             return await this.baseController.Get();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<LapTime>> Get(int id)
-        {
+        {            
             return await this.baseController.Get(id);
         }
 

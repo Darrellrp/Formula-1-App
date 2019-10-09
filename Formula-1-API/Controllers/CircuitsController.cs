@@ -8,6 +8,7 @@ using Formula_1_API.Services;
 using Formula_1_API.Factories;
 using Formula_1_API.Services.Interfaces;
 using Formula_1_API.Repositories.Adapters;
+using Formula_1_API.Utils;
 
 namespace Formula_1_API.Controllers
 {
@@ -28,31 +29,6 @@ namespace Formula_1_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Circuit>>> Get()
         {
-            var adapter = new MongoAdapter<Circuit>();
-
-            //await adapter.Add(new Circuit()  {
-            //    Id = 2,
-            //    Ref = "albert_park",
-            //    Name = "Albert Park Grand Prix Circuit",
-            //    Location = "Melbourne",
-            //    Country = "Australia",
-            //    Lat = "-37.8497",
-            //    Lng = "144.968",
-            //    Url = "http://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
-            //});
-            //var t = await adapter.FindById(1);
-            //var t = await adapter.GetAll();
-            //var t = await adapter.Delete(new Circuit()  {
-            //    Id = 2,
-            //    Ref = "albert_park",
-            //    Name = "Albert Park Grand Prix Circuit",
-            //    Location = "Melbourne",
-            //    Country = "Australia",
-            //    Lat = "-37.8497",
-            //    Lng = "144.968",
-            //    Url = "http://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
-            //});
-
             return await this.baseController.Get();
         }
 

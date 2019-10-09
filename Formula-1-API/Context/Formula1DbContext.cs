@@ -32,19 +32,19 @@ namespace Formula_1_API.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            EFDatabaseSeeder.Seed<Circuit>("circuits.csv", modelBuilder, limit: 50);
-            EFDatabaseSeeder.Seed<ConstructorResult>("constructorResults.csv", modelBuilder, limit: 50);
-            EFDatabaseSeeder.Seed<Constructor>("constructors.csv", modelBuilder, limit: 50);
-            EFDatabaseSeeder.Seed<ConstructorStanding>("constructorStandings.csv", modelBuilder, limit: 50);
-            EFDatabaseSeeder.Seed<Driver>("drivers.csv", modelBuilder, setIds: true, limit: 50);
-            EFDatabaseSeeder.Seed<DriverStanding>("driverStandings.csv", modelBuilder, limit: 50);
-            EFDatabaseSeeder.Seed<LapTime, LapTimeMap>("lapTimes.csv", modelBuilder, setIds: true, limit: 50);
-            EFDatabaseSeeder.Seed<PitStop, PitStopMap>("pitStops.csv", modelBuilder, setIds: true, limit: 50);
-            EFDatabaseSeeder.Seed<Qualification>("qualifying.csv", modelBuilder, limit: 50);
-            EFDatabaseSeeder.Seed<Race>("races.csv", modelBuilder, limit: 50);
-            EFDatabaseSeeder.Seed<RaceResult, RaceResultMap>("results.csv", modelBuilder, limit: 50);
-            EFDatabaseSeeder.Seed<Season, SeasonMap>("seasons.csv", modelBuilder, setIds: true, limit: 50);
-            EFDatabaseSeeder.Seed<ResultStatus>("status.csv", modelBuilder, limit: 50);
+            //EFDatabaseSeeder.Seed<Circuit>("circuits.csv", modelBuilder, limit: 50);
+            //EFDatabaseSeeder.Seed<ConstructorResult>("constructorResults.csv", modelBuilder, limit: 50);
+            //EFDatabaseSeeder.Seed<Constructor>("constructors.csv", modelBuilder, limit: 50);
+            //EFDatabaseSeeder.Seed<ConstructorStanding>("constructorStandings.csv", modelBuilder, limit: 50);
+            //EFDatabaseSeeder.Seed<Driver>("drivers.csv", modelBuilder, setIds: true, limit: 50);
+            //EFDatabaseSeeder.Seed<DriverStanding>("driverStandings.csv", modelBuilder, limit: 50);
+            //EFDatabaseSeeder.Seed<LapTime, LapTimeMap>("lapTimes.csv", modelBuilder, setIds: true, limit: 50);
+            //EFDatabaseSeeder.Seed<PitStop, PitStopMap>("pitStops.csv", modelBuilder, setIds: true, limit: 50);
+            //EFDatabaseSeeder.Seed<Qualification>("qualifying.csv", modelBuilder, limit: 50);
+            //EFDatabaseSeeder.Seed<Race>("races.csv", modelBuilder, limit: 50);
+            //EFDatabaseSeeder.Seed<RaceResult, RaceResultMap>("results.csv", modelBuilder, limit: 50);
+            //EFDatabaseSeeder.Seed<Season, SeasonMap>("seasons.csv", modelBuilder, setIds: true, limit: 50);
+            //EFDatabaseSeeder.Seed<ResultStatus>("status.csv", modelBuilder, limit: 50);
         }        
     }
 }

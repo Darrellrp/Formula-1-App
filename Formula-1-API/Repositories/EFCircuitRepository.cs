@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Formula_1_API.Models;
-using Formula_1_API.Repositories.Adapter;
+using Formula_1_API.Repositories.Adapters;
+using Formula_1_API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Formula_1_API.Repositories
 {
     public class EFCircuitRepository : IRepository<Circuit>
     {
-        private readonly EntityFrameworkRepository<Circuit> repository;
+        private readonly BaseRepository<Circuit> repository;
 
         public EFCircuitRepository(EntityFrameworkAdapter<Circuit> adapter)
         {
-            this.repository = new BaseRepository(adapter);
+            this.repository = new BaseRepository<Circuit>(adapter);
         }        
 
         public async Task<Circuit> FindById(int id)
@@ -42,9 +43,14 @@ namespace Formula_1_API.Repositories
             return await this.repository.Where(expression);
         }
 
-        public async Task Delete(Circuit entity)
+        public async Task<Circuit> Delete(Circuit entity)
         {
-            await this.repository.Delete(entity);
+            return await this.repository.Delete(entity);
+        }
+
+        public Task<List<Circuit>> AddMany(List<Circuit> entities)
+        {
+            throw new NotImplementedException();
         }
     }
 }
