@@ -50,6 +50,15 @@ namespace Formula_1_API.Repositories.Adapters
             return entities;
         }
 
+        public async Task<List<T>> GetPaginated(int page, int limit)
+        {
+            var collection = database.GetCollection<T>(typeof(T).Name.ToLower());
+            var filter = Builders<T>.Filter.Empty;
+            var entities = await collection.Find<T>(filter).Skip(limit * --page).Limit(limit).ToListAsync();
+
+            return entities;
+        }
+
         public async Task<T> Add(T entity)
         {
             var collection = database.GetCollection<T>(typeof(T).Name.ToLower());

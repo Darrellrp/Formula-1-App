@@ -25,35 +25,35 @@ namespace Formula_1_API.Controllers
             this.service = service;
         }
 
-        // GET api/values
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Circuit>>> Get()
+        public async Task<ActionResult<IEnumerable<Circuit>>> Get(int? page = null, int? pageSize = 100)
         {
-            return await this.baseController.Get();
+            if(!page.HasValue)
+            {
+                return await this.baseController.Get();
+            }
+
+            return await this.baseController.Get(page, pageSize);
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Circuit>> Get(int id)
         {
             return await this.baseController.Get(id);
         }
 
-        // POST api/values
         [HttpPost]
         public async Task<ActionResult<Circuit>> Post([FromBody] Circuit value)
         {
             return await this.baseController.Post(value);
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
         public async Task<ActionResult<Circuit>> Put(int id, [FromBody] Circuit value)
         {
             return await this.baseController.Put(id, value);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

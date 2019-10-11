@@ -20,10 +20,16 @@ namespace Formula_1_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<T>>> Get()
+        public async Task<ActionResult<IEnumerable<T>>> Get(int? page = null, int? pageSize = 100)
         {
-            var entities = await _service.GetAll();
-            return Ok(entities);
+            if(!page.HasValue)
+            {
+                var entities = await _service.GetAll();
+                return Ok(entities);
+            }
+
+            var paginated_entities = await _service.GetPaginated((int) page, (int) pageSize);
+            return Ok(paginated_entities);
         }
 
         [HttpGet("{id}")]

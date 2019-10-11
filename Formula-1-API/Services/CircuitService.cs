@@ -29,6 +29,11 @@ namespace Formula_1_API.Services
             return await repository.GetAll();
         }
 
+        public async Task<List<Circuit>> GetPaginated(int page, int limit = 100)
+        {
+            return await repository.GetPaginated(page, limit);
+        }
+
         public async Task<Circuit> FindById(int id)
         {
             return await repository.FindById(id);

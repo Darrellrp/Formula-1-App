@@ -28,9 +28,14 @@ namespace Formula_1_API.Controllers
 
         // GET api/values
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Constructor>>> Get()
+        public async Task<ActionResult<IEnumerable<Constructor>>> Get(int? page = null, int? pageSize = 100)
         {
-            return await this.baseController.Get();
+            if (!page.HasValue)
+            {
+                return await this.baseController.Get();
+            }
+
+            return await this.baseController.Get(page, pageSize);
         }
 
         // GET api/values/5

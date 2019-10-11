@@ -12,6 +12,7 @@ namespace Formula_1_API.Repositories.Interfaces
         Task<T> FindById(int id);
         Task<List<T>> Where(Expression<Func<T, bool>> expression);
         Task<List<T>> GetAll();
+        Task<List<T>> GetPaginated(int page, int limit = 100);
         Task<T> Add(T entity);
         Task<List<T>> AddMany(List<T> entities);
         Task<T> Update(T entity);

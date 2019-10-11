@@ -28,6 +28,11 @@ namespace Formula_1_API.Repositories
             return await adapter.GetAll();
         }
 
+        public async Task<List<T>> GetPaginated(int page, int limit = 100)
+        {
+            return await adapter.GetPaginated(page, limit);
+        }
+
         public async Task<T> Add(T entity)
         {
             return await adapter.Add(entity);

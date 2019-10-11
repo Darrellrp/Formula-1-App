@@ -28,6 +28,11 @@ namespace Formula_1_API.Repositories
             return await this.repository.GetAll();
         }
 
+        public async Task<List<Circuit>> GetPaginated(int page, int limit)
+        {
+            return await this.repository.GetPaginated(page, limit);
+        }
+
         public async Task<Circuit> Add(Circuit entity)
         {
             return await this.repository.Add(entity);

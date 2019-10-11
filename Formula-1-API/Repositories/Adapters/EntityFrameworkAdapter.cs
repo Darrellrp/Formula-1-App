@@ -33,6 +33,17 @@ namespace Formula_1_API.Repositories.Adapters
             return await _dbContext.Set<T>().ToListAsync();
         }
 
+        public async Task<List<T>> GetPaginated(int page, int limit = 100)
+        {            
+            //if(page == 1)
+            //{
+            //    return await _dbContext.Set<T>().Take(limit).ToListAsync();
+            //}
+            var skip = limit * --page;
+
+            return await _dbContext.Set<T>().Skip(skip).Take(limit).ToListAsync();
+        }
+
         public async Task<T> Add(T entity)
         {
             _dbContext.Set<T>().Add(entity);
