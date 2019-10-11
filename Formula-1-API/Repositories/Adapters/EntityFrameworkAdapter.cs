@@ -35,10 +35,6 @@ namespace Formula_1_API.Repositories.Adapters
 
         public async Task<List<T>> GetPaginated(int page, int limit = 100)
         {            
-            //if(page == 1)
-            //{
-            //    return await _dbContext.Set<T>().Take(limit).ToListAsync();
-            //}
             var skip = limit * --page;
 
             return await _dbContext.Set<T>().Skip(skip).Take(limit).ToListAsync();

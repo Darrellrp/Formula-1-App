@@ -74,7 +74,7 @@ namespace Formula_1_API
             //app.UseCors(config => config.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
             app.UseCors(builder =>
             {
-                builder.WithOrigins("http://127.0.0.1:8080")
+                builder.WithOrigins("http://localhost:8080")
                     .AllowAnyHeader()
                     .WithMethods("GET", "POST")
                     .AllowCredentials();

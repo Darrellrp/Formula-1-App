@@ -1,6 +1,18 @@
 version: '3.4'
 
 services:
+    formula-1-web:
+        container_name: formula-1-web
+        build:
+            context: .
+            dockerfile: Formula-1-Web/Dockerfile
+        ports:
+         - "8080:80"
+        environment:
+         - NGINX_HOST=formula1.web
+         - NGINX_PORT=80
+        command: /bin/bash -c "exec nginx -g 'daemon off;'"
+
     formula-1-api:
         container_name: formula-1-api
         image: ${DOCKER_REGISTRY-}formula1api
@@ -10,17 +22,18 @@ services:
         links:
             - db
         environment:
+            ASPNETCORE_URLS: https://*:5000
             DBHOST: db
             DBPORT: 3306
             ASPNETCORE_ENVIRONMENT: Development
         volumes:
             - ./Formula-1-API/Data:/app/Data
 
-    db:    
-        container_name: formula-1-db            
+    db:
+        container_name: formula-1-db
         image: mysql:latest
         restart: always
-        command: --innodb-use-native-aio=0      
+        command: --innodb-use-native-aio=0
         environment:
             MYSQL_DATABASE: Formula1App_Database
             MYSQL_ROOT_PASSWORD: root
@@ -29,4 +42,3 @@ services:
             - "3306:3306"
         volumes:
             - ./Formula-1-API/Data/mysql:/var/lib/mysql
-           

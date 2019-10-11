@@ -1,7 +1,7 @@
 const vueTable = new Vue({
   el: '#table',
   data: {
-   api_url: 'https://localhost:5001',
+   api_url: 'https://localhost:44348',
    data: "Loading...",
    columns: ""
   },
