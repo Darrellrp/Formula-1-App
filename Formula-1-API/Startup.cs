@@ -47,15 +47,13 @@ namespace Formula_1_API
             services.AddScoped(typeof(ISubject<>), typeof(BaseSubject<>));
             services.AddScoped(typeof(BaseController<>), typeof(BaseController<>));
             services.AddScoped(typeof(EntityFrameworkAdapter<>), typeof(EntityFrameworkAdapter<>));
-            services.AddScoped(typeof(MongoAdapter<>), typeof(MongoAdapter<>));
-
-            //services.AddScoped<IRepository<Circuit>, EFCircuitRepository>();            
+            services.AddScoped(typeof(MongoAdapter<>), typeof(MongoAdapter<>));                   
 
 
             services.AddScoped<DbContext, Formula1DbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<Formula1DbContext>(options => options.UseMySql(Configuration.GetConnectionString("Formula1DB")));                      
+            services.AddDbContext<Formula1DbContext>(options => options.UseMySql(Environment.GetEnvironmentVariable("DB_CONNECTIONSTRING")));                      
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
