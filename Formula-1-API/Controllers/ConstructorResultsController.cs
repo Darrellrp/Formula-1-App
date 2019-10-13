@@ -24,13 +24,8 @@ namespace Formula_1_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ConstructorResult>>> Get(int? page = null, int? pageSize = 100)
-        {
-            if (!page.HasValue)
-            {
-                return await this.baseController.Get();
-            }
-
+        public async Task<ActionResult<IEnumerable<ConstructorResult>>> Get(int? page = 1, int? pageSize = 100)
+        {            
             return await this.baseController.Get(page, pageSize);
         }
 
