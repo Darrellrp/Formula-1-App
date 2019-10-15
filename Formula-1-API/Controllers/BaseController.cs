@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Formula_1_API.Services;
 using Formula_1_API.Models;
 using Formula_1_API.Services.Interfaces;
+using System.Linq;
 
 namespace Formula_1_API.Controllers
 {
@@ -22,14 +23,20 @@ namespace Formula_1_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<T>>> Get(int? page = null, int? pageSize = 100)
         {
+            IEnumerable<T> entities = new List<T>();
+
             if(!page.HasValue)
             {
-                var entities = await _service.GetAll();
-                return Ok(entities);
+                entities = await _service.GetAll();
+            } else
+            {
+                entities = await _service.GetPaginated((int)page, (int)pageSize);
             }
 
-            var paginated_entities = await _service.GetPaginated((int) page, (int) pageSize);
-            return Ok(paginated_entities);
+            var meta = new { Type = entities.First().GetType().Name, };
+            var response = new { Meta = meta, Data = entities };
+
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
