@@ -1,6 +1,10 @@
-# Formula 1 Application
+# Formula 1 Application - Architecture & Design 2019-2020
+This API contains data from 1950 all the way through the 2017 season, and consists of tables describing constructors, race drivers, lap times, pit stops and more.
 
-Architecture & Design 2019-2020
+## Preview
+Dashboard             |  API
+:-------------------------:|:-------------------------:
+![alt text](Formula-1-Web/img/formula-1-dashboard.png "Formula 1 Dashboard example") | ![alt text](Formula-1-Web/img/formula-1-api.png "Formula 1 API example")
 
 ## Getting Started
 
