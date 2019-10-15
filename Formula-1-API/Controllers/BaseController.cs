@@ -43,7 +43,11 @@ namespace Formula_1_API.Controllers
         public async Task<ActionResult<T>> Get(int id)
         {
             var entity = await _service.FindById(id);
-            return Ok(entity);
+
+            var meta = new { Type = entity.GetType().Name, };
+            var response = new { Meta = meta, Data = entity };
+
+            return Ok(response);
         }
         [HttpPost]
         public async Task<ActionResult<T>> Post(T entity)
