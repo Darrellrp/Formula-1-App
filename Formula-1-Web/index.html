@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Tables</title>
+  <title>Formula 1 - {Entity}</title>
 
   <!-- Custom fonts for this template -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -32,7 +32,7 @@
     <ul class="navbar-nav bg-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fa fa-flag-checkered"></i>
           <!-- <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/1280px-F1.svg.png" alt=""> -->
@@ -44,14 +44,16 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="index.html">
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="/">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
-      </li>
+      </li> -->
 
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <!-- <hr class="sidebar-divider"> -->
+
+      <br />
 
       <!-- Heading -->
       <div class="sidebar-heading">
@@ -61,7 +63,7 @@
       <!-- Nav Item - Charts -->
       <li v-for="endpoint in this.endpoints" class="nav-item">
         <!-- <a class="nav-link" href="charts.html"> -->
-        <a class="nav-link">
+        <a class="nav-link" :href="endpoint.name.toLowerCase()">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>{{ endpoint.name }}</span></a>
       </li>
@@ -269,26 +271,12 @@
           <!-- DataTales Example -->
           <div id="table" class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-danger">Races</h6>
+              <h6 class="m-0 font-weight-bold text-danger">{{ entity }}</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th v-for="column in columns">{{ column }}</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th v-for="column in columns">{{ column }}</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    <tr v-for="element in data" :key="element.id">
-                      <td v-for="column in columns">{{ element[column] }}</td>
-                    </tr>
-                  </tbody>
+
                 </table>
               </div>
             </div>
@@ -351,7 +339,7 @@
   <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
+
 
   <!-- Vue.js -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
@@ -359,6 +347,7 @@
   <!-- Axios -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aspnet-signalr/1.1.4/signalr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pnotify/2.0.0/pnotify.core.min.js"></script>
 
 
   <script src="js/components/sidebar.js"></script>

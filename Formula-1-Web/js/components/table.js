@@ -2,42 +2,82 @@ const vueTable = new Vue({
   el: '#table',
   data: {
    api_url: 'https://localhost:44348',
-   data: "Loading...",
-   columns: ['default']
+   entity: '',
+   columns: ''
   },
-  created: function() {
-    axios.get(this.api_url + '/api/circuits').then(response => {
+  mounted: function() {
+    this.entity = location.pathname.substring(1);
+    this.loadTable();
+    this.connectToSocket();
+  },
+  methods: {
+    loadTable() {
       var self = this;
-      this.data = response.data;
-      this.columns = Object.keys(this.data[0]);
-    });
 
-    var connection = new signalR.HubConnectionBuilder().withUrl(this.api_url + '/signalr').build();
+      // Initialize datatable
+      $(document).ready(function() {
+        axios.get(self.api_url + '/api/' + self.entity).then(response => {
+          var data = response.data;
+          var columns = Object.keys(data[0]);
 
-    connection.on("addCircuit", function (entity) {
-      self.data.push(entity);
-      console.log(entity);
-    });
+          var column_config = self.generateColumns(columns);
 
-    connection.on("updateCircuit", function (entity) {
-      // self.data.push(entity);
-      console.log(entity);
-    });
+          self.table = $('#dataTable').DataTable({
+            data: data,
+            columns: column_config
+          });
 
-    connection.on("removeCircuit", function (entityId) {
-      // self.data.push(entity);
-      console.log(entityId);
-    });
+        }).catch(function(error) {
+          window.location.replace('/404.html');
+          console.log(error)
+        });
 
-    connection.start().then(function () {
-      console.log('Started Signal R...');
-    }).catch(function (err) {
-        return console.error(err.toString());
-    });
-  },
-  // mounted: function() {
-  //  // this.display = 'wefewfw';
-  // }
+      });
 
+    },
 
+    connectToSocket() {
+      var self = this;
+      var connection = new signalR.HubConnectionBuilder().withUrl(this.api_url + '/signalr').build();
+
+      connection.on("addCircuit", function (entity) {
+        var rowNode = self.table.row.add(entity).draw().node();
+        // $(rowNode).css( 'color', 'red' ).animate( { color: 'black' } );
+        new PNotify({
+          title: 'Create Notification',
+          text: entity.name + ' has just been added',
+          type: 'success'
+        });
+        console.log(entity);
+      });
+
+      connection.on("updateCircuit", function (entity) {
+        self.table.fnUpdate(entity, entity.id)
+        console.log(entity);
+      });
+
+      connection.on("removeCircuit", function (entityId) {
+        self.table.fnDeleteRow(entityId);
+        console.log(entityId);
+      });
+
+      connection.start().then(function () {
+        console.log('Started Signal R...');
+      }).catch(function (err) {
+          return console.error(err.toString());
+      });
+    },
+
+    generateColumns(columns) {
+      var config = [];
+
+      columns.forEach(function(column) {
+        var row = { title: column, data: column };
+        config.push(row);
+      });
+
+      return config;
+    }
+
+  }
 })
