@@ -1,4 +1,4 @@
-# Formula 1 Application - Architecture & Design 2019-2020
+# Formula 1 Application - RESTfull API & Dashboard
 This API contains data from 1950 all the way through the 2017 season, and consists of tables describing constructors, race drivers, lap times, pit stops and more.
 
 ## Preview
@@ -24,7 +24,7 @@ Also make sure that port 8080 & 44348 are available on your development machine.
 
 Once you've satisfied the prerequisites, run the following command to clone the repository:
 ```
-git clone https://gitlab.fdmci.hva.nl/poleond001/formula-1-app.git
+git clone https://github.com/Darrellrp/Formula-1-App.git
 ```
 
 ## Running the applications
@@ -45,5 +45,3 @@ Web
 ```
 http://localhost:8080
 ```
-
-
