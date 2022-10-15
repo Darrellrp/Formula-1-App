@@ -235,3 +235,6 @@ _Pvt_Extensions
 /Data/mysql/
 /Data/nginx/
 /Data/*.zip
+
+**/.vscode/
+**/.angular/
