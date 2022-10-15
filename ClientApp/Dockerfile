@@ -1,4 +1,4 @@
-FROM node:16 AS build-env
+FROM node:18-alpine3.15 AS build-env
 WORKDIR /app
 
 # Copy everything

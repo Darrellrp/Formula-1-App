@@ -229,3 +229,9 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+/Data/certbot/
+/Data/certs/
+/Data/mysql/
+/Data/nginx/
+/Data/*.zip

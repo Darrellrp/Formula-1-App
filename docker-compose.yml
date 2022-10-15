@@ -8,39 +8,22 @@ services:
     web:
         container_name: formula-1-web
         restart: always
-        image: nginx:stable
-        command: /bin/bash -c "chmod 755 /var/www && exec nginx -g 'daemon off;'"
+        build:
+            context: ./ClientApp
+            dockerfile: Dockerfile
         networks:
             - default
+        links:
+            - api
         ports:
          - "443:443"
         environment:
          - NGINX_PORT=443
         volumes:
-            - ./ClientApp/dist:/var/www
             - ./Data/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
             - ./Data/certs/:/etc/ssl:ro
             #- ./Data/certbot/conf:/etc/letsencrypt:ro
             #- ./Data/certbot/www:/var/www/certbot:ro
-
-    #webb:
-    #    container_name: formula-1-webb
-    #    restart: always
-    #    image: formula-1-webb
-    #    build:
-    #        context: ./ClientApp
-    #        dockerfile: Dockerfile
-    #    networks:
-    #        - default
-    #    ports:
-    #     - "444:443"
-    #    environment:
-    #     - NGINX_PORT=443
-    #    volumes:
-    #        - ./Data/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-    #        - ./Data/certs/:/etc/ssl:ro
-    #        - ./Data/certbot/conf:/etc/letsencrypt:ro
-    #        - ./Data/certbot/www:/var/www/certbot:ro
 
     api:
         container_name: formula-1-api
