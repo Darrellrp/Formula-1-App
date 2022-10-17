@@ -8,13 +8,9 @@ services:
     web:
         container_name: formula-1-web
         restart: always
-        build:
-            context: ./ClientApp
-            dockerfile: Dockerfile
+        build: ./ClientApp
         networks:
             - default
-        links:
-            - api
         ports:
          - "443:443"
         environment:
@@ -29,15 +25,11 @@ services:
         container_name: formula-1-api
         image: formula-1-api
         restart: always
+        build: .
         networks:
             - default
         ports:
          - "8080:443"
-        build:
-            context: .
-            dockerfile: Dockerfile
-        links:
-            - db
         depends_on:
             - db
         environment:
