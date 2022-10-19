@@ -1,18 +1,35 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+# Base stage
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 
-# Copy everything
-COPY . ./
+EXPOSE 80
+EXPOSE 443
 
-# Restore as distinct layers
-RUN dotnet restore Formula-1-App.sln
-
-# Build and publish a release
-RUN dotnet publish Formula-1-App.sln -c Release -o out
-
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+# Restore stage
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS restore
 WORKDIR /app
 
-COPY --from=build-env /app/out .
+COPY Formula-1-App.csproj .
+
+RUN dotnet restore Formula-1-App.csproj
+
+# Build stage
+FROM restore AS build
+WORKDIR /app
+
+COPY . .
+
+RUN dotnet build Formula-1-App.csproj -c Release -o /app/build
+
+# Publish stage
+from build AS publish
+WORKDIR /app
+
+RUN dotnet publish Formula-1-App.csproj -c Release -o publish
+
+# Final stage
+FROM base AS final
+WORKDIR /app
+
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Formula-1-App.dll"]
