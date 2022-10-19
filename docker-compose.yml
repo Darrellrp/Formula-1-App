@@ -56,8 +56,6 @@ services:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         networks:
             - default
-        # ports:
-        #    - "3306:3306"
         volumes:
             - ./Data/mysql:/var/lib/mysql
 
