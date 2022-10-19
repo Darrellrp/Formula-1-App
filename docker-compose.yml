@@ -59,11 +59,11 @@ services:
         volumes:
             - ./Data/mysql:/var/lib/mysql
 
-    certbot:
-         container_name: formula-1-certbot
-         image: certbot/certbot
-         # restart: always
-         command: /bin/bash -c "certbot certonly --webroot --webroot-path /var/www/certbot/ -d formula1.websites.local"
-         volumes:
-            - ./Data/certbot/conf:/etc/letsencrypt:rw
-            - ./Data/certbot/www:/var/www/certbot:rw
+    #certbot:
+    #     container_name: formula-1-certbot
+    #     image: certbot/certbot
+    #     restart: always
+    #     command: /bin/bash -c "certbot certonly --webroot --webroot-path /var/www/certbot/ -d formula1.websites.local"
+    #     volumes:
+    #        - ./Data/certbot/conf:/etc/letsencrypt:rw
+    #        - ./Data/certbot/www:/var/www/certbot:rw
