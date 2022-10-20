@@ -11,6 +11,7 @@
     "build:prod": "ng build --configuration production",
     "build:ssr": "ng run Formula_1_App:server:dev",
     "watch": "ng build --watch --configuration development",
+    "serve": "ng serve",
     "test": "ng test"
   },
   "private": true,
