@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, throwError } from 'rxjs';
 import { ApiConfiguration } from '../models/configurations/api.configuration';
 import { IResult } from '../models/IResult';
 
@@ -9,20 +9,25 @@ import { IResult } from '../models/IResult';
 })
 export class ConfigurationService {
 
-  private readonly apiBaseUrl: string = "https://localhost:7022";
+  private readonly apiBaseUrl: string = "";
   private readonly apiUri: string = "api/configuration";
 
   public constructor(private httpClient: HttpClient) {
-    const baseUrl = this.loadApiBaseUrl();
-    this.apiBaseUrl = baseUrl ?? this.apiBaseUrl;
+    this.apiBaseUrl = this.GetApiBaseUrl() ?? "";
   }
 
   public Get(): Observable<IResult<ApiConfiguration>> {
-    console.log(`test: ${this.apiBaseUrl}/${this.apiUri}`);
+    if (this.apiBaseUrl == null || this.apiBaseUrl == "") {
+      return throwError(() => {
+        const error: any = new Error('Error: Empty ApiBaseUrl property');
+        error.timestamp = Date.now();
+        return error;
+      });;
+    }
     return this.httpClient.get<any>(`${this.apiBaseUrl}/${this.apiUri}`);
   }
 
-  private loadApiBaseUrl(): string | null | undefined {
+  public GetApiBaseUrl(): string | null | undefined {
     return document.querySelector("meta[name='apiurl']")?.getAttribute("content");
   }
 
