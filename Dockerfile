@@ -19,7 +19,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN dotnet build Formula-1-App.csproj -c Release -o /app/build
+RUN dotnet build Formula-1-App.csproj -c Release -o build
 
 # Publish stage
 from build AS publish
