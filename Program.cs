@@ -38,12 +38,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseStaticFiles(new StaticFileOptions
+
+if(app.Environment.IsDevelopment())
 {
-    FileProvider = new PhysicalFileProvider(
-           Path.Combine(builder.Environment.ContentRootPath, "ClientApp", "dist")),
-    RequestPath = "/client-assets"
-});
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(
+               Path.Combine(builder.Environment.ContentRootPath, "ClientApp", "dist")),
+        RequestPath = "/client-assets"
+    });
+}
+
 app.UseRouting();
 
 app.UseCors();
