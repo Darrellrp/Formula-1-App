@@ -43,7 +43,7 @@ services:
             ASPNETCORE_Kestrel__Certificates__Default__Password: ${Certificates_Password}
             ASPNETCORE_Kestrel__Certificates__Default__Path: ${Certificates_Path}
         volumes:
-            - ./Data/formula-1-race-data:/app/Data
+            #- ./Data/formula-1-race-data:/app/Data
             - ~/.aspnet/https:/https:ro
             - ~/.aspnet/DataProtection-Keys:/root/.aspnet/DataProtection-Keys:ro
 
