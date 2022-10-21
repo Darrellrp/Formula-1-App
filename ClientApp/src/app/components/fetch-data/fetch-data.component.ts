@@ -17,8 +17,8 @@ export class FetchDataComponent {
 
   private loadWeatherForecast() {
     const apiBaseUrl = this.configurationService.GetApiBaseUrl();
-
-    this.http.get<WeatherForecast[]>(apiBaseUrl + '/weatherforecast')
+    console.log(`apiBaseUrl: ${apiBaseUrl}`);
+    this.http.get<WeatherForecast[]>(apiBaseUrl + '/api/weatherforecast')
       .pipe(tap(x => console.log(x)))
       .subscribe(result => {
         this.forecasts = result;
