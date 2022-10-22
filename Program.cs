@@ -6,7 +6,7 @@ if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
 {
     Console.WriteLine("Seeding Database...");
     EFDatabaseSeeder.SeedAll();
-    System.Environment.Exit(1);
+    Environment.Exit(1);
 }
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,7 +57,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-//app.MapFallbackToFile("index.html");
 app.MapRazorPages();
 
 app.Run();
