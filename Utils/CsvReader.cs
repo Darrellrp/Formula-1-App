@@ -6,24 +6,29 @@ using Formula_1_App.Models;
 using _CsvHelper = CsvHelper;
 using CsvHelper.Configuration;
 using Formula_1_App.Utils.ClassMaps;
+using System.Globalization;
 
 namespace Formula_1_App.Utils
 {
     public class CsvReader
     {
-        private readonly string basePath;
+        private readonly string _basePath;
+        private readonly CsvConfiguration _config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            PrepareHeaderForMatch = args => args.Header.ToLower(),
+        };
 
         public CsvReader(string basePath)
         {
-            this.basePath = basePath;
+            _basePath = basePath;
         }
 
         public List<T> Read<T>(string filename)
         {
-            var path = basePath + "/" + filename;
+            var path = _basePath + "/" + filename;
 
             using (var reader = new StreamReader(path))
-            using (var csv = new _CsvHelper.CsvReader((_CsvHelper.IParser)reader))
+            using (var csv = new _CsvHelper.CsvReader(reader, _config))
             {
                 //csv.Configuration.PrepareHeaderForMatch = (string header, int index) => header.ToLower();
                 //csv.Configuration.Delimiter = ",";               
@@ -36,10 +41,10 @@ namespace Formula_1_App.Utils
 
         public List<T> Read<T, Map>(string filename) where Map : ClassMap
         {
-            var path = basePath + "/" + filename;
+            var path = _basePath + "/" + filename;
 
             using (var reader = new StreamReader(path))
-            using (var csv = new _CsvHelper.CsvReader((_CsvHelper.IParser)reader))
+            using (var csv = new _CsvHelper.CsvReader(reader, _config))
             {
                 //csv.Configuration.PrepareHeaderForMatch = (string header, int index) => header.ToLower();
                 //csv.Configuration.Delimiter = ",";
