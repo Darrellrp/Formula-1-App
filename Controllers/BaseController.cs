@@ -11,32 +11,30 @@ using System.Linq;
 namespace Formula_1_App.Controllers
 {
     [ApiController]
-    public class BaseController<T> : ControllerBase, IApiController<T> where T : class, IIdentifier
+    public class BaseController<T> : ControllerBase, IApiController<T> where T : class, IEntity
     {
         private readonly IService<T> _service;
 
         public BaseController(IService<T> service)
         {
-            this._service = service;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<T>>> Get(int? page = null, int pageSize = 100)
         {
-            IEnumerable<T> entities = new List<T>();
+            IEnumerable<T> entities;
 
-            if(!page.HasValue)
+            if (!page.HasValue)
             {
                 entities = await _service.GetAll();
-            } else
+            }
+            else
             {
-                entities = await _service.GetPaginated((int)page, (int) pageSize);
+                entities = await _service.GetPaginated((int) page, pageSize);
             }
 
-            var meta = new { Type = entities.First().GetType().Name, };
-            var response = new { Meta = meta, Data = entities };
-
-            return Ok(response);
+            return Ok(new Response<T>(entities));
         }
 
         [HttpGet("{id}")]
@@ -49,10 +47,7 @@ namespace Formula_1_App.Controllers
                 return NotFound();
             }
 
-            var meta = new { Type = entity.GetType().Name, };
-            var response = new { Meta = meta, Data = entity };
-
-            return Ok(response);
+            return Ok(new Response<T>(entity));
         }
         [HttpPost]
         public async Task<ActionResult<T>> Post(T entity)

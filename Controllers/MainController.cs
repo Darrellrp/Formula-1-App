@@ -12,11 +12,16 @@ namespace Formula_1_App.Controllers
     [Route("api")]
     public class MainController : Controller
     {
-        
+        private readonly MainEndpointFactory _mainEndpointFactory;
+        public MainController (MainEndpointFactory mainEndpointFactory)
+        {
+            _mainEndpointFactory = mainEndpointFactory;
+        }
+
         [HttpGet]
         public ActionResult<MainEndpoint> Get()
         {
-            var mainEndpoint = MainEndpointFactory.Create(this);
+            var mainEndpoint = _mainEndpointFactory.Create(this);
 
             return Ok(mainEndpoint);
         }        
