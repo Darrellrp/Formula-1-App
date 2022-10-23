@@ -4,59 +4,92 @@ using System.Threading.Tasks;
 using CsvHelper.Configuration;
 using Formula_1_App.Factories;
 using Formula_1_App.Models;
+using Formula_1_App.Repositories;
+using Formula_1_App.Repositories.Interfaces;
+using Formula_1_App.Services.Interfaces;
 using Formula_1_App.Utils;
 using Formula_1_App.Utils.ClassMaps;
 using Microsoft.EntityFrameworkCore;
 
 namespace Formula_1_App.Seeders
 {
-    public static class EFDatabaseSeeder
+    public class EFDatabaseSeeder
     {
-        private static readonly string BasePath = "Data/formula-1-race-data";
+        private readonly string _basePath = "Data/formula-1-race-data";
 
-        public static Task SeedAll(int? limit = null, bool setIds = false)
+        private IServiceProvider _provider { get; set; }
+
+        public EFDatabaseSeeder(IServiceProvider provider)
         {
-            //EFDatabaseSeeder.Seed<Circuit>("circuits.csv", modelBuilder, limit);
-            //EFDatabaseSeeder.Seed<ConstructorResult>("constructorResults.csv", modelBuilder, limit);
-            //EFDatabaseSeeder.Seed<Constructor>("constructors.csv", modelBuilder, limit);
-            //EFDatabaseSeeder.Seed<ConstructorStanding>("constructorStandings.csv", modelBuilder);
-            //EFDatabaseSeeder.Seed<Driver>("drivers.csv", modelBuilder, setIds: true);
-            //EFDatabaseSeeder.Seed<DriverStanding>("driverStandings.csv", modelBuilder, limit);
-            //EFDatabaseSeeder.Seed<LapTime, LapTimeMap>("lapTimes.csv", modelBuilder, limit, setIds);
-            //EFDatabaseSeeder.Seed<PitStop, PitStopMap>("pitStops.csv", modelBuilder, limit, setIds);
-            //EFDatabaseSeeder.Seed<Qualification>("qualifying.csv", modelBuilder, limit);
-            //EFDatabaseSeeder.Seed<Race>("races.csv", modelBuilder, limit);
-            //EFDatabaseSeeder.Seed<RaceResult, RaceResultMap>("results.csv", modelBuilder, limit);
-            //EFDatabaseSeeder.Seed<Season, SeasonMap>("seasons.csv", modelBuilder, limit, setIds);
-            //EFDatabaseSeeder.Seed<ResultStatus>("status.csv", modelBuilder, limit);
-            Console.WriteLine("Seed initiated...");
-
-            return Task.CompletedTask;
+            _provider = provider;
         }
 
-        public static ModelBuilder Seed<T>(string filename, ModelBuilder modelBuilder, int? limit = null, bool setIds = false) where T : class, IIdentifier
+        public async Task SeedAll(int? limit = null, bool setIds = false)
         {
-            var reader = CsvReaderFactory.Create(BasePath);
-            var items = reader.Read<T>(filename).ToList();
+            Console.WriteLine("Started Database seeding...");
+
+            await Seed<Circuit>("circuits.csv", limit);
+            await Seed<ConstructorResult>("constructorResults.csv", limit);
+            await Seed<Constructor>("constructors.csv", limit);
+            await Seed<ConstructorStanding>("constructorStandings.csv");
+            await Seed<Driver>("drivers.csv", setIds: true);
+            await Seed<DriverStanding>("driverStandings.csv", limit);
+            await Seed<LapTime, LapTimeMap>("lapTimes.csv", limit, setIds);
+            await Seed<PitStop, PitStopMap>("pitStops.csv", limit, setIds);
+            await Seed<Qualification>("qualifying.csv", limit);
+            await Seed<Race>("races.csv", limit);
+            await Seed<RaceResult, RaceResultMap>("results.csv", limit);
+            await Seed<Season, SeasonMap>("seasons.csv", limit, setIds);
+            await Seed<ResultStatus>("status.csv", limit);
+
+            Console.WriteLine("Completed Database seeding");
+        }
+
+        public async Task Seed<T>(string filename, int? limit = null, bool setIds = false) where T : class, IEntity
+        {
+            var typeName = typeof(T).Name;
+            Console.WriteLine($"Seeding {typeName} entity");
+
+            var repository = _provider.GetService<IRepository<T>>();
+
+            if(repository == null)
+            {
+                throw new Exception($"Unable to get {typeName}Repository from ServiceProvider");
+            }
+
+            var reader = CsvReaderFactory.Create(_basePath);
+            var items = reader.Read<T>(filename);
 
             if(limit != null)
             {
-                items = items.Take((int)limit).ToList();
-            }            
-
-            if (setIds)
-            {
-                Helper.SetModelIds(items);
+                items = items.Take((int) limit).ToList();
             }
-            
-            modelBuilder.Entity<T>().HasData(items.ToArray());            
 
-            return modelBuilder;
+            var existingRecords = await repository.GetAll();
+            var newRecords = items.Where(x => !existingRecords.Contains(x)).ToList();
+
+            if(newRecords.Count < 1)
+            {
+                Console.WriteLine($"{typeof(T).Name} already seeded.");
+                return;
+            }
+
+            await repository.AddMany(newRecords);
         }
 
-        public static ModelBuilder Seed<T, Map>(string filename, ModelBuilder modelBuilder, int? limit = null, bool setIds = false) where T : class, IIdentifier where Map : ClassMap
+        public async Task Seed<T, Map>(string filename, int? limit = null, bool setIds = false) where T : class, IEntity where Map : ClassMap
         {
-            var reader = CsvReaderFactory.Create(BasePath);
+            var typeName = typeof(T).Name;
+            Console.WriteLine($"Seeding {typeName} entity");
+
+            var repository = _provider.GetService<IRepository<T>>();
+
+            if (repository == null)
+            {
+                throw new Exception($"Unable to Get {typeName}Repository");
+            }
+
+            var reader = CsvReaderFactory.Create(_basePath);
             var items = reader.Read<T, Map>(filename).ToList();
 
             if (limit != null)
@@ -64,14 +97,16 @@ namespace Formula_1_App.Seeders
                 items = items.Take((int)limit).ToList();
             }
 
-            if (setIds)
+            var existingRecords = await repository.GetAll();
+            var newRecords = items.Where(x => !existingRecords.Contains(x)).ToList();
+
+            if (newRecords.Count < 1)
             {
-                Helper.SetModelIds(items);
+                Console.WriteLine($"{typeof(T).Name} already seeded.");
+                return;
             }
 
-            modelBuilder.Entity<T>().HasData(items.ToArray());
-
-            return modelBuilder;
+            await repository.AddMany(newRecords);
         }
     }
 }
