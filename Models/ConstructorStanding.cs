@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Formula_1_App.Models;
 
-public class ConstructorStanding : Standing, IIdentifier
+public class ConstructorStanding : Standing, IEntity
 {     
     public int ConstructorId { get; set; }
 

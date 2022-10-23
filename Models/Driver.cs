@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Formula_1_App.Models;
 
-public class Driver : IIdentifier
+public class Driver : Entity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int? Id { get; set; }
+    public override int? Id { get; set; }
     public string Ref { get; set; } = string.Empty;
     public int? Number { get; set; }
     public string Code { get; set; } = string.Empty;

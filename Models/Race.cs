@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Formula_1_App.Models;
 
-public class Race : IIdentifier
+public class Race : Entity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int? Id { get; set; }
+    public override int? Id { get; set; }
     public string Year { get; set; } = string.Empty;
     public string Round { get; set; } = string.Empty;
     public int CircuitId { get; set; }

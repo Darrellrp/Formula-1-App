@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Formula_1_App.Models;
 
-public class DriverStanding : Standing, IIdentifier
+public class DriverStanding : Standing, IEntity
 {       
     public int DriverId { get; set; }
 
