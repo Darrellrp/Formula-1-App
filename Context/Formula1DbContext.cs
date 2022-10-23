@@ -24,5 +24,13 @@ public class Formula1DbContext : DbContext
     public DbSet<Race> Races => Set<Race>();
     public DbSet<RaceResult> RaceResults => Set<RaceResult>();
     public DbSet<ResultStatus> ResultStatus => Set<ResultStatus>();
-    public DbSet<Season> Seasons => Set<Season>();          
+    public DbSet<Season> Seasons => Set<Season>();
+
+    public Formula1DbContext(DbContextOptions<Formula1DbContext> options) : base(options) { }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTIONSTRING");
+        optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    }
 }
