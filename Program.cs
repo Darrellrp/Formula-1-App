@@ -58,10 +58,25 @@ var app = builder.Build();
 if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
 {
     var seeder = new EFDatabaseSeeder(app.Services);
+    int limit;
 
     try
-    {        
-        await seeder.SeedAll(limit: 100);
+    {
+        if (args.Length > 1 && args[1] != null)
+        {
+            if (!int.TryParse(args[1], out limit))
+            {
+                Console.WriteLine("Invalid second parameter: seeding limit must be an integer");
+                Environment.Exit(1);
+                return;
+            }
+
+            await seeder.SeedAll(limit);
+        }
+        else
+        {
+            await seeder.SeedAll();
+        }        
     }
     catch (Exception exception)
     {
@@ -69,6 +84,7 @@ if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
     }
 
     Environment.Exit(1);
+    return;
 }
 
 // Configure the HTTP request pipeline.

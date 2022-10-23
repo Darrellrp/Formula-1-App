@@ -25,7 +25,14 @@ namespace Formula_1_App.Seeders
 
         public async Task SeedAll(int? limit = null)
         {
+
             Console.WriteLine("Started Database seeding...");
+
+            if (limit != null && limit != 0) {
+                Console.WriteLine($"Limit: {limit}");
+            }
+
+            Console.WriteLine();
 
             await Seed<Circuit>("circuits.csv", limit);
             await Seed<ConstructorResult>("constructorResults.csv", limit);
@@ -41,6 +48,7 @@ namespace Formula_1_App.Seeders
             await Seed<Season, SeasonMap>("seasons.csv", limit);
             await Seed<ResultStatus>("status.csv", limit);
 
+            Console.WriteLine();
             Console.WriteLine("Completed Database seeding!");
         }
 
@@ -59,7 +67,7 @@ namespace Formula_1_App.Seeders
             var reader = CsvReaderFactory.Create(_basePath);
             var items = reader.Read<T>(filename);
 
-            if(limit != null)
+            if(limit != null && limit != 0)
             {
                 items = items.Take((int) limit).ToList();
             }
@@ -92,7 +100,7 @@ namespace Formula_1_App.Seeders
             var reader = CsvReaderFactory.Create(_basePath);
             var items = reader.Read<T, Map>(filename).ToList();
 
-            if (limit != null)
+            if (limit != null && limit != 0)
             {
                 items = items.Take((int)limit).ToList();
             }
