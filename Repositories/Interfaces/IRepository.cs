@@ -7,7 +7,7 @@ using Formula_1_App.Models;
 
 namespace Formula_1_App.Repositories.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class, IEntity
     {
         Task<T?> FindById(int id);
         Task<List<T>> Where(Expression<Func<T, bool>> expression);

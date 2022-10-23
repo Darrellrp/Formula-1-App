@@ -8,7 +8,7 @@ using Formula_1_App.Repositories.Adapters;
 
 namespace Formula_1_App.Repositories.Interfaces
 {
-    public interface IDatasourceAdapter<T> : IRepository<T> where T : class
+    public interface IDatasourceAdapter<T> : IRepository<T> where T : class, IEntity
     {
         
     }

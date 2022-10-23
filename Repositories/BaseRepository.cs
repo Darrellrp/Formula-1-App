@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Formula_1_App.Repositories
 {
-    public class BaseRepository<T> : IRepository<T> where T : class, IIdentifier
+    public class BaseRepository<T> : IRepository<T> where T : class, IEntity
     {
         private readonly IDatasourceAdapter<T> adapter;
 
