@@ -8,8 +8,13 @@ namespace Formula_1_App.Utils.ClassMaps
     {
         public LapTimeMap()
         {
-            //AutoMap();
             Map(l => l.Id).Ignore();
+            Map(l => l.RaceId).Name("raceId");
+            Map(l => l.DriverId).Name("driverId");
+            Map(l => l.Lap).Name("lap");
+            Map(l => l.Position).Name("position");
+            Map(l => l.Time).Name("time");
+            Map(l => l.Milliseconds).Name("milliseconds");
         }
     }
 }

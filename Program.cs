@@ -64,8 +64,6 @@ var app = builder.Build();
 
 if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
 {
-    Console.WriteLine("Seeding Database...");
-
     var seeder = new EFDatabaseSeeder(app.Services);
 
     try

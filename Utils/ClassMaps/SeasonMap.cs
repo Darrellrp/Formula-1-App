@@ -8,8 +8,9 @@ namespace Formula_1_App.Utils.ClassMaps
     {
         public SeasonMap()
         {
-            //AutoMap();
             Map(s => s.Id).Ignore();
+            Map(s => s.Url).Name("Url");
+            Map(s => s.Year).Name("Year");
         }
     }
 }

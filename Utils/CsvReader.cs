@@ -13,6 +13,7 @@ namespace Formula_1_App.Utils
     public class CsvReader
     {
         private readonly string _basePath;
+        private readonly CultureInfo _cultureInfo = CultureInfo.InvariantCulture;
         private readonly CsvConfiguration _config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             PrepareHeaderForMatch = args => args.Header.ToLower(),
@@ -48,7 +49,7 @@ namespace Formula_1_App.Utils
             {
                 //csv.Configuration.PrepareHeaderForMatch = (string header, int index) => header.ToLower();
                 //csv.Configuration.Delimiter = ",";
-                //csv.Configuration.RegisterClassMap<Map>();
+                csv.Context.RegisterClassMap<Map>();
 
                 var records = csv.GetRecords<T>().ToList();
 

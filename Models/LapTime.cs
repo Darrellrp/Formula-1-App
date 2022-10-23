@@ -11,19 +11,8 @@ public class LapTime : Entity
     public override int? Id { get; set; }
     public int RaceId { get; set; }
     public int DriverId { get; set; }
-    public string Lap { get; set; }
-    public string Position { get; set; } // in csv it is string
-    public string Time { get; set; }
+    public string Lap { get; set; } = string.Empty;
+    public int Position { get; set; }
+    public string Time { get; set; } = string.Empty;
     public int Milliseconds { get; set; }
-
-
-    public LapTime(int raceId, int driverId, string lap, string position, string time, int milliseconds)
-    {
-        this.RaceId = raceId;
-        this.DriverId = driverId;
-        this.Lap = lap;
-        this.Position = position;
-        this.Time = time;
-        this.Milliseconds = milliseconds;
-    }
 }

@@ -42,13 +42,13 @@ namespace Formula_1_App.Seeders
             await Seed<Season, SeasonMap>("seasons.csv", limit, setIds);
             await Seed<ResultStatus>("status.csv", limit);
 
-            Console.WriteLine("Completed Database seeding");
+            Console.WriteLine("Completed Database seeding!");
         }
 
         public async Task Seed<T>(string filename, int? limit = null, bool setIds = false) where T : class, IEntity
         {
             var typeName = typeof(T).Name;
-            Console.WriteLine($"Seeding {typeName} entity");
+            Console.Write($"- {typeName}");
 
             var repository = _provider.GetService<IRepository<T>>();
 
@@ -68,19 +68,20 @@ namespace Formula_1_App.Seeders
             var existingRecords = await repository.GetAll();
             var newRecords = items.Where(x => !existingRecords.Contains(x)).ToList();
 
-            if(newRecords.Count < 1)
+            if(newRecords.Count < 1 || (existingRecords.Count > 1 && newRecords.All(x => x.Id == null)))
             {
-                Console.WriteLine($"{typeof(T).Name} already seeded.");
+                Console.Write($": already seeded \n");
                 return;
             }
 
+            Console.WriteLine();
             await repository.AddMany(newRecords);
         }
 
         public async Task Seed<T, Map>(string filename, int? limit = null, bool setIds = false) where T : class, IEntity where Map : ClassMap
         {
             var typeName = typeof(T).Name;
-            Console.WriteLine($"Seeding {typeName} entity");
+            Console.Write($"- {typeName}");
 
             var repository = _provider.GetService<IRepository<T>>();
 
@@ -100,12 +101,13 @@ namespace Formula_1_App.Seeders
             var existingRecords = await repository.GetAll();
             var newRecords = items.Where(x => !existingRecords.Contains(x)).ToList();
 
-            if (newRecords.Count < 1)
+            if (newRecords.Count < 1 || (existingRecords.Count > 1 && newRecords.All(x => x.Id == null)))
             {
-                Console.WriteLine($"{typeof(T).Name} already seeded.");
+                Console.Write($": already seeded \n");
                 return;
             }
 
+            Console.WriteLine();
             await repository.AddMany(newRecords);
         }
     }

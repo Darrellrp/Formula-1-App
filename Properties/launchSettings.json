@@ -10,6 +10,7 @@
   "profiles": {
     "Formula_1_App": {
       "commandName": "Project",
+      "commandLineArgs": "--seed",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7022;http://localhost:5019",
       "environmentVariables": {
