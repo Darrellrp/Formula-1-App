@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Formula_1_App.Models;
 using Formula_1_App.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 //using Formula_1_App.Context;
 
 namespace Formula_1_App.Repositories.Adapters
 {
-    public class EntityFrameworkAdapter<T> : IDatasourceAdapter<T> where T : class
+    public class EntityFrameworkAdapter<T> : IDatasourceAdapter<T> where T : class, IEntity
     {
         protected readonly DbContext _dbContext;
 
         public EntityFrameworkAdapter(DbContext dbContext) 
         {
-            this._dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<T?>FindById(int id)

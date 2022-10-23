@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace Formula_1_App.Repositories.Adapters
 {
-    public class MongoAdapter<T> : IDatasourceAdapter<T> where T : class, IIdentifier
+    public class MongoAdapter<T> : IDatasourceAdapter<T> where T : class, IEntity
     {
         protected readonly IMongoClient client;
         protected readonly IMongoDatabase database;
