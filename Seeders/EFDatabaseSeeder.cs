@@ -6,8 +6,8 @@ using Formula_1_App.Factories;
 using Formula_1_App.Models;
 using Formula_1_App.Repositories;
 using Formula_1_App.Services;
-using Formula_1_App.Utils;
-using Formula_1_App.Utils.ClassMaps;
+using Formula_1_App.Datasources;
+using Formula_1_App.Datasources.ClassMaps;
 using Microsoft.EntityFrameworkCore;
 
 namespace Formula_1_App.Seeders

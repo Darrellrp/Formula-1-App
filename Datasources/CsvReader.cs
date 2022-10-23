@@ -5,10 +5,10 @@ using System.Linq;
 using Formula_1_App.Models;
 using _CsvHelper = CsvHelper;
 using CsvHelper.Configuration;
-using Formula_1_App.Utils.ClassMaps;
+using Formula_1_App.Datasources.ClassMaps;
 using System.Globalization;
 
-namespace Formula_1_App.Utils
+namespace Formula_1_App.Datasources
 {
     public class CsvReader
     {

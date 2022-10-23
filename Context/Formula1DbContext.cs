@@ -2,10 +2,9 @@
 using Formula_1_App.Models;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using System.IO;
-using Formula_1_App.Utils;
+using Formula_1_App.Datasources;
 using System.Collections.Generic;
-using Formula_1_App.Utils.ClassMaps;
+using Formula_1_App.Datasources.ClassMaps;
 using Formula_1_App.Seeders;
 
 namespace Formula_1_App.Context;

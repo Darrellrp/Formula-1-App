@@ -2,7 +2,7 @@
 using CsvHelper.Configuration;
 using Formula_1_App.Models;
 
-namespace Formula_1_App.Utils.ClassMaps
+namespace Formula_1_App.Datasources.ClassMaps
 {
     public class SeasonMap : ClassMap<Season>
     {

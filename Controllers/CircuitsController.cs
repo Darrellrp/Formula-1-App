@@ -7,7 +7,6 @@ using Formula_1_App.Models;
 using Formula_1_App.Services;
 using Formula_1_App.Factories;
 using Formula_1_App.Datasources;
-using Formula_1_App.Utils;
 
 namespace Formula_1_App.Controllers
 {
