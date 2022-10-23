@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Formula_1_App.Subjects.Interfaces
 {
-    public interface ISubject<T> where T : IIdentifier
+    public interface ISubject<T> where T : IEntity
     {
         Task NotifyAdd(T entity);
         Task NotifyAddMany(List<T> entities);

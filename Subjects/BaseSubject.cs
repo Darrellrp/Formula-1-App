@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Formula_1_App.Subjects
 {
-    public class BaseSubject<T> : ISubject<T> where T : IIdentifier
+    public class BaseSubject<T> : ISubject<T> where T : IEntity
     {
         private readonly IHubContext<EntityHub> hubContext;
 

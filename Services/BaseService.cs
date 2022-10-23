@@ -11,7 +11,7 @@ using Formula_1_App.Repositories.Interfaces;
 
 namespace Formula_1_App.Services
 {
-    public class BaseService<T> : IService<T> where T : class, IIdentifier
+    public class BaseService<T> : IService<T> where T : class, IEntity
     {
         protected readonly IRepository<T> repository;
         protected readonly ISubject<T> subject;

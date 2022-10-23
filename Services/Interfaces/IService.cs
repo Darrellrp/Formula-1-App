@@ -6,7 +6,7 @@ using Formula_1_App.Models;
 
 namespace Formula_1_App.Services.Interfaces
 {
-    public interface IService<T> where T : IIdentifier
+    public interface IService<T> where T : IEntity
     {
         Task<List<T>> GetAll();
         Task<List<T>> GetPaginated(int page, int limit = 100);
