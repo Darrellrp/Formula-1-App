@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Formula_1_App.Seeders
 {
-    public class EFDatabaseSeeder
+    public class EFDatabaseSeeder : IDatabaseSeeder
     {
         private readonly string _basePath = "Data/formula-1-race-data";
 
