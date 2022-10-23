@@ -7,15 +7,15 @@ namespace Formula_1_App.Models
 
         public Entity() { }
 
-        public override bool Equals(object obj) => this.Equals((Entity)obj);
-
-        public bool Equals(Entity entity)
+        public override bool Equals(object? obj)
         {
-            if (entity == null)
-            {
-                return false;
-            }
+            if (obj == null) { return false; }
 
+            return Equals((Entity)obj);
+        }
+
+        private bool Equals(Entity entity)
+        {
             return entity.Id.Equals(Id);
         }
 
