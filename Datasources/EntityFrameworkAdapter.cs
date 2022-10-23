@@ -4,11 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Formula_1_App.Models;
-using Formula_1_App.Repositories.Interfaces;
+using Formula_1_App.Repositories;
 using Microsoft.EntityFrameworkCore;
-//using Formula_1_App.Context;
 
-namespace Formula_1_App.Repositories.Adapters
+namespace Formula_1_App.Datasources
 {
     public class EntityFrameworkAdapter<T> : IDatasourceAdapter<T> where T : class, IEntity
     {

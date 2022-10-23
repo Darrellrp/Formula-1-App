@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Formula_1_App.Models;
 
-namespace Formula_1_App.Repositories.Interfaces
+namespace Formula_1_App.Repositories
 {
     public interface IRepository<T> where T : class, IEntity
     {

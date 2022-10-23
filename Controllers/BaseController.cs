@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Formula_1_App.Services;
 using Formula_1_App.Models;
-using Formula_1_App.Services.Interfaces;
 using System.Linq;
 
 namespace Formula_1_App.Controllers

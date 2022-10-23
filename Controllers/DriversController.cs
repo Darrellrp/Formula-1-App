@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Formula_1_App.Models;
 using Formula_1_App.Services;
-using System.IO;
 using Formula_1_App.Utils;
 using Formula_1_App.Utils.ClassMaps;
 using Formula_1_App.Factories;
-using Formula_1_App.Services.Interfaces;
 
 namespace Formula_1_App.Controllers
 {
@@ -17,43 +15,43 @@ namespace Formula_1_App.Controllers
     [ApiController]
     public class DriversController : ControllerBase
     {
-        private readonly IService<Driver> service;
-        private readonly BaseController<Driver> baseController;
+        private readonly IService<Driver> _service;
+        private readonly BaseController<Driver> _baseController;
 
         public DriversController(BaseController<Driver> baseController, IService<Driver> service)
         {
-            this.baseController = baseController;
-            this.service = service;
+            this._baseController = baseController;
+            this._service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Driver>>> Get(int? page = 1, int pageSize = 100)
         {
-            return await this.baseController.Get(page, pageSize);
+            return await this._baseController.Get(page, pageSize);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Driver>> Get(int id)
         {
-            return await this.baseController.Get(id);
+            return await this._baseController.Get(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<Driver>> Post([FromBody] Driver value)
         {
-            return await this.baseController.Post(value);
+            return await this._baseController.Post(value);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Driver>> Put(int id, [FromBody] Driver value)
         {
-            return await this.baseController.Put(id, value);
+            return await this._baseController.Put(id, value);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return await this.baseController.Delete(id);
+            return await this._baseController.Delete(id);
         }
     }
 }

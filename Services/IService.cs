@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Formula_1_App.Models;
 
-namespace Formula_1_App.Services.Interfaces
+namespace Formula_1_App.Services
 {
     public interface IService<T> where T : IEntity
     {

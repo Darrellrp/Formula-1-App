@@ -4,10 +4,9 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Formula_1_App.Models;
 using Formula_1_App.Subjects;
-using Formula_1_App.Services.Interfaces;
-using Formula_1_App.Repositories.Adapters;
-using Formula_1_App.Subjects.Interfaces;
-using Formula_1_App.Repositories.Interfaces;
+using Formula_1_App.Services;
+using Formula_1_App.Datasources;
+using Formula_1_App.Repositories;
 
 namespace Formula_1_App.Services
 {

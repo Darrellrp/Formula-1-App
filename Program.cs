@@ -6,24 +6,17 @@ using Formula_1_App.Factories.Interfaces;
 using Formula_1_App.Hubs;
 using Formula_1_App.Models;
 using Formula_1_App.Repositories;
-using Formula_1_App.Repositories.Adapters;
-using Formula_1_App.Repositories.Interfaces;
+using Formula_1_App.Datasources;
 using Formula_1_App.Seeders;
 using Formula_1_App.Services;
-using Formula_1_App.Services.Interfaces;
 using Formula_1_App.Subjects;
-using Formula_1_App.Subjects.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
-if(builder.Environment.IsProduction()) {
-    DotNetEnv.Env.Load(".env");
-} else
-{
-    DotNetEnv.Env.Load("development.env");
-}
+var env = builder.Environment.IsProduction() ? ".env" : "development.env";
+DotNetEnv.Env.Load(env);
 
 builder.Services.AddTransient(typeof(DbContextOptions<Formula1DbContext>), typeof(DbContextOptions<Formula1DbContext>));
 builder.Services.AddTransient(typeof(IDatasourceAdapter<>), typeof(EntityFrameworkAdapter<>));

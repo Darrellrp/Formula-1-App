@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Formula_1_App.Models;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Formula_1_App.Subjects.Interfaces
+namespace Formula_1_App.Subjects
 {
     public interface ISubject<T> where T : IEntity
     {

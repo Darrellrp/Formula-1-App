@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Formula_1_App.Models;
-using Formula_1_App.Repositories.Interfaces;
+using Formula_1_App.Repositories;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace Formula_1_App.Repositories.Adapters
+namespace Formula_1_App.Datasources
 {
     public class MongoAdapter<T> : IDatasourceAdapter<T> where T : class, IEntity
     {

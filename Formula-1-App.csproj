@@ -39,6 +39,7 @@
     <None Remove="Data\certbot\conf\" />
     <None Remove="Data\certbot\www\" />
     <None Remove="dotenv.net" />
+    <None Remove="Adapters\" />
   </ItemGroup>
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
@@ -51,6 +52,7 @@
     <Folder Include="Data\certbot\" />
     <Folder Include="Data\certbot\conf\" />
     <Folder Include="Data\certbot\www\" />
+    <Folder Include="Datasources\" />
   </ItemGroup>
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
