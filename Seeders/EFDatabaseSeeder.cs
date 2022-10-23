@@ -24,7 +24,7 @@ namespace Formula_1_App.Seeders
             _provider = provider;
         }
 
-        public async Task SeedAll(int? limit = null, bool setIds = false)
+        public async Task SeedAll(int? limit = null)
         {
             Console.WriteLine("Started Database seeding...");
 
@@ -32,20 +32,20 @@ namespace Formula_1_App.Seeders
             await Seed<ConstructorResult>("constructorResults.csv", limit);
             await Seed<Constructor>("constructors.csv", limit);
             await Seed<ConstructorStanding>("constructorStandings.csv");
-            await Seed<Driver>("drivers.csv", setIds: true);
+            await Seed<Driver>("drivers.csv");
             await Seed<DriverStanding>("driverStandings.csv", limit);
-            await Seed<LapTime, LapTimeMap>("lapTimes.csv", limit, setIds);
-            await Seed<PitStop, PitStopMap>("pitStops.csv", limit, setIds);
+            await Seed<LapTime, LapTimeMap>("lapTimes.csv", limit);
+            await Seed<PitStop, PitStopMap>("pitStops.csv", limit);
             await Seed<Qualification>("qualifying.csv", limit);
             await Seed<Race>("races.csv", limit);
             await Seed<RaceResult, RaceResultMap>("results.csv", limit);
-            await Seed<Season, SeasonMap>("seasons.csv", limit, setIds);
+            await Seed<Season, SeasonMap>("seasons.csv", limit);
             await Seed<ResultStatus>("status.csv", limit);
 
             Console.WriteLine("Completed Database seeding!");
         }
 
-        public async Task Seed<T>(string filename, int? limit = null, bool setIds = false) where T : class, IEntity
+        public async Task Seed<T>(string filename, int? limit = null) where T : class, IEntity
         {
             var typeName = typeof(T).Name;
             Console.Write($"- {typeName}");
@@ -78,7 +78,7 @@ namespace Formula_1_App.Seeders
             await repository.AddMany(newRecords);
         }
 
-        public async Task Seed<T, Map>(string filename, int? limit = null, bool setIds = false) where T : class, IEntity where Map : ClassMap
+        public async Task Seed<T, Map>(string filename, int? limit = null) where T : class, IEntity where Map : ClassMap
         {
             var typeName = typeof(T).Name;
             Console.Write($"- {typeName}");
