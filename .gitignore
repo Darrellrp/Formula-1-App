@@ -240,5 +240,6 @@ _Pvt_Extensions
 **/.angular/
 
 **/.env
-**/development.env
+**/.env.prod
+**/.env.dev
 
