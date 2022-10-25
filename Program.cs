@@ -13,23 +13,24 @@ using Formula_1_App.Subjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Formula_1_App.Caching;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var env = builder.Environment.IsProduction() ? ".env" : ".env.dev";
 DotNetEnv.Env.Load(env);
 
-builder.Services.AddTransient(typeof(DbContextOptions<Formula1DbContext>), typeof(DbContextOptions<Formula1DbContext>));
+builder.Services.AddTransient<DbContextOptions<Formula1DbContext>, DbContextOptions<Formula1DbContext>>();
 builder.Services.AddTransient(typeof(IDatasourceAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
-builder.Services.AddTransient(typeof(ICachingService), typeof(RedisCachingService));
+builder.Services.AddTransient<ICachingService, RedisCachingService>();
 builder.Services.AddScoped(typeof(IService<>), typeof(BaseService<>));
 builder.Services.AddScoped(typeof(ISubject<>), typeof(BaseSubject<>));
 builder.Services.AddScoped(typeof(BaseController<>), typeof(BaseController<>));
 builder.Services.AddTransient(typeof(EntityFrameworkAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(MongoAdapter<>), typeof(MongoAdapter<>));
-builder.Services.AddScoped(typeof(MainEndpointFactory), typeof(MainEndpointFactory));
-builder.Services.AddScoped(typeof(EndpointFactory), typeof(EndpointFactory));
+builder.Services.AddScoped<MainEndpointFactory, MainEndpointFactory>();
+builder.Services.AddScoped<EndpointFactory, EndpointFactory>();
 
 builder.Services.AddTransient<DbContext, Formula1DbContext>();
 

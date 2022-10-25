@@ -6,7 +6,6 @@ using Formula_1_App.Models;
 using Formula_1_App.Repositories;
 using Formula_1_App.Datasources;
 using Microsoft.EntityFrameworkCore;
-using Formula_1_App.Extensions;
 using Microsoft.Extensions.Caching.Distributed;
 using Formula_1_App.Caching;
 
