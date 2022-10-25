@@ -47,9 +47,9 @@ services:
 
     db:
         container_name: formula-1-mysql
-        image: mysql:latest
+        image: mysql:8
         restart: always
-        command: --default-authentication-plugin=mysql_native_passwordd
+        command: --default-authentication-plugin=mysql_native_password
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_USER: ${MYSQL_USER}
@@ -58,6 +58,16 @@ services:
             - default
         volumes:
             - ./Data/mysql:/var/lib/mysql
+
+    cache: 
+        container_name: formula-1-redis
+        image: redis:7-alpine
+        restart: always
+        networks:
+            - default
+        volumes:
+            - ./Data/redis:/usr/local/etc/redis
+
 
     #certbot:
     #     container_name: formula-1-certbot

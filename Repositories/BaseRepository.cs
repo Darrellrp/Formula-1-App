@@ -6,21 +6,41 @@ using Formula_1_App.Models;
 using Formula_1_App.Repositories;
 using Formula_1_App.Datasources;
 using Microsoft.EntityFrameworkCore;
+using Formula_1_App.Extensions;
+using Microsoft.Extensions.Caching.Distributed;
+using Formula_1_App.Caching;
 
 namespace Formula_1_App.Repositories
 {
     public class BaseRepository<T> : IRepository<T> where T : class, IEntity
     {
         private readonly IDatasourceAdapter<T> _datasource;
+        private readonly ICachingService _cache;
 
-        public BaseRepository(IDatasourceAdapter<T> datasource)
+        public BaseRepository(IDatasourceAdapter<T> datasource, ICachingService cache)
         {
-            this._datasource = datasource;
+            _datasource = datasource;
+            _cache = cache;
         }        
 
         public async Task<T?> FindById(int id)
         {
-            return await _datasource.FindById(id);
+            var record = await _cache.GetRecordAsync<T>(id.ToString());
+
+            if(record != null)
+            {
+                return record;
+            }
+
+            record = await _datasource.FindById(id);
+
+            if (record == null)
+            {
+                return null;
+            }
+
+            await _cache.SetRecordAsync<T>(id.ToString(), record);
+            return record;
         }
 
         public async Task<List<T>> GetAll()

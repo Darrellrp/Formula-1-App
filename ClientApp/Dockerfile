@@ -1,5 +1,5 @@
 # Base stage
-FROM nginx:stable-alpine as base
+FROM nginx:1-alpine as base
 WORKDIR /var/www
 
 RUN chmod 755 /var/www
