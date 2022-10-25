@@ -238,4 +238,7 @@ _Pvt_Extensions
 
 **/.vscode/
 **/.angular/
-.env
+
+**/.env
+**/development.env
+
