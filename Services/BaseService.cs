@@ -21,12 +21,12 @@ namespace Formula_1_App.Services
             this.subject = subject;
         }
 
-        public async Task<List<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
             return await repository.GetAll();
         }
 
-        public async Task<List<T>> GetPaginated(int page, int limit = 100)
+        public async Task<IEnumerable<T>> GetPaginated(int page, int limit = 100)
         {
             return await repository.GetPaginated(page, limit);
         }
@@ -36,7 +36,7 @@ namespace Formula_1_App.Services
             return await repository.FindById(id);
         }
 
-        public async Task<List<T>> Where(Expression<Func<T, bool>> expression)
+        public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression)
         {
             return await repository.Where(expression);
         }
@@ -49,7 +49,7 @@ namespace Formula_1_App.Services
             return newEntity;
         }
 
-        public async Task<List<T>> Save(List<T> entities)
+        public async Task<IEnumerable<T>> Save(IEnumerable<T> entities)
         {
             var newEntities = await repository.AddMany(entities);
             await subject.NotifyAddMany(newEntities);

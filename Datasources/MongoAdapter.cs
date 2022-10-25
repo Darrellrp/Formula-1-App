@@ -32,7 +32,7 @@ namespace Formula_1_App.Datasources
             return entity[0];
         }
 
-        public async Task<List<T>> Where(Expression<Func<T, bool>> expression)
+        public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression)
         {
             var collection = database.GetCollection<T>(typeof(T).Name.ToLower());
             var filter = Builders<T>.Filter.Where(expression);
@@ -41,7 +41,7 @@ namespace Formula_1_App.Datasources
             return await entities.ToListAsync();
         }
 
-        public async Task<List<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
             var collection = database.GetCollection<T>(typeof(T).Name.ToLower());
             var filter = Builders<T>.Filter.Empty;
@@ -50,7 +50,7 @@ namespace Formula_1_App.Datasources
             return entities;
         }
 
-        public async Task<List<T>> GetPaginated(int page, int limit)
+        public async Task<IEnumerable<T>> GetPaginated(int page, int limit)
         {
             var collection = database.GetCollection<T>(typeof(T).Name.ToLower());
             var filter = Builders<T>.Filter.Empty;
@@ -69,7 +69,7 @@ namespace Formula_1_App.Datasources
             return entity;
         }
 
-        public async Task<List<T>> AddMany(List<T> entities)
+        public async Task<IEnumerable<T>> AddMany(IEnumerable<T> entities)
         {
             var collection = database.GetCollection<T>(typeof(T).Name.ToLower());
             //var filter = Builders<T>.Update.Inc(d => d.Id, 1);

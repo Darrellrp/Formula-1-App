@@ -75,7 +75,7 @@ namespace Formula_1_App.Seeders
             var existingRecords = await repository.GetAll();
             var newRecords = items.Where(x => !existingRecords.Contains(x)).ToList();
 
-            if(newRecords.Count < 1 || (existingRecords.Count > 1 && newRecords.All(x => x.Id == null)))
+            if(newRecords.Count < 1 || (existingRecords.Count() > 1 && newRecords.All(x => x.Id == null)))
             {
                 Console.Write($": already seeded \n");
                 return;
@@ -108,7 +108,7 @@ namespace Formula_1_App.Seeders
             var existingRecords = await repository.GetAll();
             var newRecords = items.Where(x => !existingRecords.Contains(x)).ToList();
 
-            if (newRecords.Count < 1 || (existingRecords.Count > 1 && newRecords.All(x => x.Id == null)))
+            if (newRecords.Count < 1 || (existingRecords.Count() > 1 && newRecords.All(x => x.Id == null)))
             {
                 Console.Write($": already seeded \n");
                 return;

@@ -43,22 +43,64 @@ namespace Formula_1_App.Repositories
             return record;
         }
 
-        public async Task<List<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return await _datasource.GetAll();
+            var records = await _cache.GetRecordsAsync<T>();
+
+            if(records != null)
+            {
+                return records;
+            }
+
+            records = await _datasource.GetAll();
+
+            if(records == null)
+            {
+                return new List<T>();
+            }
+
+            await _cache.SetRecordsAsync<T>(records);
+            return records;
         }
 
-        public async Task<List<T>> GetPaginated(int page, int limit = 100)
+        public async Task<IEnumerable<T>> GetPaginated(int page, int limit = 100)
         {
-            return await _datasource.GetPaginated(page, limit);
+            var records = await _cache.GetRecordsAsync<T>();
+
+            if(records != null)
+            {
+                return records;
+            }
+
+            records = await _datasource.GetPaginated(page, limit);
+
+            if(records == null)
+            {
+                return new List<T>();
+            }
+
+            return records;
         }
 
         public async Task<T> Add(T entity)
         {
-            return await _datasource.Add(entity);
+            var newRecord = await _datasource.Add(entity);
+
+            if(newRecord == null)
+            {
+                throw new Exception("Failed to create new record");
+            }
+
+            if (newRecord.Id == null)
+            {
+                throw new Exception("Failed to create a ID for the new record");
+            }
+
+            await _cache.SetRecordAsync($"{newRecord.Id}", newRecord);
+            return newRecord;
         }
 
-        public async Task<List<T>> AddMany(List<T> entities)
+        public async Task<IEnumerable<T>> AddMany(IEnumerable<T> entities)
         {
             return await _datasource.AddMany(entities);
         }
@@ -68,7 +110,7 @@ namespace Formula_1_App.Repositories
             return await _datasource.Update(entity);
         }
 
-        public async Task<List<T>> Where(Expression<Func<T, bool>> expression)
+        public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression)
         {
             return await _datasource.Where(expression);
         }

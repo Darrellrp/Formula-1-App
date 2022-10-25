@@ -24,17 +24,17 @@ namespace Formula_1_App.Datasources
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<List<T>> Where(Expression<Func<T, bool>> expression)
+        public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression)
         {
             return await _dbContext.Set<T>().Where(expression).ToListAsync();
         }
 
-        public async Task<List<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
 
-        public async Task<List<T>> GetPaginated(int page, int limit = 100)
+        public async Task<IEnumerable<T>> GetPaginated(int page, int limit = 100)
         {            
             var skip = limit * --page;
 
@@ -48,7 +48,7 @@ namespace Formula_1_App.Datasources
             return entity;
         }
 
-        public async Task<List<T>> AddMany(List<T> entities)
+        public async Task<IEnumerable<T>> AddMany(IEnumerable<T> entities)
         {
             await _dbContext.Set<T>().AddRangeAsync(entities);
             await _dbContext.SaveChangesAsync();

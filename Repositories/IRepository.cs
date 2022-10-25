@@ -10,11 +10,11 @@ namespace Formula_1_App.Repositories
     public interface IRepository<T> where T : class, IEntity
     {
         Task<T?> FindById(int id);
-        Task<List<T>> Where(Expression<Func<T, bool>> expression);
-        Task<List<T>> GetAll();
-        Task<List<T>> GetPaginated(int page, int limit = 100);
+        Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression);
+        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetPaginated(int page, int limit = 100);
         Task<T> Add(T entity);
-        Task<List<T>> AddMany(List<T> entities);
+        Task<IEnumerable<T>> AddMany(IEnumerable<T> entities);
         Task<T> Update(T entity);
         Task<T> Delete(T entity);
     }
