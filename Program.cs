@@ -15,7 +15,7 @@ using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var env = builder.Environment.IsProduction() ? ".env" : "development.env";
+var env = builder.Environment.IsProduction() ? ".env" : ".env.dev";
 DotNetEnv.Env.Load(env);
 
 builder.Services.AddTransient(typeof(DbContextOptions<Formula1DbContext>), typeof(DbContextOptions<Formula1DbContext>));
