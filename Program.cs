@@ -22,7 +22,7 @@ DotNetEnv.Env.Load(env);
 builder.Services.AddTransient(typeof(DbContextOptions<Formula1DbContext>), typeof(DbContextOptions<Formula1DbContext>));
 builder.Services.AddTransient(typeof(IDatasourceAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
-builder.Services.AddScoped(typeof(ICachingService), typeof(RedisCachingService));
+builder.Services.AddTransient(typeof(ICachingService), typeof(RedisCachingService));
 builder.Services.AddScoped(typeof(IService<>), typeof(BaseService<>));
 builder.Services.AddScoped(typeof(ISubject<>), typeof(BaseSubject<>));
 builder.Services.AddScoped(typeof(BaseController<>), typeof(BaseController<>));
@@ -34,8 +34,7 @@ builder.Services.AddScoped(typeof(EndpointFactory), typeof(EndpointFactory));
 builder.Services.AddTransient<DbContext, Formula1DbContext>();
 
 builder.Services.AddStackExchangeRedisCache(options => {
-    //options.Configuration = Environment.GetEnvironmentVariable("REDIS_CONNECTIONSTRING");
-    options.Configuration = "formula-1-redis:6379";
+    options.Configuration = Environment.GetEnvironmentVariable("REDIS_CONNECTIONSTRING");
     options.InstanceName = "Formula1Redis_";
 });
 
@@ -88,6 +87,7 @@ if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
     }
     catch (Exception exception)
     {
+        Console.WriteLine();
         Console.WriteLine($"An error occured during database seeding: {exception}");
     }
 

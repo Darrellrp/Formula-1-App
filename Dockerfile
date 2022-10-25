@@ -22,7 +22,7 @@ COPY . .
 RUN dotnet build Formula-1-App.csproj -c Release -o build
 
 # Publish stage
-from build AS publish
+FROM build AS publish
 WORKDIR /app
 
 RUN dotnet publish Formula-1-App.csproj -c Release -o publish

@@ -54,7 +54,7 @@ namespace Formula_1_App.Repositories
 
             records = await _datasource.GetAll();
 
-            if(records == null)
+            if(records == null || !records.Any())
             {
                 return new List<T>();
             }
