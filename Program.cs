@@ -38,13 +38,6 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(
 );
 builder.Services.AddScoped<IMultiplexerCachingService, RedisMultiplexerCachingService>();
 
-// Setup old Caching 
-//builder.Services.AddStackExchangeRedisCache(options => {
-//    options.Configuration = Environment.GetEnvironmentVariable("REDIS_CONNECTIONSTRING");
-//    options.InstanceName = "Formula1Redis_";
-//});
-
-
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTIONSTRING");
 
 builder.Services.AddDbContext<Formula1DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));

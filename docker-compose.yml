@@ -38,6 +38,7 @@ services:
             DBPORT: 3306
             ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
             DB_CONNECTIONSTRING: ${DB_CONNECTIONSTRING}
+            REDIS_CONNECTIONSTRING: ${REDIS_CONNECTIONSTRING}
             ASPNETCORE_Kestrel__Certificates__Default__Password: ${Certificates_Password}
             ASPNETCORE_Kestrel__Certificates__Default__Path: ${Certificates_Path}
         volumes:
