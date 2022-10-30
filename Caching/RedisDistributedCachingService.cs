@@ -4,13 +4,13 @@ using System.Text.Json;
 
 namespace Formula_1_App.Caching
 {
-    public class RedisCachingService : ICachingService
+    public class RedisDistributedCachingService : IDistributedCachingService
     {
         private readonly string _recordIdAll = "ALL";
 
         public IDistributedCache _cache { get; set; }
 
-        public RedisCachingService(IDistributedCache cache) 
+        public RedisDistributedCachingService(IDistributedCache cache) 
         {
             _cache = cache;   
         }

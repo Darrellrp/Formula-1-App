@@ -2,7 +2,7 @@
 
 namespace Formula_1_App.Caching
 {
-    public interface ICachingService
+    public interface IDistributedCachingService
     {
         Task<IEnumerable<T>?> GetRecordsAsync<T>();
 

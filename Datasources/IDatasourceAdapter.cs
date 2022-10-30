@@ -8,8 +8,15 @@ using Formula_1_App.Repositories;
 
 namespace Formula_1_App.Datasources
 {
-    public interface IDatasourceAdapter<T> : IRepository<T> where T : class, IEntity
+    public interface IDatasourceAdapter<T> where T : class, IEntity
     {
-        
+        Task<T?> FindById(int id);
+        Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression);
+        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetPaginated(int page, int limit = 100);
+        Task<T> Add(T entity);
+        Task<IEnumerable<T>> AddMany(IEnumerable<T> entities);
+        Task<T> Update(T entity);
+        Task<T> Delete(T entity);
     }
 }

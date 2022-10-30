@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Formula_1_App.Caching;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,7 @@ DotNetEnv.Env.Load(env);
 builder.Services.AddTransient<DbContextOptions<Formula1DbContext>, DbContextOptions<Formula1DbContext>>();
 builder.Services.AddTransient(typeof(IDatasourceAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
-builder.Services.AddTransient<ICachingService, RedisCachingService>();
+builder.Services.AddTransient<IDistributedCachingService, RedisDistributedCachingService>();
 builder.Services.AddScoped(typeof(IService<>), typeof(BaseService<>));
 builder.Services.AddScoped(typeof(ISubject<>), typeof(BaseSubject<>));
 builder.Services.AddScoped(typeof(BaseController<>), typeof(BaseController<>));
@@ -31,13 +32,18 @@ builder.Services.AddTransient(typeof(EntityFrameworkAdapter<>), typeof(EntityFra
 builder.Services.AddTransient(typeof(MongoAdapter<>), typeof(MongoAdapter<>));
 builder.Services.AddScoped<MainEndpointFactory, MainEndpointFactory>();
 builder.Services.AddScoped<EndpointFactory, EndpointFactory>();
-
 builder.Services.AddTransient<DbContext, Formula1DbContext>();
+builder.Services.AddSingleton<IConnectionMultiplexer>(
+    sp => ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable("REDIS_CONNECTIONSTRING") ?? String.Empty)
+);
+builder.Services.AddScoped<RedisMultiplexerCachingService, RedisMultiplexerCachingService>();
 
-builder.Services.AddStackExchangeRedisCache(options => {
-    options.Configuration = Environment.GetEnvironmentVariable("REDIS_CONNECTIONSTRING");
-    options.InstanceName = "Formula1Redis_";
-});
+// Setup old Caching 
+//builder.Services.AddStackExchangeRedisCache(options => {
+//    options.Configuration = Environment.GetEnvironmentVariable("REDIS_CONNECTIONSTRING");
+//    options.InstanceName = "Formula1Redis_";
+//});
+
 
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTIONSTRING");
 
