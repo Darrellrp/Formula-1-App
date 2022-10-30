@@ -36,7 +36,7 @@ builder.Services.AddTransient<DbContext, Formula1DbContext>();
 builder.Services.AddSingleton<IConnectionMultiplexer>(
     sp => ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable("REDIS_CONNECTIONSTRING") ?? String.Empty)
 );
-builder.Services.AddScoped<RedisMultiplexerCachingService, RedisMultiplexerCachingService>();
+builder.Services.AddScoped<IMultiplexerCachingService, RedisMultiplexerCachingService>();
 
 // Setup old Caching 
 //builder.Services.AddStackExchangeRedisCache(options => {

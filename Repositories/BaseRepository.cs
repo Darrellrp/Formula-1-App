@@ -15,19 +15,17 @@ namespace Formula_1_App.Repositories
     public class BaseRepository<T> : IRepository<T> where T : class, IEntity
     {
         private readonly IDatasourceAdapter<T> _datasource;
-        private readonly IDistributedCachingService _cache;
-        private readonly RedisMultiplexerCachingService _cachingService;
+        private readonly IMultiplexerCachingService _cache;
 
-        public BaseRepository(IDatasourceAdapter<T> datasource, IDistributedCachingService cache, RedisMultiplexerCachingService cachingService)
+        public BaseRepository(IDatasourceAdapter<T> datasource, IMultiplexerCachingService cache)
         {
             _datasource = datasource;
             _cache = cache;
-            _cachingService = cachingService;
         }        
 
         public async Task<T?> FindById(int id)
         {
-            var record = await _cache.GetRecordAsync<T>(id.ToString());
+            var record = await _cache.FindById<T>(id);
 
             if(record != null)
             {
@@ -41,13 +39,13 @@ namespace Formula_1_App.Repositories
                 return null;
             }
 
-            await _cache.SetRecordAsync<T>(id.ToString(), record);
+            await _cache.Add<T>(record);
             return record;
         }
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            var records = await _cachingService.GetAll<T>();
+            var records = await _cache.GetAll<T>();
 
             if (records != null)
             {
@@ -61,13 +59,13 @@ namespace Formula_1_App.Repositories
                 return new List<T>();
             }
 
-            await _cachingService.AddMany(records);
+            await _cache.AddMany(records);
             return records;
         }
 
         public async Task<IEnumerable<T>> GetPaginated(int page, int limit = 100)
         {
-            var records = await _cachingService.GetPaginated<T>(page, limit);
+            var records = await _cache.GetPaginated<T>(page, limit);
 
             if (records != null && records.Any())
             {
@@ -81,7 +79,7 @@ namespace Formula_1_App.Repositories
                 return new List<T>();
             }
 
-            await _cachingService.AddMany(records);
+            await _cache.AddMany(records);
             return records;
         }
 
@@ -99,7 +97,7 @@ namespace Formula_1_App.Repositories
                 throw new Exception("Failed to create a ID for the new record");
             }
 
-            await _cachingService.Add(newRecord);
+            await _cache.Add(newRecord);
             return newRecord;
         }
 
@@ -112,7 +110,7 @@ namespace Formula_1_App.Repositories
                 throw new Exception("Failed to create new records");
             }
 
-            await _cachingService.AddMany(newRecords);
+            await _cache.AddMany(newRecords);
             return newRecords;
         }
 
@@ -130,13 +128,13 @@ namespace Formula_1_App.Repositories
                 throw new Exception("Failed to create a ID for the new record");
             }
 
-            await _cachingService.Update(updatedRecord);
+            await _cache.Update(updatedRecord);
             return updatedRecord;
         }
 
         public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression)
         {
-            var records = await _cachingService.Where(expression.Compile());
+            var records = await _cache.Where(expression.Compile());
 
             if(records != null && records.Any())
             {
@@ -149,7 +147,7 @@ namespace Formula_1_App.Repositories
         public async Task<T> Delete(T entity)
         {
             var deletedRecord = await _datasource.Delete(entity);
-            await _cachingService.Delete(entity);
+            await _cache.Delete(entity);
 
             return deletedRecord;
         }

@@ -28,14 +28,14 @@ namespace Formula_1_App.Caching
 
             var record = await _database.HashGetAsync(key, index);
 
-            return Deserialize<T>(record.ToJson());
+            return Deserialize<T>(record.ToString());
         }
 
         public async Task<IEnumerable<T>> Where<T>(Func<T, bool> expression) where T : class, IEntity
         {
             var key = GenerateKey<T>();
             var allRecords = await _database.HashGetAllAsync(key);
-            var records = allRecords.Select(x => Deserialize<T>(x.ToJson())).ToList();
+            var records = allRecords.Select(x => Deserialize<T>(x.ToString())).ToList();
 
             return records.Where(expression);
         }
@@ -51,7 +51,7 @@ namespace Formula_1_App.Caching
                 throw new Exception($"{typeof(T).Name} is null");
             }
 
-            return records.Select(x => Deserialize<T>(x.ToJson()));
+            return records.Select(x => Deserialize<T>(x.ToString()));
         }
 
         public async Task<IEnumerable<T>> GetPaginated<T>(int page, int limit = 100) where T : class, IEntity
@@ -66,7 +66,7 @@ namespace Formula_1_App.Caching
                 return new List<T>();
             }    
 
-            return records.Select(x => Deserialize<T>(x.Value.ToJson()));
+            return records.Select(x => Deserialize<T>(x.Value.ToString()));
         }
 
         public async Task Add<T>(T entity) where T : class, IEntity
@@ -91,19 +91,13 @@ namespace Formula_1_App.Caching
         public async Task AddMany<T>(IEnumerable<T> entities) where T : class, IEntity
         {
             var key = GenerateKey<T>();
-            var value = Serialize(entities);
 
             if (!entities.All(x => x.Id.HasValue))
             {
                 throw new Exception($"{typeof(T).Name} does not have an ID");
             }
 
-            if (value == null)
-            {
-                throw new Exception($"Failed to serialize {typeof(T).Name}");
-            }
-
-            var newEntries = entities.Select(x => new HashEntry(x.Id, value)).ToArray();
+            var newEntries = entities.Select(x => new HashEntry(x.Id, Serialize(x))).ToArray();
             await _database.HashSetAsync(key, newEntries);
         }
 
