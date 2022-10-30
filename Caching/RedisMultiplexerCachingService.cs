@@ -16,7 +16,7 @@ namespace Formula_1_App.Caching
             _database = multiplexer.GetDatabase();
         }
 
-        public async Task<T?> FindById<T>(int id)
+        public async Task<T?> FindById<T>(int id) where T : class, IEntity
         {
             var key = GenerateKey<T>();
             long index;
@@ -34,39 +34,43 @@ namespace Formula_1_App.Caching
         public async Task<IEnumerable<T>> Where<T>(Func<T, bool> expression) where T : class, IEntity
         {
             var key = GenerateKey<T>();
-            var allRecords = await _database.HashGetAllAsync(key);
-            var records = allRecords.Select(x => Deserialize<T>(x.ToString())).ToList();
+            var recordArray = await _database.HashGetAllAsync(key);
+            var records = recordArray.Select(x => Deserialize<T>(x.ToString())).ToList();
+            var filteredRecords = records.Where(expression);
 
-            return records.Where(expression);
+            return OrderById(filteredRecords);
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>()
+        public async Task<IEnumerable<T>> GetAll<T>() where T : class, IEntity
         {
             var key = GenerateKey<T>();
 
-            var records = await _database.HashGetAllAsync(key);
+            var recordArray = await _database.HashGetAllAsync(key);
 
-            if(records == null)
+            if(recordArray == null)
             {
                 throw new Exception($"{typeof(T).Name} is null");
             }
 
-            return records.Select(x => Deserialize<T>(x.ToString()));
+            var records = recordArray.Select(x => Deserialize<T>(x.ToString()));
+
+            return OrderById(records);
         }
 
         public async Task<IEnumerable<T>> GetPaginated<T>(int page, int limit = 100) where T : class, IEntity
         {
             var key = GenerateKey<T>();
             
-            
-            var records = await _database.HashGetAllAsync(key);
+            var recordArray = await _database.HashGetAllAsync(key);
 
-            if(records == null || !records.Any())
+            if(recordArray == null || !recordArray.Any())
             {
                 return new List<T>();
-            }    
+            }
 
-            return records.Select(x => Deserialize<T>(x.Value.ToString()));
+            var records = recordArray.Select(x => Deserialize<T>(x.Value.ToString()));
+
+            return OrderById(records).Take(limit);
         }
 
         public async Task Add<T>(T entity) where T : class, IEntity
@@ -116,6 +120,11 @@ namespace Formula_1_App.Caching
             var key = GenerateKey<T>();
             await _database.HashDeleteAsync(key, entity.Id);
             return entity;
+        }
+
+        private IEnumerable<T> OrderById<T>(IEnumerable<T> records) where T : class, IEntity
+        {
+            return records.OrderBy(x => x.Id);
         }
 
         private string Serialize<T>(T entity)
