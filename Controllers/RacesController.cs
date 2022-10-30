@@ -15,43 +15,41 @@ namespace Formula_1_App.Controllers
     [ApiController]
     public class RacesController : ControllerBase
     {
-        private readonly IService<Race> service;
-        private readonly BaseController<Race> baseController;
+        private readonly BaseController<Race> _baseController;
 
-        public RacesController(BaseController<Race> baseController, IService<Race> service)
+        public RacesController(BaseController<Race> baseController)
         {
-            this.baseController = baseController;
-            this.service = service;
+            _baseController = baseController;
         }
         
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Race>>> Get(int? page = 1, int pageSize = 100)
         {
-            return await this.baseController.Get(page, pageSize);
+            return await _baseController.Get(page, pageSize);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Race>> Get(int id)
         {
-            return await this.baseController.Get(id);
+            return await _baseController.Get(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<Race>> Post([FromBody] Race value)
         {
-            return await this.baseController.Post(value);
+            return await _baseController.Post(value);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Race>> Put(int id, [FromBody] Race value)
         {
-            return await this.baseController.Put(id, value);
+            return await _baseController.Put(id, value);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return await this.baseController.Delete(id);
+            return await _baseController.Delete(id);
         }
     }
 }
