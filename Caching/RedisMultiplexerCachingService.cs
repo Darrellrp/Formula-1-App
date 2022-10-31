@@ -57,7 +57,7 @@ namespace Formula_1_App.Caching
                 throw new Exception($"{typeof(T).Name} is null");
             }
 
-            var records = recordArray.Select(x => Deserialize<T>(x.ToString()));
+            var records = recordArray.Select(x => Deserialize<T>(x.Value.ToString()));
 
             return OrderById(records);
         }

@@ -23,7 +23,7 @@ namespace Formula_1_App.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Race>>> Get(int? page = 1, int pageSize = 100)
+        public async Task<ActionResult<IEnumerable<Race>>> Get(int page = 0, int pageSize = 100)
         {
             return await _baseController.Get(page, pageSize);
         }

@@ -20,17 +20,17 @@ namespace Formula_1_App.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<T>>> Get(int? page = null, int pageSize = 100)
+        public async Task<ActionResult<IEnumerable<T>>> Get(int page = 0, int pageSize = 100)
         {
             IEnumerable<T> entities;
 
-            if (!page.HasValue)
+            if (page < 1)
             {
                 entities = await _service.GetAll();
             }
             else
             {
-                entities = await _service.GetPaginated((int) page, pageSize);
+                entities = await _service.GetPaginated(page, pageSize);
             }
 
             return Ok(new Response<T>(entities));

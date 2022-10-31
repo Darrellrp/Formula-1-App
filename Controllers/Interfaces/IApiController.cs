@@ -9,7 +9,7 @@ namespace Formula_1_App.Controllers
     public interface IApiController<T> where T : class
     {
         [HttpGet]
-        Task<ActionResult<IEnumerable<T>>> Get(int? page = null, int pageSize = 100);
+        Task<ActionResult<IEnumerable<T>>> Get(int page = 0, int pageSize = 100);
 
         [HttpGet("{id}")]
         Task<ActionResult<T>> Get(int id);
