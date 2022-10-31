@@ -58,7 +58,7 @@ namespace Formula_1_App.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<T>> Put(int id, T entity)
         {
-            var updatedEntity = await _service.Update(entity);
+            var updatedEntity = await _service.Update(id, entity);
             return Ok(updatedEntity);
         }
 
@@ -73,7 +73,6 @@ namespace Formula_1_App.Controllers
             }
 
             await _service.Delete(entity);
-
             return NoContent();
         }
     }

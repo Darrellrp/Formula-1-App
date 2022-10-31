@@ -14,7 +14,7 @@ namespace Formula_1_App.Services
         Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression);
         Task<T> Save(T entity);
         Task<IEnumerable<T>> Save(IEnumerable<T> entities);
-        Task<T> Update(T entity);
+        Task<T> Update(int id, T entity);
         Task Delete(T entity);
     }
 }

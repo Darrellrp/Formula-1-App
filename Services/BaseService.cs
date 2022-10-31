@@ -57,8 +57,13 @@ namespace Formula_1_App.Services
             return newEntities;
         }
 
-        public async Task<T> Update(T entity)
+        public async Task<T> Update(int id, T entity)
         {
+            if (!entity.Id.HasValue)
+            {
+                entity.Id = id;
+            }
+
             var updatedEntity = await repository.Update(entity);
             await subject.NotifyUpdate(updatedEntity);
 

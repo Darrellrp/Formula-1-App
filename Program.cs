@@ -47,6 +47,9 @@ builder.Services.Configure<ApiConfiguration>(builder.Configuration.GetSection("A
 
 builder.Services.AddControllers();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddRazorPages();
 
 builder.Services.AddSignalR();
@@ -113,6 +116,9 @@ if(app.Environment.IsDevelopment())
                Path.Combine(builder.Environment.ContentRootPath, "ClientApp", "dist")),
         RequestPath = "/client-assets"
     });
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseRouting();
