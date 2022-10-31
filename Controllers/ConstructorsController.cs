@@ -16,43 +16,41 @@ namespace Formula_1_App.Controllers
     [ApiController]
     public class ConstructorsController : ControllerBase
     {
-        private readonly IService<Constructor> service;
-        private readonly BaseController<Constructor> baseController;
+        private readonly IApiController<Constructor> _baseController;
 
-        public ConstructorsController(BaseController<Constructor> baseController, IService<Constructor> service)
+        public ConstructorsController(IApiController<Constructor> baseController)
         {            
-            this.baseController = baseController;
-            this.service = service;
+            _baseController = baseController;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Constructor>>> Get(int? page = 1, int pageSize = 100)
         {            
-            return await this.baseController.Get(page, pageSize);
+            return await _baseController.Get(page, pageSize);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Constructor>> Get(int id)
         {
-            return await this.baseController.Get(id);
+            return await _baseController.Get(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<Constructor>> Post([FromBody] Constructor value)
         {
-            return await this.baseController.Post(value);
+            return await _baseController.Post(value);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Constructor>> Put(int id, [FromBody] Constructor value)
         {
-            return await this.baseController.Put(id, value);
+            return await _baseController.Put(id, value);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return await this.baseController.Delete(id);
+            return await _baseController.Delete(id);
         }
     }
 }

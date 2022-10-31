@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Formula_1_App.Caching;
 using System.Runtime.InteropServices;
+using DnsClient.Protocol;
 
 namespace Formula_1_App.Repositories
 {
@@ -39,48 +40,36 @@ namespace Formula_1_App.Repositories
                 return null;
             }
 
-            await _cache.Add<T>(record);
+            await _cache.Add(record);
             return record;
         }
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            var records = await _cache.GetAll<T>();
+            var cachedRecords = await _cache.GetAll<T>();
+            var dbRecords = await _datasource.GetAll();
 
-            if (records != null)
+            if (cachedRecords != null && cachedRecords.SequenceEqual(dbRecords))
             {
-                return records;
+                return cachedRecords;
             }
 
-            records = await _datasource.GetAll();
-
-            if(records == null || !records.Any())
-            {
-                return new List<T>();
-            }
-
-            await _cache.AddMany(records);
-            return records;
+            await LoadNewDataInCache(dbRecords);
+            return dbRecords;
         }
 
         public async Task<IEnumerable<T>> GetPaginated(int page, int limit = 100)
         {
-            var records = await _cache.GetPaginated<T>(page, limit);
+            var cachedRecords = await _cache.GetPaginated<T>(page, limit);
+            var dbRecords = await _datasource.GetPaginated(page, limit);
 
-            if (records != null && records.Any())
+            if (cachedRecords != null && cachedRecords.SequenceEqual(dbRecords))
             {
-                return records;
+                return cachedRecords;
             }
 
-            records = await _datasource.GetPaginated(page, limit);
-
-            if (records == null || !records.Any())
-            {
-                return new List<T>();
-            }
-
-            await _cache.AddMany(records);
-            return records;
+            await LoadNewDataInCache(dbRecords);
+            return dbRecords;
         }
 
         public async Task<T> Add(T entity)
@@ -150,6 +139,12 @@ namespace Formula_1_App.Repositories
             await _cache.Delete(entity);
 
             return deletedRecord;
+        }
+
+        private async Task LoadNewDataInCache(IEnumerable<T> newEntities)
+        {
+            await _cache.DeleteAll<T>();
+            await _cache.AddMany(newEntities);
         }
     }
 }

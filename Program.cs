@@ -27,7 +27,7 @@ builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
 builder.Services.AddTransient<IDistributedCachingService, RedisDistributedCachingService>();
 builder.Services.AddScoped(typeof(IService<>), typeof(BaseService<>));
 builder.Services.AddScoped(typeof(ISubject<>), typeof(BaseSubject<>));
-builder.Services.AddScoped(typeof(BaseController<>), typeof(BaseController<>));
+builder.Services.AddScoped(typeof(IApiController<>), typeof(BaseController<>));
 builder.Services.AddTransient(typeof(EntityFrameworkAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(MongoAdapter<>), typeof(MongoAdapter<>));
 builder.Services.AddScoped<MainEndpointFactory, MainEndpointFactory>();

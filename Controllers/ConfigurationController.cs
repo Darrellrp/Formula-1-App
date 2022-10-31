@@ -13,12 +13,12 @@ namespace Formula_1_App.Controllers
         [HttpGet]
         public ActionResult<ApiConfiguration> Get()
         {
-            return Ok(new ApiConfiguration { ApiServerUrl = this.GetApiServerUrl() });
+            return Ok(new ApiConfiguration { ApiServerUrl = GetApiServerUrl() });
         }
 
         private string GetApiServerUrl()
         {
-            return $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+            return $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
         }
     }
 }

@@ -15,43 +15,41 @@ namespace Formula_1_App.Controllers
     [ApiController]
     public class RaceResultsController : ControllerBase
     {
-        private readonly IService<RaceResult> service;
-        private readonly BaseController<RaceResult> baseController;
+        private readonly IApiController<RaceResult> _baseController;
 
-        public RaceResultsController(BaseController<RaceResult> baseController, IService<RaceResult> service)
+        public RaceResultsController(IApiController<RaceResult> baseController)
         {
-            this.baseController = baseController;
-            this.service = service;
+            _baseController = baseController;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RaceResult>>> Get(int? page = 1, int pageSize = 100)
         {
-            return await this.baseController.Get(page, pageSize);
+            return await _baseController.Get(page, pageSize);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<RaceResult>> Get(int id)
         {
-            return await this.baseController.Get(id);
+            return await _baseController.Get(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<RaceResult>> Post([FromBody] RaceResult value)
         {
-            return await this.baseController.Post(value);
+            return await _baseController.Post(value);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<RaceResult>> Put(int id, [FromBody] RaceResult value)
         {
-            return await this.baseController.Put(id, value);
+            return await _baseController.Put(id, value);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return await this.baseController.Delete(id);
+            return await _baseController.Delete(id);
         }
     }
 }

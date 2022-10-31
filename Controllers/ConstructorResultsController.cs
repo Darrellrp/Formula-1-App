@@ -13,43 +13,41 @@ namespace Formula_1_App.Controllers
     [ApiController]
     public class ConstructorResultsController : ControllerBase
     {
-        private readonly IService<ConstructorResult> service;
-        private readonly BaseController<ConstructorResult> baseController;
+        private readonly IApiController<ConstructorResult> _baseController;
 
-        public ConstructorResultsController(BaseController<ConstructorResult> baseController, IService<ConstructorResult> service)
+        public ConstructorResultsController(IApiController<ConstructorResult> baseController)
         {
-            this.baseController = baseController;
-            this.service = service;
+            _baseController = baseController;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ConstructorResult>>> Get(int? page = 1, int pageSize = 100)
         {            
-            return await this.baseController.Get(page, pageSize);
+            return await _baseController.Get(page, pageSize);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ConstructorResult>> Get(int id)
         {
-            return await this.baseController.Get(id);
+            return await _baseController.Get(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<ConstructorResult>> Post([FromBody] ConstructorResult value)
         {
-            return await this.baseController.Post(value);
+            return await _baseController.Post(value);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<ConstructorResult>> Put(int id, [FromBody] ConstructorResult value)
         {
-            return await this.baseController.Put(id, value);
+            return await _baseController.Put(id, value);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return await this.baseController.Delete(id);
+            return await _baseController.Delete(id);
         }
     }
 }

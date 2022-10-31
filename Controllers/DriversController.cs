@@ -15,43 +15,41 @@ namespace Formula_1_App.Controllers
     [ApiController]
     public class DriversController : ControllerBase
     {
-        private readonly IService<Driver> _service;
-        private readonly BaseController<Driver> _baseController;
+        private readonly IApiController<Driver> _baseController;
 
-        public DriversController(BaseController<Driver> baseController, IService<Driver> service)
+        public DriversController(IApiController<Driver> baseController)
         {
-            this._baseController = baseController;
-            this._service = service;
+            _baseController = baseController;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Driver>>> Get(int? page = 1, int pageSize = 100)
         {
-            return await this._baseController.Get(page, pageSize);
+            return await _baseController.Get(page, pageSize);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Driver>> Get(int id)
         {
-            return await this._baseController.Get(id);
+            return await _baseController.Get(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<Driver>> Post([FromBody] Driver value)
         {
-            return await this._baseController.Post(value);
+            return await _baseController.Post(value);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Driver>> Put(int id, [FromBody] Driver value)
         {
-            return await this._baseController.Put(id, value);
+            return await _baseController.Put(id, value);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return await this._baseController.Delete(id);
+            return await _baseController.Delete(id);
         }
     }
 }

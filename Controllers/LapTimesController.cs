@@ -16,43 +16,41 @@ namespace Formula_1_App.Controllers
     [ApiController]
     public class LapTimesController : ControllerBase
     {
-        private readonly IService<LapTime> service;
-        private readonly BaseController<LapTime> baseController;
+        private readonly IApiController<LapTime> _baseController;
 
-        public LapTimesController(BaseController<LapTime> baseController, IService<LapTime> service)
+        public LapTimesController(IApiController<LapTime> baseController)
         {
-            this.baseController = baseController;
-            this.service = service;
+            _baseController = baseController;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LapTime>>> Get(int? page = 1, int pageSize = 100)
         {
-            return await this.baseController.Get(page, pageSize);
+            return await _baseController.Get(page, pageSize);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<LapTime>> Get(int id)
         {            
-            return await this.baseController.Get(id);
+            return await _baseController.Get(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<LapTime>> Post([FromBody] LapTime value)
         {
-            return await this.baseController.Post(value);
+            return await _baseController.Post(value);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<LapTime>> Put(int id, [FromBody] LapTime value)
         {
-            return await this.baseController.Put(id, value);
+            return await _baseController.Put(id, value);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return await this.baseController.Delete(id);
+            return await _baseController.Delete(id);
         }
     }
 }

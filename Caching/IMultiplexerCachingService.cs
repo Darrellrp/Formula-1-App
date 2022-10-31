@@ -12,6 +12,6 @@ namespace Formula_1_App.Caching
         Task AddMany<T>(IEnumerable<T> entities) where T : class, IEntity;
         Task<T> Update<T>(T entity) where T : class, IEntity;
         Task<T> Delete<T>(T entity) where T : class, IEntity;
-
+        Task DeleteAll<T>() where T : class, IEntity;
     }
 }

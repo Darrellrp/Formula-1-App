@@ -28,6 +28,11 @@ namespace Formula_1_App.Caching
 
             var record = await _database.HashGetAsync(key, index);
 
+            if(record.ToString().Equals(String.Empty))
+            {
+                return null;
+            }
+
             return Deserialize<T>(record.ToString());
         }
 
@@ -120,6 +125,12 @@ namespace Formula_1_App.Caching
             var key = GenerateKey<T>();
             await _database.HashDeleteAsync(key, entity.Id);
             return entity;
+        }
+
+        public async Task DeleteAll<T>() where T : class, IEntity
+        {
+            var key = GenerateKey<T>();
+            await _database.KeyDeleteAsync(key);
         }
 
         private IEnumerable<T> OrderById<T>(IEnumerable<T> records) where T : class, IEntity

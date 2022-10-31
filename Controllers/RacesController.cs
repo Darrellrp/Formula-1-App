@@ -15,9 +15,9 @@ namespace Formula_1_App.Controllers
     [ApiController]
     public class RacesController : ControllerBase
     {
-        private readonly BaseController<Race> _baseController;
+        private readonly IApiController<Race> _baseController;
 
-        public RacesController(BaseController<Race> baseController)
+        public RacesController(IApiController<Race> baseController)
         {
             _baseController = baseController;
         }

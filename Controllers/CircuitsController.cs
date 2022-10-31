@@ -14,43 +14,41 @@ namespace Formula_1_App.Controllers
     [ApiController]
     public class CircuitsController : ControllerBase
     {
-        private readonly IService<Circuit> service;
-        private readonly BaseController<Circuit> baseController;
+        private readonly IApiController<Circuit> _baseController;
 
-        public CircuitsController(BaseController<Circuit> baseController, IService<Circuit> service)
+        public CircuitsController(IApiController<Circuit> baseController)
         {
-            this.baseController = baseController;
-            this.service = service;
+            _baseController = baseController;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Circuit>>> Get(int? page = 1, int pageSize = 100)
         {
-            return await this.baseController.Get(page, pageSize);
+            return await _baseController.Get(page, pageSize);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Circuit>> Get(int id)
         {
-            return await this.baseController.Get(id);
+            return await _baseController.Get(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<Circuit>> Post([FromBody] Circuit value)
         {
-            return await this.baseController.Post(value);
+            return await _baseController.Post(value);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Circuit>> Put(int id, [FromBody] Circuit value)
         {
-            return await this.baseController.Put(id, value);
+            return await _baseController.Put(id, value);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return await this.baseController.Delete(id);
+            return await _baseController.Delete(id);
         }
     }
 }

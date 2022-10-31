@@ -15,43 +15,41 @@ namespace Formula_1_App.Controllers
     [ApiController]
     public class QualificationsController : ControllerBase
     {
-        private readonly IService<Qualification> service;
-        private readonly BaseController<Qualification> baseController;
+        private readonly IApiController<Qualification> _baseController;
 
-        public QualificationsController(BaseController<Qualification> baseController, IService<Qualification> service)
+        public QualificationsController(IApiController<Qualification> baseController)
         {
-            this.baseController = baseController;
-            this.service = service;
+            _baseController = baseController;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Qualification>>> Get(int? page = 1, int pageSize = 100)
         {
-            return await this.baseController.Get(page, pageSize);
+            return await _baseController.Get(page, pageSize);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Qualification>> Get(int id)
         {
-            return await this.baseController.Get(id);
+            return await _baseController.Get(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<Qualification>> Post([FromBody] Qualification value)
         {
-            return await this.baseController.Post(value);
+            return await _baseController.Post(value);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Qualification>> Put(int id, [FromBody] Qualification value)
         {
-            return await this.baseController.Put(id, value);
+            return await _baseController.Put(id, value);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return await this.baseController.Delete(id);
+            return await _baseController.Delete(id);
         }
     }
 }
