@@ -10,7 +10,7 @@ services:
         container_name: formula-1-web
         image: formula-1-web
         restart: always
-        build: ./ClientApp
+        build: ./Formula-1-Web
         networks:
             - default
         ports:
@@ -18,33 +18,33 @@ services:
         environment:
          - NGINX_PORT=443
         volumes:
-            - ./Data/nginx/default.conf:/etc/nginx/conf.d/default.conf
-            - ./Data/certs/:/etc/ssl:ro
-            #- ./Data/certbot/conf:/etc/letsencrypt:ro
-            #- ./Data/certbot/www:/var/www/certbot:ro
+            - ./docker-volumes/nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ./docker-volumes/certs/:/etc/ssl:ro
+            #- ./data/certbot/conf:/etc/letsencrypt:ro
+            #- ./data/certbot/www:/var/www/certbot:ro
 
     api:
         container_name: formula-1-api
         image: formula-1-api
         restart: always
-        build: .
+        build: ./Formula-1-API
         networks:
             - default
         depends_on:
             - db
         environment:
             ASPNETCORE_URLS: https://+:443;http://+:80
-            DBHOST: db
-            DBPORT: 3306
             ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
             DB_CONNECTIONSTRING: ${DB_CONNECTIONSTRING}
             REDIS_CONNECTIONSTRING: ${REDIS_CONNECTIONSTRING}
+            ASPNETCORE_Kestrel__Certificat es__Default__Path: ${Certificates_Path}
             ASPNETCORE_Kestrel__Certificates__Default__Password: ${Certificates_Password}
-            ASPNETCORE_Kestrel__Certificates__Default__Path: ${Certificates_Path}
         volumes:
-            - ~/.aspnet/https:/https:ro
+            # - ./docker-volumes/certs:/https:ro
+            - ~/.aspnet/https:/https/
             - ~/.aspnet/DataProtection-Keys:/root/.aspnet/DataProtection-Keys:ro
-            #- ./Data/formula-1-race-data:/app/Data
+            # - ~/.aspnet/DataProtection-Keys:/root/.aspnet/DataProtection-Keys:ro
+            #- ./data/formula-1-race-data:/app/Data
 
     db:
         container_name: formula-1-mysql
@@ -60,7 +60,7 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - ./Data/mysql:/var/lib/mysql
+            - ./docker-volumes/mysql:/var/lib/mysql
 
     cache: 
         container_name: formula-1-redis
@@ -71,7 +71,7 @@ services:
         ports:
             - "6379:6379"
         volumes:
-            - ./Data/redis:/usr/local/etc/redis
+            - ./docker-volumes/redis:/usr/local/etc/redis
 
 
     #certbot:
@@ -80,5 +80,5 @@ services:
     #     restart: always
     #     command: /bin/bash -c "certbot certonly --webroot --webroot-path /var/www/certbot/ -d formula1.websites.local"
     #     volumes:
-    #        - ./Data/certbot/conf:/etc/letsencrypt:rw
-    #        - ./Data/certbot/www:/var/www/certbot:rw
+    #        - ./docker-volumes/certbot/conf:/etc/letsencrypt:rw
+    #        - ./docker-volumes/certbot/www:/var/www/certbot:rw

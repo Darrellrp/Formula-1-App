@@ -179,7 +179,7 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
-/node_modules
+Formula-1-API/node_modules
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -230,11 +230,11 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 
-/Data/certbot/
-/Data/certs/
-/Data/mysql/
-/Data/nginx/
-/Data/*.zip
+/docker-volumes/certbot/
+/docker-volumes/certs/
+/docker-volumes/mysql/
+/docker-volumes/nginx/
+/docker-volumes/*.zip
 
 **/.vscode/
 **/.angular/
