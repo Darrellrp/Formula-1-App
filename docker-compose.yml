@@ -18,8 +18,8 @@ services:
         environment:
          - NGINX_PORT=443
         volumes:
-            - ./docker-volumes/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-            - ./docker-volumes/certs/:/etc/ssl:ro
+            - ./docker-volumes/nginx/default.conf/default.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./docker-volumes/certs:/etc/ssl:ro
             #- ./data/certbot/conf:/etc/letsencrypt:ro
             #- ./data/certbot/www:/var/www/certbot:ro
 
@@ -40,9 +40,9 @@ services:
             ASPNETCORE_Kestrel__Certificates__Default__Path: ${Certificates_Path}
             ASPNETCORE_Kestrel__Certificates__Default__Password: ${Certificates_Password}
         volumes:
-            - ./docker-volumes/certs:/app/certs:ro
+            - ./docker-volumes/certs:/app/certs:rw
             # - ~/.aspnet/https:/https:ro
-            - ~/.aspnet/DataProtection-Keys:/root/.aspnet/DataProtection-Keys:ro
+            - ~/.aspnet/DataProtection-Keys:/root/.aspnet/DataProtection-Keys:rw
             #- ./data/formula-1-race-data:/app/Data
 
     db:
@@ -59,7 +59,7 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - ./docker-volumes/new-mysql:/var/lib/mysql:rw
+            - ./docker-volumes/mysql:/var/lib/mysql:rw
 
     cache: 
         container_name: formula-1-cache
