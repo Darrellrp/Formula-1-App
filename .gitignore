@@ -233,7 +233,6 @@ _Pvt_Extensions
 /docker-volumes/certbot/
 /docker-volumes/certs/
 /docker-volumes/mysql/
-/docker-volumes/nginx/
 /docker-volumes/*.zip
 
 **/.vscode/
