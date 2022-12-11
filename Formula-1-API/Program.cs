@@ -111,13 +111,18 @@ app.UseStaticFiles();
 
 if(app.Environment.IsDevelopment())
 {
-    var clientAppPath = Path.Combine(Environment.CurrentDirectory, "Formula-1-Web", "dist");
+    var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
 
-    app.UseStaticFiles(new StaticFileOptions
+    if(solutionPath != null)
     {
-        FileProvider = new PhysicalFileProvider(clientAppPath),
-        RequestPath = "/client-assets"
-    });
+        var clientAppPath = Path.Combine(solutionPath, "Formula-1-Web", "dist");
+
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(clientAppPath),
+            RequestPath = "/client-assets"
+        });
+    }    
 
     app.UseSwagger();
     app.UseSwaggerUI();
