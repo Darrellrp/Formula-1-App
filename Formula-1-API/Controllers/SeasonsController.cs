@@ -15,9 +15,9 @@ namespace Formula_1_API.Controllers
     [ApiController]
     public class SeasonsController : ControllerBase
     {
-        private readonly BaseController<Season> _baseController;
+        private readonly IApiController<Season> _baseController;
 
-        public SeasonsController(BaseController<Season> baseController)
+        public SeasonsController(IApiController<Season> baseController)
         {
             _baseController = baseController;
         }
