@@ -1,3 +1,4 @@
+using Formula_1_API;
 using Formula_1_API.Configurations;
 using Formula_1_API.Context;
 using Formula_1_API.Controllers;
@@ -17,10 +18,11 @@ using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
+var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
 
-if(builder.Environment.IsDevelopment())
+if(builder.Environment.IsDevelopment() && !String.IsNullOrEmpty(solutionPath))
 {
-    var env = Path.Combine(Environment.CurrentDirectory, ".env.dev");
+    var env = Path.Combine(solutionPath, ".env.dev");
     DotNetEnv.Env.Load(env);
 }
 
@@ -67,34 +69,8 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
-{
-    var seeder = new EFDatabaseSeeder(app.Services, app.Configuration);
-    int limit;
-
-    try
-    {
-        if (args.Length > 1 && args[1] != null)
-        {
-            if (!int.TryParse(args[1], out limit))
-            {
-                Console.WriteLine("Invalid second parameter: seeding limit must be an integer");
-                Environment.Exit(1);
-                return;
-            }
-
-            await seeder.SeedAll(limit);
-        }
-        else
-        {
-            await seeder.SeedAll();
-        }        
-    }
-    catch (Exception exception)
-    {
-        Console.WriteLine();
-        Console.WriteLine($"An error occured during database seeding: {exception}");
-    }
-
+{    
+    await app.SeedDatabase(args);
     Environment.Exit(1);
     return;
 }
@@ -111,9 +87,7 @@ app.UseStaticFiles();
 
 if(app.Environment.IsDevelopment())
 {
-    var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
-
-    if(solutionPath != null)
+    if(!String.IsNullOrEmpty(solutionPath))
     {
         var clientAppPath = Path.Combine(solutionPath, "Formula-1-Web", "dist");
 
