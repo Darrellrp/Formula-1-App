@@ -35,7 +35,10 @@ services:
         environment:
             ASPNETCORE_URLS: https://+:443;http://+:80
             ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
-            DB_CONNECTIONSTRING: ${DB_CONNECTIONSTRING}
+            MYSQL_HOST: ${MYSQL_HOST}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             REDIS_CONNECTIONSTRING: ${REDIS_CONNECTIONSTRING}
             ASPNETCORE_Kestrel__Certificates__Default__Path: ${Certificates_Path}
             ASPNETCORE_Kestrel__Certificates__Default__Password: ${Certificates_Password}

@@ -41,8 +41,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(
 );
 builder.Services.AddScoped<IMultiplexerCachingService, RedisMultiplexerCachingService>();
 
-var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTIONSTRING");
-builder.Services.AddDbContext<Formula1DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddDbContext<Formula1DbContext>();
 
 // Add services to the container.
 builder.Services.Configure<ApiConfiguration>(builder.Configuration.GetSection("ApiConfiguration"));
