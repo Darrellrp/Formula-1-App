@@ -1,10 +1,15 @@
 #!/bin/bash
 
+if [ $1 = "--env" ]; then
+    export $(grep -v '^#' ../.env.dev | xargs)
+else    
+    read -e -p "Enter MySQL user: " MYSQL_USER
+    read -e -p "Enter MySQL password: " MYSQL_ROOT_PASSWORD
+fi
+
 HOST=formula-1-db
-read -e -p "Enter MySQL user: " USER
-read -e -p "Enter MySQL password: " PASSWORD
 
 echo "Opening Docker MySQL instance"
-docker exec -it $HOST mysql -u $USER -p$PASSWORD Formula1App_Database
-echo $HOST
+echo ""
 
+docker exec -it $HOST mysql -u $MYSQL_USER -p$MYSQL_ROOT_PASSWORD
