@@ -5,6 +5,8 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+RUN mkdir data
+
 # Restore stage
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS restore
 WORKDIR /app

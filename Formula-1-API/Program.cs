@@ -42,7 +42,6 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(
 builder.Services.AddScoped<IMultiplexerCachingService, RedisMultiplexerCachingService>();
 
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTIONSTRING");
-
 builder.Services.AddDbContext<Formula1DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add services to the container.
@@ -70,7 +69,7 @@ var app = builder.Build();
 
 if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
 {
-    var seeder = new EFDatabaseSeeder(app.Services);
+    var seeder = new EFDatabaseSeeder(app.Services, app.Configuration);
     int limit;
 
     try

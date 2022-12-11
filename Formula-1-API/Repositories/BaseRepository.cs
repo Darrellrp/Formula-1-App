@@ -141,6 +141,11 @@ namespace Formula_1_API.Repositories
             return deletedRecord;
         }
 
+        public async Task<int> Count()
+        {
+            return await _datasource.Count();
+        }
+
         private async Task LoadNewDataInCache(IEnumerable<T> newEntities)
         {
             await _cache.DeleteAll<T>();

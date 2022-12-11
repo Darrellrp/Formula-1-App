@@ -14,13 +14,15 @@ namespace Formula_1_API.Seeders
 {
     public class EFDatabaseSeeder : IDatabaseSeeder
     {
-        private readonly string _basePath = "../Data/formula-1-race-data";
+        private const string CONFIGURATION_KEY = "DataSourcePath";
+        private readonly string _basePath;
 
         private IServiceProvider _provider { get; set; }
 
-        public EFDatabaseSeeder(IServiceProvider provider)
+        public EFDatabaseSeeder(IServiceProvider provider, IConfiguration configuration)
         {
             _provider = provider;
+            _basePath = configuration.GetValue<string>(CONFIGURATION_KEY);
         }
 
         public async Task SeedAll(int? limit = null)
@@ -62,6 +64,12 @@ namespace Formula_1_API.Seeders
             {
                 throw new Exception($"Unable to get {typeName}Repository from ServiceProvider");
             }
+        
+            if(await repository.Count() > 1)
+            {
+                Console.Write($": already seeded \n");
+                return;
+            }
 
             var reader = CsvReaderFactory.Create(_basePath);
             var items = reader.Read<T>(filename);
@@ -70,18 +78,9 @@ namespace Formula_1_API.Seeders
             {
                 items = items.Take((int) limit).ToList();
             }
-
-            var existingRecords = await repository.GetAll();
-            var newRecords = items.Where(x => !existingRecords.Contains(x)).ToList();
-
-            if(newRecords.Count < 1 || (existingRecords.Count() > 1 && newRecords.All(x => x.Id == null)))
-            {
-                Console.Write($": already seeded \n");
-                return;
-            }
-
+            
             Console.WriteLine();
-            await repository.AddMany(newRecords);
+            await repository.AddMany(items);
         }
 
         public async Task Seed<T, Map>(string filename, int? limit = null) where T : class, IEntity where Map : ClassMap
@@ -93,7 +92,13 @@ namespace Formula_1_API.Seeders
 
             if (repository == null)
             {
-                throw new Exception($"Unable to Get {typeName}Repository");
+                throw new Exception($"Unable to Get {typeName}Repository from ServiceProvider");
+            }
+
+            if(await repository.Count() > 1)
+            {
+                Console.Write($": already seeded \n");
+                return;
             }
 
             var reader = CsvReaderFactory.Create(_basePath);
@@ -104,17 +109,8 @@ namespace Formula_1_API.Seeders
                 items = items.Take((int)limit).ToList();
             }
 
-            var existingRecords = await repository.GetAll();
-            var newRecords = items.Where(x => !existingRecords.Contains(x)).ToList();
-
-            if (newRecords.Count < 1 || (existingRecords.Count() > 1 && newRecords.All(x => x.Id == null)))
-            {
-                Console.Write($": already seeded \n");
-                return;
-            }
-
             Console.WriteLine();
-            await repository.AddMany(newRecords);
+            await repository.AddMany(items);
         }
     }
 }

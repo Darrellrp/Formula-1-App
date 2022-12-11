@@ -17,5 +17,6 @@ namespace Formula_1_API.Repositories
         Task<IEnumerable<T>> AddMany(IEnumerable<T> entities);
         Task<T> Update(T entity);
         Task<T> Delete(T entity);
+        Task<int> Count();
     }
 }

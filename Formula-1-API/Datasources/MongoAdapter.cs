@@ -95,6 +95,12 @@ namespace Formula_1_API.Datasources
 
             return entity;
         }
-        
+
+        public async Task<int> Count()
+        {
+            var collection = database.GetCollection<T>(typeof(T).Name.ToLower());
+            var filter = Builders<T>.Filter.Empty;
+            return (int) await collection.CountDocumentsAsync(filter);
+        }
     }
 }
