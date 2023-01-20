@@ -1,5 +1,11 @@
 {
+  "name": "formula-1-api",
+  "version": "0.0.0",
   "dependencies": {
-    "Formula_1_API": "file:ClientApp"
+    "aspnet-prerendering": "^3.0.1",
+    "formula-1-web": "file:../Formula-1-Web"
+  },
+  "devDependencies": {
+    "webpack-hot-middleware": "^2.25.3"
   }
 }

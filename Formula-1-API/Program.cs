@@ -3,24 +3,20 @@ using Formula_1_API.Configurations;
 using Formula_1_API.Context;
 using Formula_1_API.Controllers;
 using Formula_1_API.Factories;
-using Formula_1_API.Factories.Interfaces;
 using Formula_1_API.Hubs;
-using Formula_1_API.Models;
 using Formula_1_API.Repositories;
 using Formula_1_API.Datasources;
-using Formula_1_API.Seeders;
 using Formula_1_API.Services;
 using Formula_1_API.Subjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Formula_1_API.Caching;
-using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
 
-if(builder.Environment.IsDevelopment() && !String.IsNullOrEmpty(solutionPath))
+if (builder.Environment.IsDevelopment() && !String.IsNullOrEmpty(solutionPath))
 {
     var env = Path.Combine(solutionPath, ".env.dev");
     DotNetEnv.Env.Load(env);
@@ -69,7 +65,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
-{    
+{
     await app.SeedDatabase(args);
     Environment.Exit(1);
     return;
@@ -83,11 +79,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 
-if(app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    if(!String.IsNullOrEmpty(solutionPath))
+    if (!String.IsNullOrEmpty(solutionPath))
     {
         var clientAppPath = Path.Combine(solutionPath, "Formula-1-Web", "dist");
 
@@ -96,7 +91,21 @@ if(app.Environment.IsDevelopment())
             FileProvider = new PhysicalFileProvider(clientAppPath),
             RequestPath = "/client-assets"
         });
-    }    
+
+        // One or more errors occurred. (The npm script 'watch' exited without indicating that the Angular CLI was listening for requests. The error output was: Node.js version v19.3.0 detected.
+        // app.UseSpa(spa =>
+        // {
+        //     spa.Options.SourcePath = Path.Combine(solutionPath, "Formula-1-Web");
+        //     spa.UseAngularCliServer(npmScript: "start");
+        // });
+
+
+        // app.UseSpaStaticFiles(new StaticFileOptions
+        // {
+        //     FileProvider = new PhysicalFileProvider(clientAppPath),
+        //     RequestPath = "/client-assets"
+        // });
+    }
 
     app.UseSwagger();
     app.UseSwaggerUI();
