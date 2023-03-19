@@ -15,6 +15,7 @@ using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
+var clientAppPath = Path.Combine(solutionPath!, "Formula-1-Web", "dist");
 
 if (builder.Environment.IsDevelopment() && !String.IsNullOrEmpty(solutionPath))
 {
@@ -48,6 +49,10 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSpaStaticFiles(configuration =>
+{
+    configuration.RootPath = clientAppPath;
+});
 
 builder.Services.AddRazorPages();
 
@@ -82,30 +87,7 @@ app.UseHttpsRedirection();
 
 if (app.Environment.IsDevelopment())
 {
-    if (!String.IsNullOrEmpty(solutionPath))
-    {
-        var clientAppPath = Path.Combine(solutionPath, "Formula-1-Web", "dist");
-
-        app.UseStaticFiles(new StaticFileOptions
-        {
-            FileProvider = new PhysicalFileProvider(clientAppPath),
-            RequestPath = "/client-assets"
-        });
-
-        // One or more errors occurred. (The npm script 'watch' exited without indicating that the Angular CLI was listening for requests. The error output was: Node.js version v19.3.0 detected.
-        // app.UseSpa(spa =>
-        // {
-        //     spa.Options.SourcePath = Path.Combine(solutionPath, "Formula-1-Web");
-        //     spa.UseAngularCliServer(npmScript: "start");
-        // });
-
-
-        // app.UseSpaStaticFiles(new StaticFileOptions
-        // {
-        //     FileProvider = new PhysicalFileProvider(clientAppPath),
-        //     RequestPath = "/client-assets"
-        // });
-    }
+    app.UseSpaStaticFiles();
 
     app.UseSwagger();
     app.UseSwaggerUI();

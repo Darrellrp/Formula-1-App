@@ -13,7 +13,13 @@ export class ConfigurationService {
   private readonly apiUri: string = "api/configuration";
 
   public constructor(private httpClient: HttpClient) {
-    this.apiBaseUrl = this.GetApiBaseUrl() ?? "";
+    let apiBaseUrl = this.GetApiBaseUrl();
+
+    if (apiBaseUrl == null || apiBaseUrl == '') {
+      throw new Error("API Base URL was not found");
+    }
+
+    this.apiBaseUrl = apiBaseUrl;
   }
 
   public Get(): Observable<IResult<ApiConfiguration>> {

@@ -13,7 +13,7 @@ namespace Formula_1_API.Controllers
     public class MainController : Controller
     {
         private readonly MainEndpointFactory _mainEndpointFactory;
-        public MainController (MainEndpointFactory mainEndpointFactory)
+        public MainController(MainEndpointFactory mainEndpointFactory)
         {
             _mainEndpointFactory = mainEndpointFactory;
         }
@@ -24,6 +24,6 @@ namespace Formula_1_API.Controllers
             var mainEndpoint = _mainEndpointFactory.Create(this);
 
             return Ok(mainEndpoint);
-        }        
+        }
     }
 }

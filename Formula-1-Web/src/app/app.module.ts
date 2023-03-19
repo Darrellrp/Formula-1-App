@@ -15,11 +15,11 @@ import { AppComponent } from './app.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      // { path: '', component: HomeComponent, pathMatch: 'full' },
-      // { path: 'counter', component: CounterComponent },
-      // { path: 'fetch-data', component: FetchDataComponent },
-    ])
+    // RouterModule.forRoot([
+    // { path: '', component: HomeComponent, pathMatch: 'full' },
+    // { path: 'counter', component: CounterComponent },
+    // { path: 'fetch-data', component: FetchDataComponent },
+    // ])
   ],
   // providers: [ConfigurationService],
   bootstrap: [AppComponent]
