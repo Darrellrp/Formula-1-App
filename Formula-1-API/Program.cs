@@ -36,7 +36,7 @@ builder.Services.AddScoped<MainEndpointFactory, MainEndpointFactory>();
 builder.Services.AddScoped<EndpointFactory, EndpointFactory>();
 builder.Services.AddTransient<DbContext, Formula1DbContext>();
 builder.Services.AddSingleton<IConnectionMultiplexer>(
-    sp => ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable("REDIS_CONNECTIONSTRING") ?? String.Empty)
+    sp => ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable("REDIS_CONNECTIONSTRING") ?? throw new Exception("Redis connectionstring has not been provided"))
 );
 builder.Services.AddScoped<IMultiplexerCachingService, RedisMultiplexerCachingService>();
 
