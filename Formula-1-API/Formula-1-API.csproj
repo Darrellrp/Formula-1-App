@@ -56,7 +56,7 @@
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
   </Target>
 
-  <Target Name="NpmBuild" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' Or !Exists('$(SpaRoot)dist') ">
+  <Target Name="NpmBuild" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
