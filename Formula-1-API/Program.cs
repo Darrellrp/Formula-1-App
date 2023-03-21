@@ -16,9 +16,9 @@ var builder = WebApplication.CreateBuilder(args);
 var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
 var clientAppPath = Path.Combine(solutionPath!, "Formula-1-Web", "dist");
 
-if (builder.Environment.IsDevelopment() && !String.IsNullOrEmpty(solutionPath))
+if (builder.Environment.IsDevelopment())
 {
-    var env = Path.Combine(solutionPath, ".env.dev");
+    var env = Path.Combine(solutionPath!, ".env.dev");
     DotNetEnv.Env.Load(env);
 }
 
@@ -57,14 +57,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddSignalR();
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.AllowAnyOrigin();
-        });
-});
+builder.Services.AddCors();
 
 var app = builder.Build();
 
