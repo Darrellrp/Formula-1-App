@@ -22,6 +22,7 @@ if (builder.Environment.IsDevelopment() && !String.IsNullOrEmpty(solutionPath))
     DotNetEnv.Env.Load(env);
 }
 
+// Add services to the container.
 builder.Services.AddTransient<DbContextOptions<Formula1DbContext>, DbContextOptions<Formula1DbContext>>();
 builder.Services.AddTransient(typeof(IDatasourceAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
@@ -41,7 +42,6 @@ builder.Services.AddScoped<IMultiplexerCachingService, RedisMultiplexerCachingSe
 
 builder.Services.AddDbContext<Formula1DbContext>();
 
-// Add services to the container.
 builder.Services.Configure<ApiConfiguration>(builder.Configuration.GetSection("ApiConfiguration"));
 
 builder.Services.AddControllers();
@@ -68,6 +68,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Seed database
 if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
 {
     await app.SeedDatabase(args);
