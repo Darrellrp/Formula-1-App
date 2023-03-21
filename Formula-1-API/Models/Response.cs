@@ -8,8 +8,8 @@ namespace Formula_1_API.Models
 
         public Response(dynamic data)
         {
-            Meta = new Meta<T>();
-            Payload = new Payload(data);
+            Meta = new();
+            Payload = new(data);
         }
     }
 

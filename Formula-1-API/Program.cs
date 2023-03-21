@@ -9,7 +9,6 @@ using Formula_1_API.Datasources;
 using Formula_1_API.Services;
 using Formula_1_API.Subjects;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 using Formula_1_API.Caching;
 using StackExchange.Redis;
 
