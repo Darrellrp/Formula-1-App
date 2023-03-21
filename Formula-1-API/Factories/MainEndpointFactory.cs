@@ -4,28 +4,40 @@ using Formula_1_API.Factories.Interfaces;
 using Formula_1_API.Models;
 using Formula_1_API.Datasources;
 using Microsoft.AspNetCore.Mvc;
+using Formula_1_API.Controllers;
 
 namespace Formula_1_API.Factories
 {
     public class MainEndpointFactory
     {
-        private readonly string _name = "Formula 1 REST API - Main endpoint";
-        private readonly string _description = "This API contains data from 1950 all the way through the 2017 season, and consists of tables describing constructors, race drivers, lap times, pit stops and more.";
-        private readonly string _version = "1.0";
-        private readonly string _source = "https://www.kaggle.com/cjgdev/formula-1-race-data-19502017";
-        private readonly string[] _excludedControllers = { "Base`1", "Main", "Configuration", "WeatherForecast" };
+        private const string _name = "Formula 1 REST API - Main endpoint";
+        private const string _description = "This API contains data from 1950 all the way through the 2017 season, and consists of tables describing constructors, race drivers, lap times, pit stops and more.";
+        private const string _version = "1.0";
+        private const string _source = "https://www.kaggle.com/cjgdev/formula-1-race-data-19502017";
+        private readonly Type[] _excludedControllers = {
+            typeof(BaseController<>),
+            typeof(MainController),
+            typeof(ConfigurationController),
+            typeof(WeatherForecastController)
+        };
+
+        private const string _hostConfigurationKey = "HostDomain";
 
         private EndpointFactory _endpointFactory { get; set; }
+        private IConfiguration _configuration { get; set; }
 
-        public MainEndpointFactory(EndpointFactory endpointFactory)
+        public MainEndpointFactory(EndpointFactory endpointFactory, IConfiguration configuration)
         {
             _endpointFactory = endpointFactory;
+            _configuration = configuration;
         }
 
         public MainEndpoint Create(ControllerBase controller)
         {
-            var baseUrl = $"{controller.Request.Scheme}://{controller.Request.Host}{controller.Request.PathBase}/api";
-            var endpoints = GetEndpoints(baseUrl);                        
+            var configuredHost = _configuration.GetValue<string>(_hostConfigurationKey);
+            var host = !string.IsNullOrWhiteSpace(configuredHost) ? configuredHost : controller.Request.Host.ToString();
+            var baseUrl = $"{controller.Request.Scheme}://{host}{controller.Request.PathBase}/api";
+            var endpoints = GetEndpoints(baseUrl);
 
             return new MainEndpoint(_name, _description, _version, _source, endpoints);
         }
@@ -36,15 +48,11 @@ namespace Formula_1_API.Factories
 
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
-                .Where(t => type.IsAssignableFrom(t) && !t.IsAbstract);
-            
-            var uris = types.Select(c => c.Name)
-                .Select(n => n.Replace("Controller", ""))
-                .Where(n => !_excludedControllers.Contains(n));
+                .Where(t => type.IsAssignableFrom(t) && !t.IsAbstract && !_excludedControllers.Contains(t));
 
-            var endpoints = _endpointFactory.Create(baseUrl, uris);
+            var uris = types.Select(c => c.Name.Replace("Controller", string.Empty));
 
-            return endpoints;
+            return _endpointFactory.Create(baseUrl, uris);
         }
     }
 }
