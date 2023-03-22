@@ -22,13 +22,13 @@ namespace Formula_1_API.Repositories
         {
             _datasource = datasource;
             _cache = cache;
-        }        
+        }
 
         public async Task<T?> FindById(int id)
         {
             var record = await _cache.FindById<T>(id);
 
-            if(record != null)
+            if (record != null)
             {
                 return record;
             }
@@ -76,7 +76,7 @@ namespace Formula_1_API.Repositories
         {
             var newRecord = await _datasource.Add(entity);
 
-            if(newRecord == null)
+            if (newRecord == null)
             {
                 throw new Exception("Failed to create new record");
             }
@@ -94,7 +94,7 @@ namespace Formula_1_API.Repositories
         {
             var newRecords = await _datasource.AddMany(entities);
 
-            if(newRecords == null || !newRecords.Any())
+            if (newRecords == null || !newRecords.Any())
             {
                 throw new Exception("Failed to create new records");
             }
@@ -107,12 +107,12 @@ namespace Formula_1_API.Repositories
         {
             var updatedRecord = await _datasource.Update(entity);
 
-            if(updatedRecord == null)
+            if (updatedRecord == null)
             {
                 throw new Exception("Failed to create new record");
             }
 
-            if(updatedRecord.Id == null)
+            if (updatedRecord.Id == null)
             {
                 throw new Exception("Failed to create a ID for the new record");
             }
@@ -125,7 +125,7 @@ namespace Formula_1_API.Repositories
         {
             var records = await _cache.Where(expression.Compile());
 
-            if(records != null && records.Any())
+            if (records != null && records.Any())
             {
                 return records;
             }
