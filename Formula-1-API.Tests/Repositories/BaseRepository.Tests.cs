@@ -15,15 +15,16 @@ public class BaseRepositoryTests : BaseRepositoryBase<Models.Circuit>
     public async Task FindById_WhenEntityIsInCache_ReturnsEntityFromCache()
     {
         // Arrange
+        const int entityId = 1;
         var entity = Fixture.Build<Models.Circuit>().Create();
 
-        CachingService.Setup(x => x.FindById<Models.Circuit>(It.IsAny<int>()))
+        CachingService.Setup(x => x.FindById<Models.Circuit>(entityId))
             .ReturnsAsync(entity);
 
         var repository = GetBaseRepository();
 
         // Act
-        var result = await repository.FindById(1);
+        var result = await repository.FindById(entityId);
 
         // Assert
         result.Should().Be(entity);
@@ -34,20 +35,19 @@ public class BaseRepositoryTests : BaseRepositoryBase<Models.Circuit>
     public async Task FindById_WhenEntityIsNotInCache_ReturnsEntityFromDatasource()
     {
         // Arrange
+        const int entityId = 1;
         var entity = Fixture.Build<Models.Circuit>().Create();
 
-        CachingService.Setup(x => x.FindById<Models.Circuit>(It.IsAny<int>()))
+        CachingService.Setup(x => x.FindById<Models.Circuit>(entityId))
             .ReturnsAsync(null as Models.Circuit);
-
-        DatasourceAdapter.Setup(x => x.FindById(It.IsAny<int>()))
+        DatasourceAdapter.Setup(x => x.FindById(entityId))
             .ReturnsAsync(entity);
-
         CachingService.Setup(x => x.Add(entity));
 
         var repository = GetBaseRepository();
 
         // Act
-        var result = await repository.FindById(1);
+        var result = await repository.FindById(entityId);
 
         // Assert
         result.Should().Be(entity);
@@ -59,18 +59,18 @@ public class BaseRepositoryTests : BaseRepositoryBase<Models.Circuit>
     public async Task FindById_WhenEntityIsNotInCacheAndInDatasource_ReturnsNull()
     {
         // Arrange
+        const int entityId = 1;
         var entity = Fixture.Build<Models.Circuit>().Create();
 
-        CachingService.Setup(x => x.FindById<Models.Circuit>(It.IsAny<int>()))
+        CachingService.Setup(x => x.FindById<Models.Circuit>(entityId))
             .ReturnsAsync(null as Models.Circuit);
-
-        DatasourceAdapter.Setup(x => x.FindById(It.IsAny<int>()))
+        DatasourceAdapter.Setup(x => x.FindById(entityId))
             .ReturnsAsync(null as Models.Circuit);
 
         var repository = GetBaseRepository();
 
         // Act
-        var result = await repository.FindById(1);
+        var result = await repository.FindById(entityId);
 
         // Assert
         result.Should().BeNull();
