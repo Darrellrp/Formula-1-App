@@ -9,8 +9,17 @@ using FluentAssertions;
 
 namespace Formula_1_API.Tests.Repositories;
 
-public class BaseRepositoryTests : BaseRepositoryBase<Models.Circuit>
+public class BaseRepositoryTests
 {
+    private readonly Fixture Fixture = new();
+    private readonly Mock<IDatasourceAdapter<Models.Circuit>> DatasourceAdapter = new();
+    private readonly Mock<IMultiplexerCachingService> CachingService = new();
+
+    private BaseRepository<Models.Circuit> GetBaseRepository()
+    {
+        return new BaseRepository<Models.Circuit>(DatasourceAdapter.Object, CachingService.Object);
+    }
+
     [Fact]
     public async Task FindById_WhenEntityIsInCache_ReturnsEntityFromCache()
     {
@@ -21,10 +30,10 @@ public class BaseRepositoryTests : BaseRepositoryBase<Models.Circuit>
         CachingService.Setup(x => x.FindById<Models.Circuit>(entityId))
             .ReturnsAsync(entity);
 
-        var repository = GetBaseRepository();
+        var sut = GetBaseRepository();
 
         // Act
-        var result = await repository.FindById(entityId);
+        var result = await sut.FindById(entityId);
 
         // Assert
         result.Should().Be(entity);
@@ -44,10 +53,10 @@ public class BaseRepositoryTests : BaseRepositoryBase<Models.Circuit>
             .ReturnsAsync(entity);
         CachingService.Setup(x => x.Add(entity));
 
-        var repository = GetBaseRepository();
+        var sut = GetBaseRepository();
 
         // Act
-        var result = await repository.FindById(entityId);
+        var result = await sut.FindById(entityId);
 
         // Assert
         result.Should().Be(entity);
@@ -67,26 +76,83 @@ public class BaseRepositoryTests : BaseRepositoryBase<Models.Circuit>
         DatasourceAdapter.Setup(x => x.FindById(entityId))
             .ReturnsAsync(null as Models.Circuit);
 
-        var repository = GetBaseRepository();
+        var sut = GetBaseRepository();
 
         // Act
-        var result = await repository.FindById(entityId);
+        var result = await sut.FindById(entityId);
 
         // Assert
         result.Should().BeNull();
         CachingService.VerifyAll();
         DatasourceAdapter.VerifyAll();
     }
-}
 
-public class BaseRepositoryBase<TModel> where TModel : class, IEntity
-{
-    protected readonly Fixture Fixture = new();
-    protected readonly Mock<IDatasourceAdapter<TModel>> DatasourceAdapter = new();
-    protected readonly Mock<IMultiplexerCachingService> CachingService = new();
-
-    protected BaseRepository<TModel> GetBaseRepository()
+    [Fact]
+    public async Task GetAll_WhenAllEntitiesAreInCache_ReturnsAllEntities()
     {
-        return new BaseRepository<TModel>(DatasourceAdapter.Object, CachingService.Object);
+        // Arrange
+        var entities = Fixture.CreateMany<Models.Circuit>();
+
+        CachingService.Setup(x => x.GetAll<Models.Circuit>())
+            .ReturnsAsync(entities);
+        DatasourceAdapter.Setup(x => x.GetAll())
+            .ReturnsAsync(entities);
+
+        var sut = GetBaseRepository();
+
+        // Act
+        var result = await sut.GetAll();
+
+        // Assert
+        result.Should().BeEquivalentTo(entities);
+        CachingService.VerifyAll();
+        DatasourceAdapter.VerifyAll();
+    }
+
+    [Fact]
+    public async Task GetAll_WhenSomeEntitiesAreInCache_ReturnsAllEntities()
+    {
+        // Arrange
+        var entities = Fixture.CreateMany<Models.Circuit>();
+
+        CachingService.Setup(x => x.GetAll<Models.Circuit>())
+            .ReturnsAsync(entities.Take(2));
+        DatasourceAdapter.Setup(x => x.GetAll())
+            .ReturnsAsync(entities);
+
+        var sut = GetBaseRepository();
+
+        // Act
+        var result = await sut.GetAll();
+
+        // Assert
+        result.Should().BeEquivalentTo(entities);
+        CachingService.VerifyAll();
+        DatasourceAdapter.VerifyAll();
+    }
+
+    [Fact]
+    public async Task GetAll_WhenSomeOrNoEntitiesAreInCache_LoadDbEntitiesInCache()
+    {
+        // Arrange
+        var entities = Fixture.CreateMany<Models.Circuit>();
+
+        CachingService.Setup(x => x.GetAll<Models.Circuit>())
+            .ReturnsAsync(entities.Take(2));
+        DatasourceAdapter.Setup(x => x.GetAll())
+            .ReturnsAsync(entities);
+
+        CachingService.Setup(x => x.DeleteAll<Models.Circuit>()).Verifiable();
+        CachingService.Setup(x => x.AddMany(entities)).Verifiable();
+
+        var sut = GetBaseRepository();
+
+        // Act
+        var result = await sut.GetAll();
+
+        // Assert
+        result.Should().BeEquivalentTo(entities);
+        CachingService.Verify();
+        DatasourceAdapter.Verify();
     }
 }
