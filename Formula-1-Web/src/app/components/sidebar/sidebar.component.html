@@ -5,20 +5,12 @@
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fa fa-flag-checkered"></i>
-            <!-- <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/1280px-F1.svg.png" alt=""> -->
         </div>
         <div class="sidebar-brand-text mx-3">Formula 1</div>
     </a>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    <!-- <li class="nav-item">
-      <a class="nav-link" href="/">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></a>
-    </li> -->
 
     <!-- Divider -->
     <!-- <hr class="sidebar-divider"> -->
@@ -31,11 +23,13 @@
     </div>
 
     <!-- Nav Item - Charts -->
-    <li v-for="endpoint in this.endpoints" class="nav-item">
-        <!-- <a class="nav-link" href="charts.html"> -->
-        <a class="nav-link" href="#">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span> endpoint.name </span></a>
+    <li *ngFor="let endpoint of endpoints | async" class="nav-item">
+        <div>
+            <a class="nav-link" href="{{ endpoint.url }}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>{{ endpoint.name }}</span>
+            </a>
+        </div>
     </li>
 
 
