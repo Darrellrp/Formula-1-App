@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { ApiConfiguration } from '../models/configurations/api.configuration';
-import { IResult } from '../models/IResult';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,7 @@ export class ConfigurationService {
     this.apiBaseUrl = apiBaseUrl;
   }
 
-  public Get(): Observable<IResult<ApiConfiguration>> {
+  public Get(): Observable<ApiConfiguration> {
     if (this.apiBaseUrl == null || this.apiBaseUrl == "") {
       return throwError(() => {
         const error: any = new Error('Error: Empty ApiBaseUrl property');
@@ -32,12 +31,4 @@ export class ConfigurationService {
     }
     return this.httpClient.get<any>(`${this.apiBaseUrl}/${this.apiUri}`);
   }
-
-  public GetApiBaseUrl(): string | null | undefined {
-    return document.querySelector("meta[name='apiurl']")?.getAttribute("content");
-  }
-
-  //public GetProperty(propertyName: string) {
-  //  return this.Get().pipe()
-  //}
 }
