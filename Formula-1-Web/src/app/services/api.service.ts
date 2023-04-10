@@ -9,6 +9,7 @@ import { ApiOverview } from '../models/api.overview';
 import { Entity } from '../models/entities/entity';
 import Circuit from '../models/entities/circuit';
 import { ApiResult } from '../models/api.result';
+import ConstructorResults from '../models/entities/constructor-results';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,14 @@ export class ApiService {
   }
 
   public GetCircuits(): Observable<ApiResult<Circuit>> {
-    return this.http.get<ApiResult<Circuit>>(`${this.baseUrl}/${ApiEndpoints.Circuits}`)
+    return this.GetEntity<Circuit>(ApiEndpoints.Circuits);
+  }
+
+  public GetConstructorResults(): Observable<ApiResult<ConstructorResults>> {
+    return this.GetEntity<ConstructorResults>(ApiEndpoints.ConstructorResults);
+  }
+
+  private GetEntity<Entity>(endpoint: ApiEndpoints): Observable<ApiResult<Entity>> {
+    return this.http.get<ApiResult<Entity>>(`${this.baseUrl}/${endpoint}`);
   }
 }
