@@ -11,6 +11,7 @@ import { TopbarComponent } from './components/topbar/topbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LogoutModalComponent } from './components/logoutmodal/logout-modal.component';
 import { ScrollToTopButtonComponent } from './components/scroll-to-top-button/scroll-to-top-button.component';
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
@@ -20,18 +21,18 @@ import { ScrollToTopButtonComponent } from './components/scroll-to-top-button/sc
     FooterComponent,
     LogoutModalComponent,
     ScrollToTopButtonComponent,
+    TableComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     // RouterModule.forRoot([
-    // { path: '', component: HomeComponent, pathMatch: 'full' },
-    // { path: 'counter', component: CounterComponent },
-    // { path: 'fetch-data', component: FetchDataComponent },
+    //   { path: '', component: TableComponent, pathMatch: 'full' },
+    //   { path: 'circuits', component: TableComponent },
+    //   { path: 'fetch-data', component:  FetchDataComponent }
     // ])
   ],
-  // providers: [ConfigurationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

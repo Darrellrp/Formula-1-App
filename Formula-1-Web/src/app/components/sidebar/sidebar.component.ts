@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ApiOverview } from 'src/app/models/api.overview';
 import { Endpoint } from 'src/app/models/endpoint';
+import { ApiService } from 'src/app/services/api.service';
 import { APP_BASEURL } from 'src/main';
 
 @Component({
@@ -12,11 +13,10 @@ import { APP_BASEURL } from 'src/main';
 })
 export class SidebarComponent implements OnInit {
 
-  public endpoints: Observable<Array<Endpoint>> = this.http.get<ApiOverview>(`${this.baseUrl}/api`).pipe(map(x => x.endpoints));
+  public readonly endpoints: Observable<Array<Endpoint>> = this.apiService.GetSidebar();
 
-  constructor(private http: HttpClient, @Inject(APP_BASEURL) private baseUrl: string) { }
+  constructor(private readonly apiService: ApiService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }
