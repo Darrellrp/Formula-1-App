@@ -34,14 +34,14 @@ export class ApiService {
   }
 
   public GetCircuits(): Observable<ApiResult<Circuit>> {
-    return this.GetEntity<Circuit>(ApiEndpoints.Circuits);
+    return this.GetEntities<Circuit>(ApiEndpoints.Circuits);
   }
 
   public GetConstructorResults(): Observable<ApiResult<ConstructorResults>> {
-    return this.GetEntity<ConstructorResults>(ApiEndpoints.ConstructorResults);
+    return this.GetEntities<ConstructorResults>(ApiEndpoints.ConstructorResults);
   }
 
-  private GetEntity<Entity>(endpoint: ApiEndpoints): Observable<ApiResult<Entity>> {
+  private GetEntities<Entity>(endpoint: ApiEndpoints): Observable<ApiResult<Entity>> {
     return this.http.get<ApiResult<Entity>>(`${this.baseUrl}/${endpoint}`);
   }
 }

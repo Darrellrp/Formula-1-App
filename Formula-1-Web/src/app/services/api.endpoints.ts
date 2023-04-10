@@ -1,6 +1,6 @@
 export enum ApiEndpoints {
-  Overview = "api",
-  Configuration = "api/configuration",
-  Circuits = "api/circuits",
-  ConstructorResults = "api/constructorresults"
+  Overview = "/",
+  Configuration = "configuration",
+  Circuits = "circuits",
+  ConstructorResults = "constructorresults"
 }

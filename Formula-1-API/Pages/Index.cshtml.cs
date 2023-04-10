@@ -9,7 +9,7 @@ namespace Formula_1_API.Pages
 
         public void OnGet()
         {
-            this.ApiServerUrl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+            this.ApiServerUrl = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/api";
         }
     }
 }

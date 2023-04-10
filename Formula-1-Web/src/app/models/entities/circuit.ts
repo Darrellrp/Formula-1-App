@@ -1,14 +1,12 @@
 import { Entity } from './entity';
 
-export default class Circuit implements Entity {
-  constructor(
-    public id: number,
-    public ref: string,
-    public name: string,
-    public location: string,
-    public country: string,
-    public lat: string,
-    public lng: string,
-    public url: string
-    ) { }
+export default interface Circuit extends Entity {
+  id: number,
+  ref: string,
+  name: string,
+  location: string,
+  country: string,
+  lat: string,
+  lng: string,
+  url: string
 }
