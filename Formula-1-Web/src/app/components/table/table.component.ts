@@ -20,16 +20,18 @@ export class TableComponent implements OnInit {
   public entityList$: Observable<Array<Entity>> = of();
   public table: any;
 
+  private readonly tableElementId: string = '#dataTable';
+
   constructor(private readonly apiService: ApiService) { }
 
   ngOnInit(): void {
     this.response$ = this.apiService.GetCircuits();
     this.entity$ = this.response$.pipe(map(response => response.meta.type));
-    this.columns$ = this.response$.pipe(map(response => Object.keys(response.payload.data[0]).map(x => ({ title: x, data: x }))));
+    this.columns$ = this.response$.pipe(map(response => Object.keys(response.payload.data[0]).map(columnName => ({ title: columnName, data: columnName }))));
     this.entityList$ = this.response$.pipe(map(response => response.payload.data));
 
     combineLatest([this.columns$, this.entityList$]).subscribe(([columns, data]) => {
-      this.table = $('#dataTable').DataTable({ columns, data, retrieve: true });
+      this.table = $(this.tableElementId).DataTable({ columns, data, retrieve: true });
     });
   }
 }
