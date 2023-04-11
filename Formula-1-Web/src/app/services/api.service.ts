@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable, map, throwError } from 'rxjs';
 import { APP_BASEURL } from 'src/main';
-import { ApiConfiguration } from '../models/configurations/api.configuration';
+import { ApiConfiguration } from '../models/api.configuration';
 import { ApiEndpoints } from './api.endpoints';
 import { Endpoint } from '../models/endpoint';
 import { ApiOverview } from '../models/api.overview';
