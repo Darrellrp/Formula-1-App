@@ -30,7 +30,7 @@ export class ApiService {
   }
 
   public GetSidebar(): Observable<Array<Endpoint>> {
-    return this.http.get<ApiOverview>(`${this.baseUrl}/${ApiEndpoints.Overview}`).pipe(map(x => x.endpoints));
+    return this.http.get<ApiOverview>(this.baseUrl).pipe(map(x => x.endpoints));
   }
 
   public GetCircuits(): Observable<ApiResult<Circuit>> {
