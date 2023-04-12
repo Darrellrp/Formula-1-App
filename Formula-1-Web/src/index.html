@@ -9,10 +9,11 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <meta name="apiurl" content="https://localhost/api" />
+  <base href="/">
 
   <title>Formula 1 - REST API</title>
 
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 
   <!-- Custom fonts for this template -->
   <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,7 +35,9 @@
 
 <body id="page-top">
 
-  <app-root></app-root>
+  <app-root>
+    <router-outlet></router-outlet>
+  </app-root>
 
   <!-- Bootstrap core JavaScript-->
   <script src="assets/vendor/jquery/jquery.min.js"></script>

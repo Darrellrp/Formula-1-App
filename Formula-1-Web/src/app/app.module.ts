@@ -12,6 +12,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LogoutModalComponent } from './components/logoutmodal/logout-modal.component';
 import { ScrollToTopButtonComponent } from './components/scroll-to-top-button/scroll-to-top-button.component';
 import { TableComponent } from './components/table/table.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -22,16 +25,14 @@ import { TableComponent } from './components/table/table.component';
     LogoutModalComponent,
     ScrollToTopButtonComponent,
     TableComponent,
+    DashboardComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    // RouterModule.forRoot([
-    //   { path: '', component: TableComponent, pathMatch: 'full' },
-    //   { path: 'circuits', component: TableComponent },
-    //   { path: 'fetch-data', component:  FetchDataComponent }
-    // ])
+    FormsModule
   ],
   bootstrap: [AppComponent]
 })

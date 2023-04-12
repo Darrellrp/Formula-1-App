@@ -88,7 +88,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseRouting();
 
-app.UseCors();
+app.UseCors(policy => policy.AllowAnyOrigin());
 
 app.MapControllerRoute(
     name: "default",

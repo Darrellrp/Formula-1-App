@@ -1,0 +1,41 @@
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <app-sidebar class="bg-danger"></app-sidebar>
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+      <app-topbar></app-topbar>
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Formula 1 REST API - Dashboard</h1>
+        <p class="mb-4">This api contains data from 1950 all the way through the 2017 season, and consists of tables
+          describing constructors, race drivers, lap times, pit stops and more. To get the source code visit <a
+            target="_blank" href="https://github.com/Darrellrp/Formula-1-App">GitHub</a></p>
+
+        <app-table></app-table>
+
+      </div>
+      <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <app-footer></app-footer>
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<app-scroll-to-top-button></app-scroll-to-top-button>
+
+<app-logout-modal></app-logout-modal>
