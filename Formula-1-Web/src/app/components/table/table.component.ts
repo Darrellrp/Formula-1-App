@@ -20,7 +20,7 @@ export class TableComponent implements OnInit {
 
   private readonly tableElementId: string = '#dataTable';
 
-  constructor(private readonly apiService: ApiService, private router: Router) { }
+  constructor(private readonly apiService: ApiService, private readonly router: Router) { }
 
   ngOnInit(): void {
     const collectionKey = this.router.url.replace('/', '');
