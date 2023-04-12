@@ -4,12 +4,14 @@ namespace Formula_1_API.Models;
 
 public class Endpoint
 {
-    public string Name { get; set; }
-    public string Url { get; set; }
+    public string Label { get; set; }
+    public string WebUrl { get; set; }
+    public string CollectionKey { get; set; }
 
-    public Endpoint(string name, string url)
+    public Endpoint(string name, string webUrl, string apiUrl)
     {
-        this.Name = name;
-        this.Url = url;
+        this.Label = name;
+        this.WebUrl = webUrl;
+        this.CollectionKey = apiUrl;
     }
 }

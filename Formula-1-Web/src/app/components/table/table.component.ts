@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, combineLatest, map, of } from 'rxjs';
 import { ApiResult } from 'src/app/models/api.result';
 import { Entity } from 'src/app/models/entities/entity';
-import { ApiService } from 'src/app/services/api.service';
+import { ApiService } from 'src/app/services/api/api.service';
 import 'datatables.net-bs4'
 import { ApiEndpoints } from 'src/app/services/api.endpoints';
 import Circuit from 'src/app/models/entities/circuit';

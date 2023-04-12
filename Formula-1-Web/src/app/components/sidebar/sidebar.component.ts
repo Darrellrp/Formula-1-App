@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ApiOverview } from 'src/app/models/api.overview';
 import { Endpoint } from 'src/app/models/endpoint';
-import { ApiService } from 'src/app/services/api.service';
+import { ApiService } from 'src/app/services/api/api.service';
 import { APP_BASEURL } from 'src/main';
 
 @Component({
@@ -13,7 +13,7 @@ import { APP_BASEURL } from 'src/main';
 })
 export class SidebarComponent implements OnInit {
 
-  public readonly endpoints: Observable<Array<Endpoint>> = this.apiService.GetSidebar();
+  public readonly endpoints: Observable<Array<Endpoint>> = this.apiService.GetEndpoints();
 
   constructor(private readonly apiService: ApiService) { }
 

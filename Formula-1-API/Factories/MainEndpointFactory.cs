@@ -17,8 +17,7 @@ namespace Formula_1_API.Factories
         private readonly Type[] _excludedControllers = {
             typeof(BaseController<>),
             typeof(MainController),
-            typeof(ConfigurationController),
-            typeof(WeatherForecastController)
+            typeof(ConfigurationController)
         };
 
         private const string _hostConfigurationKey = "HostDomain";
