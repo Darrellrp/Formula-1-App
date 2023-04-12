@@ -4,9 +4,7 @@ import { ApiResult } from 'src/app/models/api.result';
 import { Entity } from 'src/app/models/entities/entity';
 import { ApiService } from 'src/app/services/api/api.service';
 import 'datatables.net-bs4'
-import { ApiEndpoints } from 'src/app/services/api.endpoints';
-import Circuit from 'src/app/models/entities/circuit';
-import ConstructorResults from 'src/app/models/entities/constructor-results';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -22,10 +20,12 @@ export class TableComponent implements OnInit {
 
   private readonly tableElementId: string = '#dataTable';
 
-  constructor(private readonly apiService: ApiService) { }
+  constructor(private readonly apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
-    this.response$ = this.apiService.GetCircuits();
+    const collectionKey = this.router.url.replace('/', '');
+
+    this.response$ = this.apiService.GetEntities(collectionKey);
     this.entity$ = this.response$.pipe(map(response => response.meta.type));
     this.columns$ = this.response$.pipe(map(response => Object.keys(response.payload.data[0]).map(columnName => ({ title: columnName, data: columnName }))));
     this.entityList$ = this.response$.pipe(map(response => response.payload.data));

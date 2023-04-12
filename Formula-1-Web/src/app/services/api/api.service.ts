@@ -6,10 +6,7 @@ import { ApiConfiguration } from '../../models/api.configuration';
 import { ApiEndpoints } from '../api.endpoints';
 import { Endpoint } from '../../models/endpoint';
 import { ApiOverview } from '../../models/api.overview';
-import { Entity } from '../../models/entities/entity';
-import Circuit from '../../models/entities/circuit';
 import { ApiResult } from '../../models/api.result';
-import ConstructorResults from '../../models/entities/constructor-results';
 
 @Injectable({
   providedIn: 'root'
@@ -37,15 +34,7 @@ export class ApiService {
     return this.http.get<ApiOverview>(this.baseUrl).pipe(map(x => x.endpoints));
   }
 
-  public GetCircuits(): Observable<ApiResult<Circuit>> {
-    return this.GetEntities<Circuit>(ApiEndpoints.Circuits);
-  }
-
-  public GetConstructorResults(): Observable<ApiResult<ConstructorResults>> {
-    return this.GetEntities<ConstructorResults>(ApiEndpoints.ConstructorResults);
-  }
-
-  private GetEntities<Entity>(endpoint: ApiEndpoints): Observable<ApiResult<Entity>> {
-    return this.http.get<ApiResult<Entity>>(`${this.baseUrl}/${endpoint}`);
+  public GetEntities<Entity>(collectionKey: string): Observable<ApiResult<Entity>> {
+    return this.http.get<ApiResult<Entity>>(`${this.baseUrl}/${collectionKey}`);
   }
 }
