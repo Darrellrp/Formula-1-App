@@ -22,5 +22,5 @@ docker exec formula-1-api sh -c "export MYSQL_HOST=formula-1-db; export MYSQL_DA
 for entry in *
 do
     echo "Deleting $entry from docker container"
-    rm formula-1-api:/app/data/$entry
+    docker exec formula-1-api sh -c "rm /app/data/$entry"
 done
