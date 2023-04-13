@@ -1,4 +1,5 @@
 
+using System.Text.RegularExpressions;
 using Formula_1_API.Seeders;
 
 namespace Formula_1_API
@@ -32,6 +33,11 @@ namespace Formula_1_API
                 Console.WriteLine();
                 Console.WriteLine($"An error occured during database seeding: {exception}");
             }
+        }
+
+        public static string AddSpacesToPascalCase(this string text)
+        {
+            return Regex.Replace(text, "(\\B[A-Z])", " $1");
         }
     }
 }

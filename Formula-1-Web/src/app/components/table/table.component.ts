@@ -18,20 +18,22 @@ export class TableComponent implements OnInit {
   public entityList$: Observable<Array<Entity>> = of();
   public table: any;
 
-  private readonly tableElementId: string = '#dataTable';
+  private static readonly tableElementId: string = '#dataTable';
+  private static readonly defaultCollection: string = 'circuits';
 
   constructor(private readonly apiService: ApiService, private readonly router: Router) { }
 
   ngOnInit(): void {
-    const collectionKey = this.router.url.replace('/', '');
+    const uri = this.router.url.replace('/', '');
+    const collectionKey = uri == '' ? TableComponent.defaultCollection : uri;
 
     this.response$ = this.apiService.GetEntities(collectionKey);
-    this.entity$ = this.response$.pipe(map(response => response.meta.type));
+    this.entity$ = this.response$.pipe(map(response => response.meta.label));
     this.columns$ = this.response$.pipe(map(response => Object.keys(response.payload.data[0]).map(columnName => ({ title: columnName, data: columnName }))));
     this.entityList$ = this.response$.pipe(map(response => response.payload.data));
 
     combineLatest([this.columns$, this.entityList$]).subscribe(([columns, data]) => {
-      this.table = $(this.tableElementId).DataTable({ columns, data, retrieve: true });
+      this.table = $(TableComponent.tableElementId).DataTable({ columns, data, retrieve: true });
     });
   }
 }

@@ -11,9 +11,10 @@ namespace Formula_1_API.Factories
         public IEnumerable<Models.Endpoint> Create(string baseUrl, IEnumerable<string> endpoints)
         {
             return endpoints.Select(endpoint => new Models.Endpoint(
-                Regex.Replace(endpoint, "(\\B[A-Z])", " $1"),
-                baseUrl + "/" + endpoint.ToLower(),
-                endpoint.ToLower()
+                label: endpoint.AddSpacesToPascalCase(),
+                key: endpoint.ToLower(),
+                webUrl: Path.Combine(baseUrl, endpoint.ToLower()),
+                apiUrl: Path.Combine(baseUrl, "api", endpoint.ToLower())
             ));
         }
     }

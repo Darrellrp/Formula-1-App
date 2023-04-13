@@ -35,7 +35,7 @@ namespace Formula_1_API.Factories
         {
             var configuredHost = _configuration.GetValue<string>(_hostConfigurationKey);
             var host = !string.IsNullOrWhiteSpace(configuredHost) ? configuredHost : controller.Request.Host.ToString();
-            var baseUrl = $"{controller.Request.Scheme}://{host}{controller.Request.PathBase}/api";
+            var baseUrl = $"{controller.Request.Scheme}://{host}{controller.Request.PathBase}";
             var endpoints = GetEndpoints(baseUrl);
 
             return new MainEndpoint(_name, _description, _version, _source, endpoints);

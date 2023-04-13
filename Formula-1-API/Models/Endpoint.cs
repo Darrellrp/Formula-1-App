@@ -5,13 +5,15 @@ namespace Formula_1_API.Models;
 public class Endpoint
 {
     public string Label { get; set; }
+    public string Key { get; set; }
     public string WebUrl { get; set; }
-    public string CollectionKey { get; set; }
+    public string ApiUrl { get; set; }
 
-    public Endpoint(string name, string webUrl, string apiUrl)
+    public Endpoint(string label, string key, string webUrl, string apiUrl)
     {
-        this.Label = name;
+        this.Label = label;
+        this.Key = key;
         this.WebUrl = webUrl;
-        this.CollectionKey = apiUrl;
+        this.ApiUrl = apiUrl;
     }
 }

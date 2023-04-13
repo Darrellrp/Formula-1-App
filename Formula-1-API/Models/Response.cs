@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Formula_1_API.Models
 {
     public class Response<T> where T : class, IEntity
@@ -15,7 +16,8 @@ namespace Formula_1_API.Models
 
     public class Meta<T>
     {
-        public string Type { get; set; } = typeof(T).Name;
+        public string Label { get; set; } = typeof(T).Name.AddSpacesToPascalCase();
+        public string Key { get; set; } = typeof(T).Name;
     }
 
     public class Payload
