@@ -18,3 +18,9 @@ done
 echo ""
 
 docker exec formula-1-api sh -c "export MYSQL_HOST=formula-1-db; export MYSQL_DATABASE=$MYSQL_DATABASE; export MYSQL_USER=$MYSQL_USER; export MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD; dotnet Formula-1-API.dll -s 100"
+
+for entry in *
+do
+    echo "Deleting $entry from docker container"
+    rm formula-1-api:/app/data/$entry
+done
