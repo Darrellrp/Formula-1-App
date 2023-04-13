@@ -12,13 +12,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Make sure you have docker installed and the ports 8080 & 44348 are available on your development machine.
+Make sure you have docker installed and the ports 80 & 443 are available on your development machine.
 
 Make sure you have installed all of the following prerequisites on your development machine:
 * Git - [Download & Install Git](https://git-scm.com/downloads)
 * Docker - [Download & Install Docker](https://www.docker.com/products/docker-desktop)
-
-Also make sure that port 8080 & 44348 are available on your development machine.
 
 ### Installing
 
