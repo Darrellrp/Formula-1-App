@@ -41,5 +41,5 @@ https://localhost/api
 
 Web
 ```
-http://localhost
+https://localhost
 ```
