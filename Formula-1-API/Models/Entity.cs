@@ -4,6 +4,7 @@ namespace Formula_1_API.Models
     public abstract class Entity: IEntity
     {
         public abstract int? Id { get; set; }
+        public abstract string? CollectionKey { get; set; }
 
         public Entity() { }
 

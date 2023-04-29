@@ -6,4 +6,5 @@ public class ResultStatus : Entity
 {
     public override int? Id { get; set; }
     public string Status { get; set; } = string.Empty;
+    public override string? CollectionKey { get; set; } = "resultstatuses";
 }

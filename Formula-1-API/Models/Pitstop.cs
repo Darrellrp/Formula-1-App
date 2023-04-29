@@ -16,4 +16,5 @@ public class PitStop : Entity
     public string Time { get; set; } = string.Empty;
     public string Duration { get; set; } = string.Empty;
     public string Milliseconds { get; set; } = string.Empty;
+    public override string? CollectionKey { get; set; } = "pitstops";
 }

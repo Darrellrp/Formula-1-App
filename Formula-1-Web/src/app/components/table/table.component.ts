@@ -5,6 +5,9 @@ import { Entity } from 'src/app/models/entities/entity';
 import { ApiService } from 'src/app/services/api/api.service';
 import 'datatables.net-bs4'
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as EntitiesActions from 'src/app/store/entities/entities.actions';
+import { selectEntityListFromDict } from 'src/app/store/entities/entities.selectors';
 
 @Component({
   selector: 'app-table',
@@ -21,11 +24,19 @@ export class TableComponent implements OnInit {
   private static readonly tableElementId: string = '#dataTable';
   private static readonly defaultCollection: string = 'circuits';
 
-  constructor(private readonly apiService: ApiService, private readonly router: Router) { }
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly router: Router,
+    private readonly store: Store) { }
 
   ngOnInit(): void {
     const uri = this.router.url.replace('/', '');
     const collectionKey = uri == '' ? TableComponent.defaultCollection : uri;
+
+    this.store.dispatch(EntitiesActions.load({ collectionKey }));
+    // this.store.select(selectEntitiesList(collectionKey));
+    // const sss = selectEntityListFromDict(collectionKey);
+    // this.store.select(sss);
 
     this.response$ = this.apiService.GetEntities(collectionKey);
     this.entity$ = this.response$.pipe(map(response => response.meta.label));

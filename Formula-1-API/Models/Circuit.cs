@@ -20,4 +20,5 @@ public class Circuit : Entity
     public string Lng { get; set; } = string.Empty;
     //public string Alt { get; set; }
     public string Url { get; set; } = string.Empty;
+    public override string? CollectionKey { get; set; } = "circuits";
 }

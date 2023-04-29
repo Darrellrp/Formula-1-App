@@ -19,6 +19,7 @@ public class RaceResult : Result
     public string FastestLapTime { get; set; } = string.Empty;
     public string FastestLapSpeed { get; set; } = string.Empty;
     public int StatusId { get; set; }
+    public override string? CollectionKey { get; set; } = "raceresults";
 
     public RaceResult() : base(int.MinValue, int.MinValue, int.MinValue, float.MinValue) { }
 

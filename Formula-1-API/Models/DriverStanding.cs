@@ -5,8 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Formula_1_API.Models;
 
 public class DriverStanding : Standing, IEntity
-{       
+{
     public int DriverId { get; set; }
+    public override string? CollectionKey { get; set; } = "driverstandings";
 
     public DriverStanding(int? id, int driverId, int raceId, float points, int position, string positionText, int wins)
         : base(id, raceId, points, position, positionText, wins)
