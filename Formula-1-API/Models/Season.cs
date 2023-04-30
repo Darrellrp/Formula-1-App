@@ -11,5 +11,4 @@ public class Season : Entity
     public override int? Id { get; set; }
     public int Year { get; set; }
     public string Url { get; set; } = string.Empty;
-    public override string? CollectionKey { get; set; } = "seasons";
 }

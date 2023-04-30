@@ -15,5 +15,4 @@ public class LapTime : Entity
     public int Position { get; set; }
     public string Time { get; set; } = string.Empty;
     public int Milliseconds { get; set; }
-    public override string? CollectionKey { get; set; } = "laptimes";
 }

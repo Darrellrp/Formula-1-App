@@ -17,5 +17,4 @@ public class Qualification : Entity
     public string Q1 { get; set; } = string.Empty;
     public string Q2 { get; set; } = string.Empty;
     public string Q3 { get; set; } = string.Empty;
-    public override string? CollectionKey { get; set; } = "qualifications";
 }
