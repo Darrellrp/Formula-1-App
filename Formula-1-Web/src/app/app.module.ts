@@ -37,8 +37,8 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    StoreModule.forRoot(reducers),
     EffectsModule.forRoot([EntitiesEffects]),
+    StoreModule.forFeature('app', reducers),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   bootstrap: [AppComponent]

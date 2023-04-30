@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest, map, of } from 'rxjs';
+import { Observable, combineLatest, map, of, tap } from 'rxjs';
 import { ApiResult } from 'src/app/models/api.result';
 import { Entity } from 'src/app/models/entities/entity';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -7,7 +7,7 @@ import 'datatables.net-bs4'
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as EntitiesActions from 'src/app/store/entities/entities.actions';
-import { selectEntityListFromDict } from 'src/app/store/entities/entities.selectors';
+import * as EntitiesSelectors from 'src/app/store/entities/entities.selectors';
 
 @Component({
   selector: 'app-table',
@@ -34,9 +34,9 @@ export class TableComponent implements OnInit {
     const collectionKey = uri == '' ? TableComponent.defaultCollection : uri;
 
     this.store.dispatch(EntitiesActions.load({ collectionKey }));
-    // this.store.select(selectEntitiesList(collectionKey));
-    // const sss = selectEntityListFromDict(collectionKey);
-    // this.store.select(sss);
+    this.store.select(EntitiesSelectors.selectEntities(collectionKey))
+      .subscribe(x => console.log(x));
+    console.log(collectionKey);
 
     this.response$ = this.apiService.GetEntities(collectionKey);
     this.entity$ = this.response$.pipe(map(response => response.meta.label));

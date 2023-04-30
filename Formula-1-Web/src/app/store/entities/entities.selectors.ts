@@ -1,28 +1,22 @@
 import { createSelector } from '@ngrx/store';
-import { EntityCollectionsState, collectionsAdapter } from './entity-collections.state';
-import { selectEntitiesState } from '../app.selectors';
-import { Dictionary } from '@ngrx/entity';
-import { ApiResult } from 'src/app/models/api.result';
-import { Entity } from 'src/app/models/entities/entity';
-import { CollectionState } from './entity-collection.state';
+import { collectionsAdapter } from './entity-collections.state';
+import { selectCollectionsState } from '../app.selectors';
 
-export const selectEntitiesList = (collectionKey: string) =>
-  createSelector(
-    selectEntitiesState,
-    (state: EntityCollectionsState) => state.entities[collectionKey]
-  );
-
-const {
+export const {
   selectAll,
-  selectEntities,
+  selectEntities: selectCollections,
   selectIds,
   selectTotal
 
 } = collectionsAdapter.getSelectors();
 
-export const selectEntityListFromDict = (collectionKey: string) =>
-  createSelector(
-    selectEntities,
-    // (state: Dictionary<Collection<Entity>>) => state[collectionKey]?.items
-    (state: Dictionary<CollectionState<Entity>>) => state[collectionKey]?.entities
-  );
+export const selectEntityCollections = createSelector(
+  selectCollectionsState,
+  selectCollections
+);
+
+export const selectEntities = (collectionKey: string) =>
+createSelector(
+  selectEntityCollections,
+  (state) => state[collectionKey]?.entities
+);
