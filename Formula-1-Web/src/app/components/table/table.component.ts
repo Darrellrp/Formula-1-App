@@ -34,7 +34,7 @@ export class TableComponent implements OnInit {
     const collectionKey = uri == '' ? TableComponent.defaultCollection : uri;
 
     this.store.dispatch(EntitiesActions.load({ collectionKey }));
-    this.store.select(EntitiesSelectors.selectEntities('Circuit'))
+    this.store.select(EntitiesSelectors.selectEntities('circuit'))
       .subscribe(x => console.log(collectionKey, x));
 
     this.response$ = this.apiService.GetEntities(collectionKey);
