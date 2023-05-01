@@ -17,7 +17,7 @@ namespace Formula_1_API.Models
     public class Meta<T>
     {
         public string Label { get; set; } = typeof(T).Name.AddSpacesToPascalCase();
-        public string Key { get; set; } = typeof(T).Name;
+        public string Key { get; set; } = typeof(T).Name.ToLower();
     }
 
     public class Payload
