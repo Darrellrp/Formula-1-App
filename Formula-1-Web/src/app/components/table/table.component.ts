@@ -35,7 +35,7 @@ export class TableComponent implements OnInit {
 
     this.store.dispatch(EntitiesActions.load({ collectionKey }));
     this.store.select(EntitiesSelectors.selectEntities('circuit'))
-      .subscribe(x => console.log(collectionKey, x));
+      .subscribe(data => console.log(collectionKey, data));
 
     this.response$ = this.apiService.GetEntities(collectionKey);
     this.entity$ = this.response$.pipe(map(response => response.meta.label));
