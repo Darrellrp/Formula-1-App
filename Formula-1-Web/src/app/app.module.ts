@@ -37,6 +37,7 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    StoreModule.forRoot({}),
     EffectsModule.forRoot([EntitiesEffects]),
     StoreModule.forFeature('app', reducers),
     !environment.production ? StoreDevtoolsModule.instrument() : []
