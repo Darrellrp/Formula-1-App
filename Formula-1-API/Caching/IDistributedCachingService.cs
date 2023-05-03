@@ -4,11 +4,11 @@ namespace Formula_1_API.Caching
 {
     public interface IDistributedCachingService
     {
-        Task<IEnumerable<T>?> GetRecordsAsync<T>();
+        Task<IEnumerable<T>?> GetCollectionAsync<T>();
 
         Task<T?> GetRecordAsync<T>(string recordId);
 
-        Task SetRecordsAsync<T>(
+        Task SetCollectionAsync<T>(
             IEnumerable<T> data,
             TimeSpan? absoluteExpireTime = null,
             TimeSpan? slidingExpireTime = null
@@ -19,6 +19,6 @@ namespace Formula_1_API.Caching
             T data,
             TimeSpan? absoluteExpireTime = null,
             TimeSpan? slidingExpireTime = null
-        );        
+        );
     }
 }

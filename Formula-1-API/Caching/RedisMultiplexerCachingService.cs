@@ -65,7 +65,7 @@ namespace Formula_1_API.Caching
         public async Task<IEnumerable<T>> GetPaginated<T>(int page, int limit = 100) where T : class, IEntity
         {
             var key = GenerateKey<T>();
-            
+
             var recordArray = await _database.HashGetAllAsync(key);
 
             if(recordArray == null || !recordArray.Any())

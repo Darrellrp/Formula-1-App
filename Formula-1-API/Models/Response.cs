@@ -7,17 +7,32 @@ namespace Formula_1_API.Models
         public Meta<T> Meta { get; set; }
         public Payload Payload { get; set; }
 
-        public Response(dynamic data)
+        public Response(string collectionLabel, T record)
         {
-            Meta = new();
-            Payload = new(data);
+            Meta = new()
+            {
+                CollectionLabel = collectionLabel,
+                CollectionKey = collectionLabel.ToLower()
+            };
+            Payload = new(record);
+        }
+
+        public Response(string collectionLabel, IEnumerable<T> collection)
+        {
+            Meta = new()
+            {
+                CollectionLabel = collectionLabel,
+                CollectionKey = collectionLabel.ToLower()
+            };
+            Payload = new(collection);
         }
     }
 
     public class Meta<T>
     {
-        public string Label { get; set; } = typeof(T).Name.AddSpacesToPascalCase();
-        public string Key { get; set; } = typeof(T).Name.ToLower();
+        public string EntityLabel { get; init; } = typeof(T).Name.AddSpacesToPascalCase();
+        public string CollectionLabel { get; set; } = string.Empty;
+        public string CollectionKey { get; set; } = string.Empty;
     }
 
     public class Payload

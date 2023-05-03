@@ -47,7 +47,9 @@ namespace Formula_1_API.Factories
 
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
-                .Where(t => type.IsAssignableFrom(t) && !t.IsAbstract && !_excludedControllers.Contains(t));
+                .Where(t => type.IsAssignableFrom(t) &&
+                    !t.IsAbstract &&
+                    !_excludedControllers.Contains(t));
 
             var uris = types.Select(c => c.Name.Replace("Controller", string.Empty));
 

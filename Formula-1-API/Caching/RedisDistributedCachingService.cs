@@ -10,9 +10,9 @@ namespace Formula_1_API.Caching
 
         public IDistributedCache _cache { get; set; }
 
-        public RedisDistributedCachingService(IDistributedCache cache) 
+        public RedisDistributedCachingService(IDistributedCache cache)
         {
-            _cache = cache;   
+            _cache = cache;
         }
 
         public async Task<T?> GetRecordAsync<T>(string id)
@@ -30,7 +30,7 @@ namespace Formula_1_API.Caching
             return await JsonSerializer.DeserializeAsync<T>(stream);
         }
 
-        public async Task<IEnumerable<T>?> GetRecordsAsync<T>()
+        public async Task<IEnumerable<T>?> GetCollectionAsync<T>()
         {
             var recordsId = await GenerateRecordId<T>(_recordIdAll);
             var jsonData = await _cache.GetStringAsync(recordsId);
@@ -43,23 +43,6 @@ namespace Formula_1_API.Caching
             var stream = new MemoryStream(Encoding.ASCII.GetBytes(jsonData));
 
             return await JsonSerializer.DeserializeAsync<IEnumerable<T>>(stream);
-        }
-
-        public async Task SetRecordsAsync<T>(
-            IEnumerable<T> data,
-            TimeSpan? absoluteExpireTime = null,
-            TimeSpan? slidingExpireTime = null
-        )
-        {
-            var options = new DistributedCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = absoluteExpireTime ?? TimeSpan.FromSeconds(60),
-                SlidingExpiration = slidingExpireTime
-            };
-            var recordId = await GenerateRecordId<T>(_recordIdAll);
-
-            var jsonData = JsonSerializer.Serialize(data);
-            await _cache.SetStringAsync(recordId, jsonData, options);
         }
 
         public async Task SetRecordAsync<T>(
@@ -75,6 +58,23 @@ namespace Formula_1_API.Caching
                 SlidingExpiration = slidingExpireTime
             };
             var recordId = await GenerateRecordId<T>(id);
+
+            var jsonData = JsonSerializer.Serialize(data);
+            await _cache.SetStringAsync(recordId, jsonData, options);
+        }
+
+        public async Task SetCollectionAsync<T>(
+            IEnumerable<T> data,
+            TimeSpan? absoluteExpireTime = null,
+            TimeSpan? slidingExpireTime = null
+        )
+        {
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = absoluteExpireTime ?? TimeSpan.FromSeconds(60),
+                SlidingExpiration = slidingExpireTime
+            };
+            var recordId = await GenerateRecordId<T>(_recordIdAll);
 
             var jsonData = JsonSerializer.Serialize(data);
             await _cache.SetStringAsync(recordId, jsonData, options);

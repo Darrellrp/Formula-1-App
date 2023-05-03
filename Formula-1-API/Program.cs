@@ -34,6 +34,7 @@ builder.Services.AddTransient(typeof(EntityFrameworkAdapter<>), typeof(EntityFra
 builder.Services.AddTransient(typeof(MongoAdapter<>), typeof(MongoAdapter<>));
 builder.Services.AddScoped<MainEndpointFactory, MainEndpointFactory>();
 builder.Services.AddScoped<EndpointFactory, EndpointFactory>();
+builder.Services.AddScoped<EntityCollectionKeyFactory, EntityCollectionKeyFactory>();
 builder.Services.AddTransient<DbContext, Formula1DbContext>();
 builder.Services.AddSingleton<IConnectionMultiplexer>(
     sp => ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable("REDIS_CONNECTIONSTRING") ?? throw new Exception("Redis connectionstring has not been provided"))
