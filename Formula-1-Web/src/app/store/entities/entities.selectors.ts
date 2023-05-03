@@ -15,6 +15,12 @@ export const selectEntityCollections = createSelector(
   selectCollections
 );
 
+export const selectCollectionLabel = (collectionKey: string) =>
+createSelector(
+  selectEntityCollections,
+  (state) => state[collectionKey]?.collectionLabel
+);
+
 export const selectEntities = (collectionKey: string) =>
 createSelector(
   selectEntityCollections,

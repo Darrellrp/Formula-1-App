@@ -6,10 +6,14 @@ export const collectionAdapter : EntityAdapter<Entity> = createEntityAdapter<Ent
 });
 
 export const initialState: CollectionState<Entity> = {
-  key: '',
+  entityLabel: '',
+  collectionLabel: '',
+  collectionKey: '',
   ...collectionAdapter.getInitialState()
 };
 
 export interface CollectionState<Entity> extends EntityState<Entity> {
-  key: string;
+  entityLabel: string;
+  collectionLabel: string;
+  collectionKey: string;
 }

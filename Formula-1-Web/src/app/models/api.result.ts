@@ -1,7 +1,8 @@
 export interface ApiResult<Entity> {
   meta: {
-    label: string;
-    key: string;
+    collectionLabel: string;
+    collectionKey: string;
+    entityLabel: string;
   }
   payload: {
     data: Array<Entity>

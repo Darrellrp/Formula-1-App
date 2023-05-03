@@ -17,7 +17,10 @@ export class EntitiesEffects {
     ofType(EntityApiActions.LoadEntities),
     exhaustMap((action: { collectionKey: string; }) => this.apiService.GetEntities(action.collectionKey)
       .pipe(
-        map(apiResult => ({ type: EntityApiActions.LoadedEntities, collectionKey: apiResult.meta.key, entityCollection: apiResult.payload.data })),
+        map(apiResult => ({
+          type: EntityApiActions.LoadedEntities,
+          apiResult: apiResult
+        })),
         catchError(() => EMPTY)
       ))
     )

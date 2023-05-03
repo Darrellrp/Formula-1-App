@@ -5,12 +5,16 @@ import { collectionAdapter } from './entity-collection.state';
 
 export const entitiesReducer = createReducer(
   initialState,
-  on(loaded, (state, { collectionKey, entityCollection }) => {
-    const entities = Object.assign({}, ...entityCollection.map((x) => ({[x.id]: x})));
+  on(loaded, (state, { apiResult }) => {
+    const entities = Object.assign({}, ...apiResult.payload.data.map((x) => ({[x.id]: x})));
+
     // collectionAdapter.addMany(entityCollection);
+
     const newCollectionsState = collectionsAdapter.addOne({
-      key: collectionKey,
-      ids: entityCollection.map(x => x.id),
+      entityLabel: apiResult.meta.entityLabel,
+      collectionLabel: apiResult.meta.collectionLabel,
+      collectionKey: apiResult.meta.collectionKey,
+      ids: apiResult.payload.data.map(x => x.id),
       entities: entities
     }, state);
 

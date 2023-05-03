@@ -9,5 +9,5 @@ export enum EntityApiActions {
 }
 
 export const load = createAction(EntityApiActions.LoadEntities, props<{ collectionKey: string }>());
-export const loaded = createAction(EntityApiActions.LoadedEntities, props<{ collectionKey: string; entityCollection: Array<Entity> }>());
+export const loaded = createAction(EntityApiActions.LoadedEntities, props<{ apiResult: ApiResult<Entity> }>());
 export const reset = createAction(EntityApiActions.ResetEntities);
