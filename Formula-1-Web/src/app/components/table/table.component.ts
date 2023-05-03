@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest, filter, map, of, tap } from 'rxjs';
+import { Observable, combineLatest, distinct, filter, map, of, tap } from 'rxjs';
 import { Entity } from 'src/app/models/entities/entity';
 import { ApiService } from 'src/app/services/api/api.service';
 import 'datatables.net-bs4'
@@ -35,7 +35,7 @@ export class TableComponent implements OnInit {
 
     this.store.dispatch(EntitiesActions.load({ collectionKey }));
 
-    this.response$ = this.store.select(EntitiesSelectors.selectEntities(collectionKey));
+    this.response$ = this.store.select(EntitiesSelectors.selectEntities(collectionKey)).pipe(distinct());
     this.entity$ = this.store.select(EntitiesSelectors.selectCollectionLabel(collectionKey));
     this.columns$ = this.response$.pipe(
       filter((entities): entities is Dictionary<Entity> => !!entities),
@@ -52,7 +52,7 @@ export class TableComponent implements OnInit {
       filter((entities): entities is Dictionary<Entity> => !!entities),
       map(entities => Object.values(entities)),
     )
-    .pipe(tap(x => console.log('entityList', x)));
+    .pipe(tap(x => console.log(collectionKey, x)));
 
     combineLatest([this.columns$, this.entityList$]).subscribe(([columns, data]) => {
       this.table = $(TableComponent.tableElementId).DataTable({ columns, data, retrieve: true });
