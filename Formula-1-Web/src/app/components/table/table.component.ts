@@ -42,7 +42,7 @@ export class TableComponent implements OnInit {
       map((entities) => {
         const entity = entities[Object.keys(entities)[0]];
 
-        if(entity == undefined) { return undefined; }
+        if (entity == undefined) { return undefined; }
 
         return Object.keys(entity).map(columnName => ({ title: columnName, data: columnName }))
       })
@@ -51,8 +51,7 @@ export class TableComponent implements OnInit {
     this.entityList$ = this.response$.pipe(
       filter((entities): entities is Dictionary<Entity> => !!entities),
       map(entities => Object.values(entities)),
-    )
-    .pipe(tap(x => console.log(collectionKey, x)));
+    );
 
     combineLatest([this.columns$, this.entityList$]).subscribe(([columns, data]) => {
       this.table = $(TableComponent.tableElementId).DataTable({ columns, data, retrieve: true });
