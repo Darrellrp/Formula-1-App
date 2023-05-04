@@ -20,7 +20,7 @@ namespace Formula_1_API.Repositories
         private readonly IMultiplexerCachingService _cache;
         private readonly string _collectionLabel = string.Empty;
 
-        public BaseRepository(IDatasourceAdapter<T> datasource, IMultiplexerCachingService cache, EntityCollectionKeyFactory keyFactory)
+        public BaseRepository(IDatasourceAdapter<T> datasource, IMultiplexerCachingService cache, EntityCollectionLabelFactory keyFactory)
         {
             _datasource = datasource;
             _cache = cache;

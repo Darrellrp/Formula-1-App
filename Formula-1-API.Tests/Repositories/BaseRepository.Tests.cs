@@ -15,7 +15,7 @@ public class BaseRepositoryTests
     private readonly Fixture Fixture = new();
     private readonly Mock<IDatasourceAdapter<Models.Circuit>> DatasourceAdapter = new();
     private readonly Mock<IMultiplexerCachingService> CachingService = new();
-    private readonly Mock<EntityCollectionKeyFactory> CollectionKeyFactory = new();
+    private readonly Mock<EntityCollectionLabelFactory> CollectionKeyFactory = new();
 
     private BaseRepository<Models.Circuit> GetBaseRepository()
     {

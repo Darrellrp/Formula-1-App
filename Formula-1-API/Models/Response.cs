@@ -11,7 +11,7 @@ namespace Formula_1_API.Models
         {
             Meta = new()
             {
-                CollectionLabel = collectionLabel,
+                CollectionLabel = collectionLabel.AddSpacesToPascalCase(),
                 CollectionKey = collectionLabel.ToLower()
             };
             Payload = new(record);
@@ -21,7 +21,7 @@ namespace Formula_1_API.Models
         {
             Meta = new()
             {
-                CollectionLabel = collectionLabel,
+                CollectionLabel = collectionLabel.AddSpacesToPascalCase(),
                 CollectionKey = collectionLabel.ToLower()
             };
             Payload = new(collection);

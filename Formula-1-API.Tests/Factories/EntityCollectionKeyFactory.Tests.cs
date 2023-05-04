@@ -10,7 +10,7 @@ namespace Formula_1_API.Tests.Factories
 {
     public class EntityCollectionKeyFactoryTests
     {
-        private EntityCollectionKeyFactory _sut = new EntityCollectionKeyFactory();
+        private EntityCollectionLabelFactory _sut = new EntityCollectionLabelFactory();
 
         [Fact]
         public void CreateAllKeys()
