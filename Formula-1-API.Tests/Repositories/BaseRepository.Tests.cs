@@ -6,6 +6,7 @@ using Formula_1_API.Repositories;
 using Moq;
 using AutoFixture;
 using FluentAssertions;
+using Formula_1_API.Factories;
 
 namespace Formula_1_API.Tests.Repositories;
 
@@ -14,10 +15,11 @@ public class BaseRepositoryTests
     private readonly Fixture Fixture = new();
     private readonly Mock<IDatasourceAdapter<Models.Circuit>> DatasourceAdapter = new();
     private readonly Mock<IMultiplexerCachingService> CachingService = new();
+    private readonly Mock<EntityCollectionLabelFactory> CollectionKeyFactory = new();
 
     private BaseRepository<Models.Circuit> GetBaseRepository()
     {
-        return new BaseRepository<Models.Circuit>(DatasourceAdapter.Object, CachingService.Object);
+        return new BaseRepository<Models.Circuit>(DatasourceAdapter.Object, CachingService.Object, CollectionKeyFactory.Object);
     }
 
     [Fact]

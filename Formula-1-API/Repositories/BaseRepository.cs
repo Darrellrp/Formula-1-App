@@ -10,6 +10,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Formula_1_API.Caching;
 using System.Runtime.InteropServices;
 using DnsClient.Protocol;
+using Formula_1_API.Factories;
 
 namespace Formula_1_API.Repositories
 {
@@ -17,20 +18,22 @@ namespace Formula_1_API.Repositories
     {
         private readonly IDatasourceAdapter<T> _datasource;
         private readonly IMultiplexerCachingService _cache;
+        private readonly string _collectionLabel = string.Empty;
 
-        public BaseRepository(IDatasourceAdapter<T> datasource, IMultiplexerCachingService cache)
+        public BaseRepository(IDatasourceAdapter<T> datasource, IMultiplexerCachingService cache, EntityCollectionLabelFactory keyFactory)
         {
             _datasource = datasource;
             _cache = cache;
+            _collectionLabel = keyFactory.CreateSingleLabel<T>();
         }
 
-        public async Task<T?> FindById(int id)
+        public async Task<DbResult<T>?> FindById(int id)
         {
             var record = await _cache.FindById<T>(id);
 
             if (record != null)
             {
-                return record;
+                return new DbResult<T>(_collectionLabel, record);
             }
 
             record = await _datasource.FindById(id);
@@ -41,35 +44,35 @@ namespace Formula_1_API.Repositories
             }
 
             await _cache.Add(record);
-            return record;
+            return new DbResult<T>(_collectionLabel, record);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<DbResult<T>> GetAll()
         {
             var cachedRecords = await _cache.GetAll<T>();
             var dbRecords = await _datasource.GetAll();
 
             if (cachedRecords != null && cachedRecords.SequenceEqual(dbRecords))
             {
-                return cachedRecords;
+                return new DbResult<T>(_collectionLabel, cachedRecords);
             }
 
             await LoadNewDataInCache(dbRecords);
-            return dbRecords;
+            return new DbResult<T>(_collectionLabel, dbRecords);
         }
 
-        public async Task<IEnumerable<T>> GetPaginated(int page, int limit = 100)
+        public async Task<DbResult<T>> GetPaginated(int page, int limit = 100)
         {
             var cachedRecords = await _cache.GetPaginated<T>(page, limit);
             var dbRecords = await _datasource.GetPaginated(page, limit);
 
             if (cachedRecords != null && cachedRecords.SequenceEqual(dbRecords))
             {
-                return cachedRecords;
+                return new DbResult<T>(_collectionLabel, cachedRecords);
             }
 
             await LoadNewDataInCache(dbRecords);
-            return dbRecords;
+            return new DbResult<T>(_collectionLabel, dbRecords);
         }
 
         public async Task<T> Add(T entity)
@@ -90,7 +93,7 @@ namespace Formula_1_API.Repositories
             return newRecord;
         }
 
-        public async Task<IEnumerable<T>> AddMany(IEnumerable<T> entities)
+        public async Task<DbResult<T>> AddMany(IEnumerable<T> entities)
         {
             var newRecords = await _datasource.AddMany(entities);
 
@@ -100,7 +103,7 @@ namespace Formula_1_API.Repositories
             }
 
             await _cache.AddMany(newRecords);
-            return newRecords;
+            return new DbResult<T>(_collectionLabel, newRecords);
         }
 
         public async Task<T> Update(T entity)
@@ -121,16 +124,17 @@ namespace Formula_1_API.Repositories
             return updatedRecord;
         }
 
-        public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression)
+        public async Task<DbResult<T>> Where(Expression<Func<T, bool>> expression)
         {
-            var records = await _cache.Where(expression.Compile());
+            var cachedRecords = await _cache.Where(expression.Compile());
 
-            if (records != null && records.Any())
+            if (cachedRecords != null && cachedRecords.Any())
             {
-                return records;
+                return new DbResult<T>(_collectionLabel, cachedRecords);
             }
 
-            return await _datasource.Where(expression);
+            var records = await _datasource.Where(expression);
+            return new DbResult<T>(_collectionLabel, records);
         }
 
         public async Task<T> Delete(T entity)

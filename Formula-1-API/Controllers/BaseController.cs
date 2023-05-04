@@ -22,57 +22,57 @@ namespace Formula_1_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<T>>> Get(int page = 0, int pageSize = 100)
         {
-            IEnumerable<T> entities;
+            DbResult<T> result;
 
             if (page < 1)
             {
-                entities = await _service.GetAll();
+                result = await _service.GetAll();
             }
             else
             {
-                entities = await _service.GetPaginated(page, pageSize);
+                result = await _service.GetPaginated(page, pageSize);
             }
 
-            return Ok(new Response<T>(entities));
+            return Ok(new Response<T>(result.CollectionLabel, result.Collection));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<T>> Get(int id)
         {
-            var entity = await _service.FindById(id);
+            var result = await _service.FindById(id);
 
-            if(entity == null)
+            if(result == null)
             {
                 return NotFound();
             }
 
-            return Ok(new Response<T>(entity));
+            return Ok(new Response<T>(result.CollectionLabel, result.Collection));
         }
         [HttpPost]
-        public async Task<ActionResult<T>> Post(T entity)
+        public async Task<ActionResult<T>> Post(T result)
         {
-            var newEntity = await _service.Save(entity);
+            var newEntity = await _service.Save(result);
             return Ok(newEntity);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<T>> Put(int id, T entity)
+        public async Task<ActionResult<T>> Put(int id, T result)
         {
-            var updatedEntity = await _service.Update(id, entity);
+            var updatedEntity = await _service.Update(id, result);
             return Ok(updatedEntity);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var entity = await _service.FindById(id);
+            var result = await _service.FindById(id);
 
-            if (entity == null)
+            if (result == null)
             {
                 return NotFound();
             }
 
-            await _service.Delete(entity);
+            await _service.Delete(result.Record);
             return NoContent();
         }
     }
