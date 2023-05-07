@@ -25,7 +25,6 @@ export class TableComponent implements OnInit {
   private static readonly defaultCollection: string = 'circuits';
 
   constructor(
-    private readonly apiService: ApiService,
     private readonly router: Router,
     private readonly store: Store) { }
 
@@ -35,18 +34,13 @@ export class TableComponent implements OnInit {
 
     this.store.dispatch(EntitiesActions.load({ collectionKey }));
 
-    this.response$ = this.store.select(EntitiesSelectors.selectEntities(collectionKey)).pipe(distinct());
+    this.response$ = this.store.select(EntitiesSelectors.selectEntities(collectionKey)).pipe(distinct())
+      .pipe(tap(entities => console.log(collectionKey, entities)));
     this.entity$ = this.store.select(EntitiesSelectors.selectCollectionLabel(collectionKey));
     this.columns$ = this.response$.pipe(
       filter((entities): entities is Dictionary<Entity> => !!entities),
-      map((entities) => {
-        const entity = entities[Object.keys(entities)[0]];
-
-        if (entity == undefined) { return undefined; }
-
-        return Object.keys(entity).map(columnName => ({ title: columnName, data: columnName }))
-      })
-    )
+      map((entities) => this.getColumns(entities))
+    );
 
     this.entityList$ = this.response$.pipe(
       filter((entities): entities is Dictionary<Entity> => !!entities),
@@ -56,5 +50,13 @@ export class TableComponent implements OnInit {
     combineLatest([this.columns$, this.entityList$]).subscribe(([columns, data]) => {
       this.table = $(TableComponent.tableElementId).DataTable({ columns, data, retrieve: true });
     });
+  }
+
+  private getColumns(entities: Dictionary<Entity>): { title: string, data: string }[] | undefined {
+    const entity = entities[Object.keys(entities)[0]];
+
+    if (entity == undefined) { return undefined; }
+
+    return Object.keys(entity).map(columnName => ({ title: columnName, data: columnName }))
   }
 }
