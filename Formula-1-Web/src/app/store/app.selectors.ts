@@ -7,3 +7,8 @@ export const selectCollectionsState = createSelector(
   getAppState,
   (state: AppState) => state.entityCollections
 );
+
+export const selectEndpointsState = createSelector(
+  getAppState,
+  (state: AppState) => state.endpoints
+);

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, of } from 'rxjs';
-import { map, exhaustMap, catchError, withLatestFrom, filter, tap, switchMap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { map, exhaustMap, catchError, filter, tap, switchMap } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api/api.service';
-import { EntityApiActions } from './entities.actions';
 import { Store } from '@ngrx/store';
-import * as EntitiesSelectors from 'src/app/store/entities/entities.selectors';
+import { selectEntities } from './entities.selectors';
+import { EntityApiActions } from './entities.actions';
 
 @Injectable()
 export class EntitiesEffects {
@@ -19,7 +19,7 @@ export class EntitiesEffects {
   loadEntities$ = createEffect(() => this.actions$.pipe(
     ofType(EntityApiActions.LoadEntities),
     switchMap((action: { collectionKey: string }) =>
-      this.store.select(EntitiesSelectors.selectEntities(action.collectionKey)).pipe(
+      this.store.select(selectEntities(action.collectionKey)).pipe(
         filter(entities => !entities),
         exhaustMap(() => this.apiService.GetEntities(action.collectionKey)
           .pipe(

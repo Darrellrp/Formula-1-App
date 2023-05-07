@@ -1,4 +1,4 @@
-import { Action, createAction, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { ApiResult } from 'src/app/models/api.result';
 import { Entity } from 'src/app/models/entities/entity';
 
@@ -8,6 +8,6 @@ export enum EntityApiActions {
   ResetEntities = '[Entities API] Reset collection'
 }
 
-export const load = createAction(EntityApiActions.LoadEntities, props<{ collectionKey: string }>());
-export const loaded = createAction(EntityApiActions.LoadedEntities, props<{ apiResult: ApiResult<Entity> }>());
-export const reset = createAction(EntityApiActions.ResetEntities);
+export const loadEntities = createAction(EntityApiActions.LoadEntities, props<{ collectionKey: string }>());
+export const loadedEntities = createAction(EntityApiActions.LoadedEntities, props<{ apiResult: ApiResult<Entity> }>());
+export const resetEntities = createAction(EntityApiActions.ResetEntities);
