@@ -1,6 +1,6 @@
 export interface Endpoint {
-    label: string;
-    key: string;
-    webUrl: string;
-    apiUrl: string;
+  collectionLabel: string;
+  collectionKey: string;
+  webUrl: string;
+  apiUrl: string;
 }

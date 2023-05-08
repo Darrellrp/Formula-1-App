@@ -25,9 +25,9 @@
   <!-- Nav Item - Charts -->
   <li *ngFor="let endpoint of endpoints$ | async" class="nav-item">
     <div>
-      <a class="nav-link" routerLink="/{{ endpoint?.key }}">
+      <a class="nav-link" routerLink="/{{ endpoint?.collectionKey }}">
         <i class="fas fa-fw fa-chart-area"></i>
-        <span>{{ endpoint?.label }}</span>
+        <span>{{ endpoint?.collectionLabel }}</span>
       </a>
     </div>
   </li>
