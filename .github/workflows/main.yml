@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
@@ -29,6 +29,12 @@ jobs:
 
       - name: Publish artifact
         run: dotnet publish -c Release -o publish
+
+      - name: Build the Docker image
+        run: docker build -t formula1registry.azurecr.io/formula-1-web:${{ steps.vars.outputs.tag }} ./Formula-1-Web/
+
+      - name: Build the Docker image
+        run: docker build -t formula1registry.azurecr.io/formula-1-api:${{ steps.vars.outputs.tag }} ./Formula-1-API/
 
       # - name: Deploy to Server
       #   uses: actions/upload-artifact@v2
