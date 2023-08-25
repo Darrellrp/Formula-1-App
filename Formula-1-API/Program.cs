@@ -1,4 +1,4 @@
-using Formula_1_API;
+﻿using Formula_1_API;
 using Formula_1_API.Configurations;
 using Formula_1_API.Context;
 using Formula_1_API.Controllers;
@@ -15,6 +15,7 @@ using StackExchange.Redis;
 var builder = WebApplication.CreateBuilder(args);
 var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
 var clientAppPath = Path.Combine(solutionPath!, "Formula-1-Web", "dist");
+var forceDisableHttps = Boolean.Parse(Environment.GetEnvironmentVariable("FORCE_DISABLE_HTTPS") ?? "false");
 
 if (builder.Environment.IsDevelopment())
 {
@@ -71,13 +72,16 @@ if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
 }
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment() && !forceDisableHttps)
 {
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+if (!forceDisableHttps)
+{
+    app.UseHttpsRedirection();
+}
 
 if (app.Environment.IsDevelopment())
 {
