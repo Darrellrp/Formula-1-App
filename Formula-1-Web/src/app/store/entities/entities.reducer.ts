@@ -8,7 +8,10 @@ export const entitiesReducer = createReducer(
   on(loadedEntities, (state, { apiResult }) => {
     const entities = Object.assign({}, ...apiResult.payload.data.map((x) => ({ [x.id]: x })));
 
-    // collectionAdapter.addMany(entityCollection);
+    collectionAdapter.addMany(apiResult.payload.data, {
+      ids: [],
+      entities: state.entities['e']?.entities ?? {}
+    });
 
     const newCollectionsState = collectionsAdapter.addOne({
       entityLabel: apiResult.meta.entityLabel,
