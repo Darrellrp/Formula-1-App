@@ -7,9 +7,11 @@ EXPOSE 443
 
 RUN mkdir data
 
-# Restore stage
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS restore
-WORKDIR /app
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS sdk
+RUN dotnet dev-certs https
+RUN dotnet dev-certs https --trust
+
+FROM sdk AS restore
 
 COPY Formula-1-API.csproj .
 
@@ -28,6 +30,15 @@ FROM build AS publish
 WORKDIR /app
 
 RUN dotnet publish Formula-1-API.csproj -c Release -o publish
+
+# Restore stage
+FROM publish AS ef
+WORKDIR /app
+
+# RUN dotnet new tool-manifest
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+RUN dotnet ef database update
 
 # Final stage
 FROM base AS final
