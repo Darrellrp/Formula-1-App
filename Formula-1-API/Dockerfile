@@ -32,13 +32,13 @@ WORKDIR /app
 RUN dotnet publish Formula-1-API.csproj -c Release -o publish
 
 # Restore stage
-FROM publish AS ef
-WORKDIR /app
+# FROM publish AS ef
+# WORKDIR /app
 
 # RUN dotnet new tool-manifest
-RUN dotnet tool install --global dotnet-ef
-ENV PATH="$PATH:/root/.dotnet/tools"
-RUN dotnet ef database update
+# RUN dotnet tool install --global dotnet-ef
+# ENV PATH="$PATH:/root/.dotnet/tools"
+# RUN dotnet ef database update
 
 # Final stage
 FROM base AS final
