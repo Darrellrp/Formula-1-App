@@ -31,10 +31,10 @@ jobs:
         run: dotnet publish -c Release -o publish
 
       - name: Build the Docker image
-        run: docker build -t formula1registry.azurecr.io/formula-1-web:${{ steps.vars.outputs.tag }} ./Formula-1-Web/
+        run: docker build -t formula1registry.azurecr.io/formula-1-web:${{ github.ref_name }} ./Formula-1-Web/
 
       - name: Build the Docker image
-        run: docker build -t formula1registry.azurecr.io/formula-1-api:${{ steps.vars.outputs.tag }} ./Formula-1-API/
+        run: docker build -t formula1registry.azurecr.io/formula-1-api:${{ github.ref_name }} ./Formula-1-API/
 
       # - name: Deploy to Server
       #   uses: actions/upload-artifact@v2
