@@ -1,14 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
-import { loaded, reset } from './entities.actions';
+import { loadedEntities, resetEntities } from './entities.actions';
 import { collectionsAdapter, initialState } from './entity-collections.state';
 import { collectionAdapter } from './entity-collection.state';
 
 export const entitiesReducer = createReducer(
   initialState,
-  on(loaded, (state, { apiResult }) => {
-    const entities = Object.assign({}, ...apiResult.payload.data.map((x) => ({[x.id]: x})));
+  on(loadedEntities, (state, { apiResult }) => {
+    const entities = Object.assign({}, ...apiResult.payload.data.map((x) => ({ [x.id]: x })));
 
-    // collectionAdapter.addMany(entityCollection);
+    collectionAdapter.addMany(apiResult.payload.data, {
+      ids: [],
+      entities: state.entities['e']?.entities ?? {}
+    });
 
     const newCollectionsState = collectionsAdapter.addOne({
       entityLabel: apiResult.meta.entityLabel,
@@ -20,5 +23,5 @@ export const entitiesReducer = createReducer(
 
     return { ...newCollectionsState };
   }),
-  on(reset, (state) => (initialState))
+  on(resetEntities, (state) => (initialState))
 );

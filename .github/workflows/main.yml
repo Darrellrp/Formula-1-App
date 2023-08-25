@@ -1,0 +1,37 @@
+name: Build and Deploy
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '3.1'  # Change to the desired .NET Core version
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build project
+        run: dotnet build --configuration Release
+
+      - name: Run tests
+        run: dotnet test --configuration Release --no-build
+
+      - name: Publish artifact
+        run: dotnet publish -c Release -o publish
+
+      # - name: Deploy to Server
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app-artifact
+      #     path: publish

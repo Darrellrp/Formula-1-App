@@ -38,7 +38,7 @@ function loadRoutesFromApi(apiService: ApiService, router: Router): () => Promis
 
         endpoints.forEach(e => {
           apiRoutes.push({
-            path: e.key,
+            path: e.collectionKey,
             component: DashboardComponent,
           });
         });

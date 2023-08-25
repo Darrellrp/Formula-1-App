@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
-import { Observable, map } from 'rxjs';
-import { ApiOverview } from 'src/app/models/api.overview';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, map, of } from 'rxjs';
 import { Endpoint } from 'src/app/models/endpoint';
-import { ApiService } from 'src/app/services/api/api.service';
-import { APP_BASEURL } from 'src/main';
+import { loadEndpoints } from 'src/app/store/endpoints/endpoints.actions';
+import { selectEndpoints } from 'src/app/store/endpoints/endpoints.selectors';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,10 +12,16 @@ import { APP_BASEURL } from 'src/main';
 })
 export class SidebarComponent implements OnInit {
 
-  public readonly endpoints: Observable<Array<Endpoint>> = this.apiService.GetEndpoints();
+  public endpoints$: Observable<Array<Endpoint | undefined>> = of();
 
-  constructor(private readonly apiService: ApiService) { }
+  constructor(private readonly store: Store) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.store.dispatch(loadEndpoints());
+
+    this.endpoints$ = this.store.select(selectEndpoints).pipe(
+      map(entities => Object.values(entities)),
+    );
+  }
 
 }

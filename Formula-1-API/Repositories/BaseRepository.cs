@@ -38,13 +38,13 @@ namespace Formula_1_API.Repositories
 
             record = await _datasource.FindById(id);
 
-            if (record == null)
+            if (record != null)
             {
-                return null;
+                await _cache.Add(record);
+                return new DbResult<T>(_collectionLabel, record);
             }
 
-            await _cache.Add(record);
-            return new DbResult<T>(_collectionLabel, record);
+            return null;
         }
 
         public async Task<DbResult<T>> GetAll()

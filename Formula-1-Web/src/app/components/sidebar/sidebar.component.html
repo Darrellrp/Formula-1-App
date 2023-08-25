@@ -1,33 +1,35 @@
 <!-- Sidebar -->
-<ul class="navbar-nav bg-danger sidebar sidebar-dark accordion" id="accordionSidebar">
-
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fa fa-flag-checkered"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Formula 1</div>
-    </a>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <br />
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Data
+<ul
+  class="navbar-nav bg-danger sidebar sidebar-dark accordion"
+  id="accordionSidebar"
+>
+  <!-- Sidebar - Brand -->
+  <a
+    class="sidebar-brand d-flex align-items-center justify-content-center"
+    routerLink="/"
+  >
+    <div class="sidebar-brand-icon rotate-n-15">
+      <i class="fa fa-flag-checkered"></i>
     </div>
+    <div class="sidebar-brand-text mx-3">Formula 1</div>
+  </a>
 
-    <!-- Nav Item - Charts -->
-    <li *ngFor="let endpoint of endpoints | async" class="nav-item">
-        <div>
-            <a class="nav-link" routerLink="/{{ endpoint.key }}">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>{{ endpoint.label }}</span>
-            </a>
-        </div>
-    </li>
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0" />
 
+  <br />
+
+  <!-- Heading -->
+  <div class="sidebar-heading">Data</div>
+
+  <!-- Nav Item - Charts -->
+  <li *ngFor="let endpoint of endpoints$ | async" class="nav-item">
+    <div>
+      <a class="nav-link" routerLink="/{{ endpoint?.collectionKey }}">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>{{ endpoint?.collectionLabel }}</span>
+      </a>
+    </div>
+  </li>
 </ul>
 <!-- End of Sidebar -->
