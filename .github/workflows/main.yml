@@ -5,6 +5,10 @@ on:
     tags:
       - '*'
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -35,6 +39,20 @@ jobs:
 
       - name: Build the Docker image
         run: docker build -t formula1registry.azurecr.io/formula-1-api:${{ github.ref_name }} ./Formula-1-API/
+
+      - uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az account show
+            az group list
 
       # - name: Deploy to Server
       #   uses: actions/upload-artifact@v2
