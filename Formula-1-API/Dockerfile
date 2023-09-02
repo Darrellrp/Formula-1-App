@@ -1,5 +1,6 @@
 # Base stage
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS base
+# FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS base
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS base
 WORKDIR /app
 
 EXPOSE 80
@@ -7,10 +8,11 @@ EXPOSE 443
 
 RUN mkdir data
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS sdk
+# FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS sdk
+FROM base AS sdk
 WORKDIR /app
 
-RUN dotnet dev-certs https
+# RUN dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p crypticpassword
 RUN dotnet dev-certs https --trust
 
 FROM sdk AS restore
