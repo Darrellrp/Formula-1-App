@@ -12,8 +12,7 @@ RUN mkdir data
 FROM base AS sdk
 WORKDIR /app
 
-RUN dotnet dev-certs https
-RUN dotnet dev-certs https --trust
+# RUN dotnet dev-certs https --trust
 
 FROM sdk AS restore
 
@@ -47,6 +46,8 @@ RUN dotnet publish Formula-1-API.csproj -c Release -o publish
 # Final stage
 FROM base AS final
 WORKDIR /app
+
+RUN dotnet dev-certs https
 
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Formula-1-API.dll"]
