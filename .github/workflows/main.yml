@@ -50,14 +50,6 @@ jobs:
       - name: Push the Docker image
         run: docker push formula1registry.azurecr.io/formula-1-api:latest
 
-      - name: Azure CLI script
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az account show
-            az group list
-
   build-and-deploy-web:
     runs-on: ubuntu-latest
 
@@ -81,12 +73,3 @@ jobs:
 
       - name: Push the Docker image
         run: docker push formula1registry.azurecr.io/formula-1-web:latest
-
-      - name: Azure CLI script
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az account show
-            az group list
-
