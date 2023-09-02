@@ -14,13 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Az CLI login'
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -42,7 +35,20 @@ jobs:
         run: dotnet publish -c Release -o publish
 
       - name: Build the Docker image
-        run: docker build -t formula1registry.azurecr.io/formula-1-api:${{ github.ref_name }} ./Formula-1-API/
+        run: docker build -t formula1registry.azurecr.io/formula-1-api:latest ./Formula-1-API/
+
+      - name: Az CLI login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Az CLI acr login
+        run: az acr login -n formula1registry
+
+      - name: Push the Docker image
+        run: docker push formula1registry.azurecr.io/formula-1-api
 
       - name: Azure CLI script
         uses: azure/CLI@v1
@@ -56,18 +62,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Az CLI login'
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build the Docker image
+        # run: docker build -t formula1registry.azurecr.io/formula-1-web:${{ github.ref_name }} ./Formula-1-Web/
+        run: docker build -t formula1registry.azurecr.io/formula-1-web:latest ./Formula-1-Web/
+
+      - name: Az CLI login
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Az CLI acr login
+        run: az acr login -n formula1registry
 
-      - name: Build the Docker image
-        run: docker build -t formula1registry.azurecr.io/formula-1-web:${{ github.ref_name }} ./Formula-1-Web/
+      - name: Push the Docker image
+        run: docker push formula1registry.azurecr.io/formula-1-api
 
       - name: Azure CLI script
         uses: azure/CLI@v1
@@ -77,8 +90,3 @@ jobs:
             az account show
             az group list
 
-      # - name: Deploy to Server
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: app-artifact
-      #     path: publish
