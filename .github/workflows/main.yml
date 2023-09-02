@@ -48,7 +48,7 @@ jobs:
         run: az acr login -n formula1registry
 
       - name: Push the Docker image
-        run: docker push formula1registry.azurecr.io/formula-1-api
+        run: docker push formula1registry.azurecr.io/formula-1-api:latest
 
       - name: Azure CLI script
         uses: azure/CLI@v1
@@ -80,7 +80,7 @@ jobs:
         run: az acr login -n formula1registry
 
       - name: Push the Docker image
-        run: docker push formula1registry.azurecr.io/formula-1-api
+        run: docker push formula1registry.azurecr.io/formula-1-web:latest
 
       - name: Azure CLI script
         uses: azure/CLI@v1
