@@ -2,8 +2,8 @@ name: Build and Deploy
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - master
 
 permissions:
   id-token: write
