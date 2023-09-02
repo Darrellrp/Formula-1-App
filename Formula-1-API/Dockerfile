@@ -12,7 +12,7 @@ RUN mkdir data
 FROM base AS sdk
 WORKDIR /app
 
-# RUN dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p crypticpassword
+RUN dotnet dev-certs https
 RUN dotnet dev-certs https --trust
 
 FROM sdk AS restore
