@@ -32,8 +32,7 @@ public class Formula1DbContext : DbContext
         var host = Environment.GetEnvironmentVariable("MYSQL_HOST");
         var database = Environment.GetEnvironmentVariable("MYSQL_DATABASE");
         var user = Environment.GetEnvironmentVariable("MYSQL_USER");
-        var password = Environment.GetEnvironmentVariable("MYSQL_ROOT_PASSWORD");
-
+        var password = Environment.GetEnvironmentVariable("MYSQL_PASSWORD");
         var connectionString = $"server={host};database={database};user={user};password={password};";
         optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
     }

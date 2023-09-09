@@ -33,6 +33,7 @@ builder.Services.AddScoped(typeof(ISubject<>), typeof(BaseSubject<>));
 builder.Services.AddScoped(typeof(IApiController<>), typeof(BaseController<>));
 builder.Services.AddTransient(typeof(EntityFrameworkAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(MongoAdapter<>), typeof(MongoAdapter<>));
+builder.Services.AddTransient<IDatabaseMigrator, EFDatabaseMigrator>();
 builder.Services.AddScoped<MainEndpointFactory, MainEndpointFactory>();
 builder.Services.AddScoped<EndpointFactory, EndpointFactory>();
 builder.Services.AddScoped<EntityCollectionLabelFactory, EntityCollectionLabelFactory>();
@@ -64,11 +65,12 @@ builder.Services.AddCors();
 var app = builder.Build();
 
 // Seed database
-if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
+if (args.Any())
 {
-    await app.SeedDatabase(args);
+    // Invoke Commands
+    var commandHandler = new CommandHandler(app, args);
+    await commandHandler.InvokeCommands();
     Environment.Exit(1);
-    return;
 }
 
 // Configure the HTTP request pipeline.
