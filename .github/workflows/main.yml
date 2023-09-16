@@ -54,7 +54,7 @@ jobs:
         run: az extension add -n containerapp
 
       - name: Update container app
-        run: az containerapp update --name api --resource-group Formula1ResourceGroup --image formula-1-api
+        run: az containerapp update --name api --resource-group Formula1ResourceGroup --image formula1registry.azurecr.io/formula-1-api:latest
 
       - name: Run database migrations
         run: az containerapp exec -n api -g Formula1ResourceGroup --command "dotnet 'Formula-1-API.dll' -m"
@@ -86,4 +86,4 @@ jobs:
         run: az extension add -n containerapp
 
       - name: Update container app
-        run: az containerapp update --name web --resource-group Formula1ResourceGroup --image formula-1-web
+        run: az containerapp update --name web --resource-group Formula1ResourceGroup --image formula1registry.azurecr.io/formula-1-web:latest
