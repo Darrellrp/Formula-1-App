@@ -7,7 +7,7 @@ networks:
 
 services:
     web:
-        container_name: formula1registry.azurecr.io/formula-1-web
+        container_name: formula-1-web
         image: formula-1-web
         restart: always
         build: ./Formula-1-Web
@@ -30,8 +30,8 @@ services:
         build: ./Formula-1-API
         networks:
             - default
-        ports:
-            - "443:443"
+        # ports:
+        #     - "443:443"
         depends_on:
             - db
         environment:
@@ -40,7 +40,7 @@ services:
             MYSQL_HOST: ${MYSQL_HOST}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_USER: ${MYSQL_USER}
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             REDIS_CONNECTIONSTRING: ${REDIS_CONNECTIONSTRING}
             ASPNETCORE_Kestrel__Certificates__Default__Path: ${Certificates_Path}
             ASPNETCORE_Kestrel__Certificates__Default__Password: ${Certificates_Password}
