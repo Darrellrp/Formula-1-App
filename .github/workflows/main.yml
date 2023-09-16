@@ -50,6 +50,9 @@ jobs:
       - name: Push the Docker image
         run: docker push formula1registry.azurecr.io/formula-1-api:latest
 
+      - name: Install azure cli container app extension
+        run: az extension add -n containerapp
+
       - name: Update container app
         run: az containerapp update --name api --resource-group Formula1ResourceGroup --image formula-1-api
 
@@ -78,6 +81,9 @@ jobs:
 
       - name: Push the Docker image
         run: docker push formula1registry.azurecr.io/formula-1-web:latest
+      
+      - name: Install azure cli container app extension
+        run: az extension add -n containerapp
 
       - name: Update container app
         run: az containerapp update --name web --resource-group Formula1ResourceGroup --image formula-1-web
