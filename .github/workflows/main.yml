@@ -50,6 +50,12 @@ jobs:
       - name: Push the Docker image
         run: docker push formula1registry.azurecr.io/formula-1-api:latest
 
+      - name: Update container app
+        run: az containerapp update --name api --resource-group Formula1ResourceGroup --image formula-1-api
+
+      - name: Run database migrations
+        run: az containerapp exec -n api -g Formula1ResourceGroup --command "dotnet 'Formula-1-API.dll' -m"
+
   build-and-deploy-web:
     runs-on: ubuntu-latest
 
@@ -58,7 +64,6 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build the Docker image
-        # run: docker build -t formula1registry.azurecr.io/formula-1-web:${{ github.ref_name }} ./Formula-1-Web/
         run: docker build -t formula1registry.azurecr.io/formula-1-web:latest ./Formula-1-Web/
 
       - name: Az CLI login
@@ -73,3 +78,6 @@ jobs:
 
       - name: Push the Docker image
         run: docker push formula1registry.azurecr.io/formula-1-web:latest
+
+      - name: Update container app
+        run: az containerapp update --name web --resource-group Formula1ResourceGroup --image formula-1-web
