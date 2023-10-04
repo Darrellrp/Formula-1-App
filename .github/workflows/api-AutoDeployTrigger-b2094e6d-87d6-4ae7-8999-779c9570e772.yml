@@ -1,0 +1,42 @@
+name: Trigger auto deployment for api
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ live ]
+    paths:
+    - 'Formula-1-API/**'
+    - '.github/workflows/api-AutoDeployTrigger-b2094e6d-87d6-4ae7-8999-779c9570e772.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.API_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}Formula-1-API 
+          registryUrl: formula1registry.azurecr.io
+          registryUsername: ${{ secrets.API_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.API_REGISTRY_PASSWORD }}
+          containerAppName: api
+          resourceGroup: Formula1ResourceGroup
+          imageToBuild: formula1registry.azurecr.io/api:${{ github.sha }}
+          dockerfilePath: Dockerfile
+
+     
+
