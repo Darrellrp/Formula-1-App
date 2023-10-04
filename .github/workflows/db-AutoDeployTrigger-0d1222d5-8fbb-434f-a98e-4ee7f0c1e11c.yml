@@ -1,0 +1,42 @@
+name: Trigger auto deployment for db
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ live ]
+    paths:
+    - '**'
+    - '.github/workflows/db-AutoDeployTrigger-0d1222d5-8fbb-434f-a98e-4ee7f0c1e11c.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.DB_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: formula1registry.azurecr.io
+          registryUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}
+          containerAppName: db
+          resourceGroup: Formula1ResourceGroup
+          imageToBuild: formula1registry.azurecr.io/db:${{ github.sha }}
+          
+
+     
+
