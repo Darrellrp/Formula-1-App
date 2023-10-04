@@ -4,15 +4,14 @@ name: Trigger auto deployment for api
 on:
   # Automatically trigger it when detected changes in repo
   push:
-    branches: 
-      [ live ]
+    branches: [live]
     paths:
-    - 'Formula-1-API/**'
-    - '.github/workflows/api-AutoDeployTrigger-b2094e6d-87d6-4ae7-8999-779c9570e772.yml'
+      - "Formula-1-API/**"
+      - ".github/workflows/api-AutoDeployTrigger-b2094e6d-87d6-4ae7-8999-779c9570e772.yml"
 
-  # Allow manual trigger 
+  # Allow manual trigger
   workflow_dispatch:
-      
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -29,7 +28,7 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v1
         with:
-          appSourcePath: ${{ github.workspace }}Formula-1-API 
+          appSourcePath: ${{ github.workspace }}
           registryUrl: formula1registry.azurecr.io
           registryUsername: ${{ secrets.API_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.API_REGISTRY_PASSWORD }}
@@ -37,6 +36,3 @@ jobs:
           resourceGroup: Formula1ResourceGroup
           imageToBuild: formula1registry.azurecr.io/api:${{ github.sha }}
           dockerfilePath: Dockerfile
-
-     
-
