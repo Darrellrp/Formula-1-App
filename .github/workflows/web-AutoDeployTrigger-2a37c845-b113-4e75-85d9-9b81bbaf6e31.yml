@@ -1,0 +1,42 @@
+name: Trigger auto deployment for web
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ live ]
+    paths:
+    - '**'
+    - '.github/workflows/web-AutoDeployTrigger-2a37c845-b113-4e75-85d9-9b81bbaf6e31.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.WEB_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: formula1registry.azurecr.io
+          registryUsername: ${{ secrets.WEB_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.WEB_REGISTRY_PASSWORD }}
+          containerAppName: web
+          resourceGroup: Formula1ResourceGroup
+          imageToBuild: formula1registry.azurecr.io/web:${{ github.sha }}
+          
+
+     
+
