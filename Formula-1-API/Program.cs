@@ -11,6 +11,7 @@ using Formula_1_API.Subjects;
 using Microsoft.EntityFrameworkCore;
 using Formula_1_API.Caching;
 using StackExchange.Redis;
+using Formula_1_API.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
@@ -34,6 +35,7 @@ builder.Services.AddScoped(typeof(IApiController<>), typeof(BaseController<>));
 builder.Services.AddTransient(typeof(EntityFrameworkAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(MongoAdapter<>), typeof(MongoAdapter<>));
 builder.Services.AddTransient<IDatabaseMigrator, EFDatabaseMigrator>();
+builder.Services.AddTransient<IDatabaseSeeder, EFDatabaseSeeder>();
 builder.Services.AddScoped<MainEndpointFactory, MainEndpointFactory>();
 builder.Services.AddScoped<EndpointFactory, EndpointFactory>();
 builder.Services.AddScoped<EntityCollectionLabelFactory, EntityCollectionLabelFactory>();
