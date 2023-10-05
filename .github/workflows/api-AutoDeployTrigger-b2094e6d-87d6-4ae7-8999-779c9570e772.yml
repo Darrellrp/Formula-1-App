@@ -1,4 +1,4 @@
-name: Trigger auto deployment for api
+name: Trigger auto deployment for formula-1-api
 
 # When this action will be executed
 on:

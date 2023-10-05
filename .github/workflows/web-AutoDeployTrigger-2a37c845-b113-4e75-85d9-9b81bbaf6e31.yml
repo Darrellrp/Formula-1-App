@@ -1,18 +1,17 @@
-name: Trigger auto deployment for web
+name: Trigger auto deployment for formula-1-web
 
 # When this action will be executed
 on:
   # Automatically trigger it when detected changes in repo
   push:
-    branches: 
-      [ live ]
+    branches: [live]
     paths:
-    - '**'
-    - '.github/workflows/web-AutoDeployTrigger-2a37c845-b113-4e75-85d9-9b81bbaf6e31.yml'
+      - "**"
+      - ".github/workflows/web-AutoDeployTrigger-2a37c845-b113-4e75-85d9-9b81bbaf6e31.yml"
 
-  # Allow manual trigger 
+  # Allow manual trigger
   workflow_dispatch:
-      
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -29,14 +28,10 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v1
         with:
-          appSourcePath: ${{ github.workspace }} 
+          appSourcePath: ${{ github.workspace }}
           registryUrl: formula1registry.azurecr.io
           registryUsername: ${{ secrets.WEB_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.WEB_REGISTRY_PASSWORD }}
           containerAppName: web
           resourceGroup: Formula1ResourceGroup
           imageToBuild: formula1registry.azurecr.io/web:${{ github.sha }}
-          
-
-     
-
