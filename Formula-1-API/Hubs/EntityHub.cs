@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace Formula_1_API.Hubs
 {
     public class EntityHub : Hub
-    {        
-        
+    {
+
     }
 }
