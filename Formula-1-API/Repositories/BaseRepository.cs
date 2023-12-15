@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using Formula_1_API.Models;
-using Formula_1_API.Repositories;
 using Formula_1_API.Datasources;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
 using Formula_1_API.Caching;
-using System.Runtime.InteropServices;
-using DnsClient.Protocol;
 using Formula_1_API.Factories;
 
 namespace Formula_1_API.Repositories
