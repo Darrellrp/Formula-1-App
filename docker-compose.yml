@@ -78,6 +78,30 @@ services:
         volumes:
             - ./docker-volumes/redis:/usr/local/etc/redis:rw
 
+    ops:
+        container_name: formula-1-ops
+        image: formula-1-ops
+        build: .
+        restart: always
+        networks:
+            - default
+        ports:
+            - "80:80"
+        environment:
+            ASPNETCORE_URLS: https://+:443;http://+:80
+            ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+            MYSQL_HOST: ${MYSQL_HOST}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            REDIS_CONNECTIONSTRING: ${REDIS_CONNECTIONSTRING}
+            ASPNETCORE_Kestrel__Certificates__Default__Path: ${Certificates_Path}
+            ASPNETCORE_Kestrel__Certificates__Default__Password: ${Certificates_Password}
+        volumes:
+            - ./docker-volumes/certs:/app/certs:rw
+            # - ~/.aspnet/https:/https:ro
+            - ~/.aspnet/DataProtection-Keys:/root/.aspnet/DataProtection-Keys:rw
+            #- ./data/formula-1-race-data:/app/Data
 
     #certbot:
     #     container_name: formula-1-certbot
