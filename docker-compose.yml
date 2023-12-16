@@ -27,7 +27,7 @@ services:
         container_name: formula-1-api
         image: formula-1-api
         restart: always
-        build: ./Formula-1-API
+        build: ./Formula-1-Services/Formula-1-API
         networks:
             - default
         # ports:
@@ -48,7 +48,7 @@ services:
             - ./docker-volumes/certs:/app/certs:rw
             # - ~/.aspnet/https:/https:ro
             - ~/.aspnet/DataProtection-Keys:/root/.aspnet/DataProtection-Keys:rw
-            #- ./data/formula-1-race-data:/app/Data
+            - ./data/formula-1-race-data:/app/data
 
     db:
         container_name: formula-1-db
