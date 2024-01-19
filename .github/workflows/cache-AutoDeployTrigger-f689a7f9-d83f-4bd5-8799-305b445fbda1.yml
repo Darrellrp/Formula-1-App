@@ -35,3 +35,4 @@ jobs:
           containerAppName: cache
           resourceGroup: Formula1ResourceGroup
           imageToBuild: formula1registry.azurecr.io/formula-1-cache:${{ github.sha }}
+          location: ${{ secrets.AZURE_LOCATION }}
