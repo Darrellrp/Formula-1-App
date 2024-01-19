@@ -10,8 +10,8 @@ WORKDIR /app
 RUN dotnet dev-certs https
 RUN dotnet dev-certs https --trust
 
-COPY Formula-1-API/Formula-1-API.csproj .
-COPY Formula-1-API/ .
+COPY Formula-1-Services/Formula-1-API/Formula-1-API.csproj .
+COPY Formula-1-Services/Formula-1-API/ .
 
 RUN dotnet restore Formula-1-API.csproj
 RUN dotnet build Formula-1-API.csproj -c Release -o build
