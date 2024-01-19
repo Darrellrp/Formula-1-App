@@ -36,3 +36,4 @@ jobs:
           resourceGroup: Formula1ResourceGroup
           imageToBuild: formula1registry.azurecr.io/formula-1-cache:${{ github.sha }}
           location: westeurope
+          containerAppEnvironment: formula-1-app-env

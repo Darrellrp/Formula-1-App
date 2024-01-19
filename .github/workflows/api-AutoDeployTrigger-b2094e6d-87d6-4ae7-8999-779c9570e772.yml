@@ -37,3 +37,4 @@ jobs:
           imageToBuild: formula1registry.azurecr.io/api:${{ github.sha }}
           dockerfilePath: Dockerfile
           location: westeurope
+          containerAppEnvironment: formula-1-app-env
