@@ -24,7 +24,7 @@ if (builder.Environment.IsDevelopment())
     DotNetEnv.Env.Load(env);
 }
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddTransient<DbContextOptions<Formula1DbContext>, DbContextOptions<Formula1DbContext>>();
 builder.Services.AddTransient(typeof(IDatasourceAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
