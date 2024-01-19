@@ -1,4 +1,4 @@
-name: Trigger auto deployment for formula-1-cache
+name: formula-1-cache
 
 # When this action will be executed
 on:
