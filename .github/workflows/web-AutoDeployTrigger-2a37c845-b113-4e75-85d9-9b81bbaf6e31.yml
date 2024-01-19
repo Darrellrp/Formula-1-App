@@ -35,4 +35,4 @@ jobs:
           containerAppName: web
           resourceGroup: Formula1ResourceGroup
           imageToBuild: formula1registry.azurecr.io/web:${{ github.sha }}
-          location: west-europe
+          location: westeurope
