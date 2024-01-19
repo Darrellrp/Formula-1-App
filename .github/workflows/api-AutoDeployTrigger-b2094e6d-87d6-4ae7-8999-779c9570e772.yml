@@ -36,4 +36,4 @@ jobs:
           resourceGroup: Formula1ResourceGroup
           imageToBuild: formula1registry.azurecr.io/api:${{ github.sha }}
           dockerfilePath: Dockerfile
-          location: "West Europe"
+          location: west-europe

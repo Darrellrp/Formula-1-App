@@ -35,4 +35,4 @@ jobs:
           containerAppName: db
           resourceGroup: Formula1ResourceGroup
           imageToBuild: formula1registry.azurecr.io/db:${{ github.sha }}
-          location: "West Europe"
+          location: west-europe
