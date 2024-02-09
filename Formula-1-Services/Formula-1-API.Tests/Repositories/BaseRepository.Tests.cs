@@ -7,6 +7,7 @@ using Moq;
 using AutoFixture;
 using FluentAssertions;
 using Formula_1_API.Factories;
+using System.Linq.Expressions;
 
 namespace Formula_1_API.Tests.Repositories;
 
@@ -454,6 +455,102 @@ public class BaseRepositoryTests
 
         // Assert
         await action.Should().ThrowAsync<Exception>();
+        VerifyAllMocks();
+    }
+
+    [Fact]
+    public async Task Where_WhenEntitiesAreInCache_ReturnsEntitiesFromCache()
+    {
+        // Arrange
+        var entities = Fixture.Build<Models.Circuit>()
+            .Without(x => x.Id)
+            .CreateMany();
+
+        // newRecords cannot be null
+        CachingService.Setup(x => x.Where(It.IsAny<Func<Models.Circuit, bool>>()))
+            .ReturnsAsync(entities);
+
+        var sut = GetBaseRepository();
+
+        // Act
+        var result = await sut.Where(x => x.Id == 1);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Collection.Should().NotBeEmpty();
+
+        DatasourceAdapter.Verify(x => x.Where(It.IsAny<Expression<Func<Models.Circuit, bool>>>()), Times.Never());
+        VerifyAllMocks();
+    }
+
+    [Fact]
+    public async Task Where_WhenEntitiesAreNotInCache_ReturnsEntitiesFromDatasource()
+    {
+        // Arrange
+        var entities = Fixture.Build<Models.Circuit>()
+            .Without(x => x.Id)
+            .CreateMany();
+
+        // newRecords cannot be null
+        CachingService.Setup(x => x.Where(It.IsAny<Func<Models.Circuit, bool>>()))
+            .ReturnsAsync(Array.Empty<Models.Circuit>());
+
+        DatasourceAdapter.Setup(x => x.Where(It.IsAny<Expression<Func<Models.Circuit, bool>>>()))
+            .ReturnsAsync(entities);
+
+        var sut = GetBaseRepository();
+
+        // Act
+        var result = await sut.Where(x => x.Id == 1);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Collection.Should().NotBeEmpty();
+
+        VerifyAllMocks();
+    }
+
+    [Fact]
+    public async Task Delete_WhenValidEntityIsPassed_EntityIsDeleted()
+    {
+        // Arrange
+        var entity = Fixture.Build<Models.Circuit>()
+            .Without(x => x.Id)
+            .Create();
+
+        // newRecords cannot be null
+        CachingService.Setup(x => x.Delete(It.IsAny<Models.Circuit>()))
+            .ReturnsAsync(entity);
+
+        DatasourceAdapter.Setup(x => x.Delete(It.IsAny<Models.Circuit>()))
+            .ReturnsAsync(entity);
+
+        var sut = GetBaseRepository();
+
+        // Act
+        var result = await sut.Delete(entity);
+
+        // Assert
+        result.Should().NotBeNull();
+        VerifyAllMocks();
+    }
+
+    [Fact]
+    public async Task Count_ReturnsNumberOfEntities()
+    {
+        // Arrange
+        const int count = 10;
+
+        DatasourceAdapter.Setup(x => x.Count())
+            .ReturnsAsync(count);
+
+        var sut = GetBaseRepository();
+
+        // Act
+        var result = await sut.Count();
+
+        // Assert
+        result.Should().Be(count);
         VerifyAllMocks();
     }
 }

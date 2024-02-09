@@ -11,6 +11,7 @@ using Formula_1_API.Subjects;
 using Microsoft.EntityFrameworkCore;
 using Formula_1_API.Caching;
 using StackExchange.Redis;
+using Formula_1_API.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
@@ -23,7 +24,7 @@ if (builder.Environment.IsDevelopment())
     DotNetEnv.Env.Load(env);
 }
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddTransient<DbContextOptions<Formula1DbContext>, DbContextOptions<Formula1DbContext>>();
 builder.Services.AddTransient(typeof(IDatasourceAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
@@ -33,6 +34,8 @@ builder.Services.AddScoped(typeof(ISubject<>), typeof(BaseSubject<>));
 builder.Services.AddScoped(typeof(IApiController<>), typeof(BaseController<>));
 builder.Services.AddTransient(typeof(EntityFrameworkAdapter<>), typeof(EntityFrameworkAdapter<>));
 builder.Services.AddTransient(typeof(MongoAdapter<>), typeof(MongoAdapter<>));
+builder.Services.AddTransient<IDatabaseMigrator, EFDatabaseMigrator>();
+builder.Services.AddTransient<IDatabaseSeeder, EFDatabaseSeeder>();
 builder.Services.AddScoped<MainEndpointFactory, MainEndpointFactory>();
 builder.Services.AddScoped<EndpointFactory, EndpointFactory>();
 builder.Services.AddScoped<EntityCollectionLabelFactory, EntityCollectionLabelFactory>();
@@ -64,11 +67,12 @@ builder.Services.AddCors();
 var app = builder.Build();
 
 // Seed database
-if (args.Length != 0 && (args[0].Equals("-s") || args[0].Equals("--seed")))
+if (args.Any())
 {
-    await app.SeedDatabase(args);
+    // Invoke Commands
+    var commandHandler = new CommandHandler(app, args);
+    await commandHandler.InvokeCommands();
     Environment.Exit(1);
-    return;
 }
 
 // Configure the HTTP request pipeline.

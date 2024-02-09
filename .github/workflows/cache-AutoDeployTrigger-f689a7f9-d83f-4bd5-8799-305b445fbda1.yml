@@ -1,0 +1,39 @@
+name: formula-1-cache
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: [live]
+    paths:
+      - "**"
+      - ".github/workflows/cache-AutoDeployTrigger-f689a7f9-d83f-4bd5-8799-305b445fbda1.yml"
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.CACHE_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}
+          registryUrl: formula1registry.azurecr.io
+          registryUsername: ${{ secrets.CACHE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.CACHE_REGISTRY_PASSWORD }}
+          containerAppName: cache
+          resourceGroup: Formula1ResourceGroup
+          imageToBuild: formula1registry.azurecr.io/formula-1-cache:${{ github.sha }}
+          location: ${{ secrets.AZURE_LOCATION }}
+          containerAppEnvironment: formula-1-app-env

@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <SpaRoot>..\Formula-1-Web\</SpaRoot>
+    <SpaRoot>..\..\Formula-1-Web\</SpaRoot>
     <SpaProxyServerUrl>https://localhost:44466</SpaProxyServerUrl>
     <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
     <RootNamespace>Formula_1_API</RootNamespace>
