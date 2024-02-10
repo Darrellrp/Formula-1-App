@@ -22,7 +22,7 @@ jobs:
         uses: azure/arm-deploy@v1
         with:
           region: westeurope
-          scope: subscription
+          scope: resourcegroup
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ./Formula-1-Infrastructure/main.bicep
