@@ -314,7 +314,7 @@ resource containerapps_api_name_resource 'Microsoft.App/containerapps@2023-08-01
             }
           ]
           resources: {
-            cpu: '0.25'
+            // cpu: '0.25'
             memory: '0.5Gi'
           }
           probes: []
