@@ -12,10 +12,11 @@ param workspaces_workspace_ormula1esourceroupfTso_name string = 'workspace-ormul
 param workspaces_workspace_ormula1esourceroupmbEl_name string = 'workspace-ormula1esourceroupmbEl'
 param workspaces_workspace_ormula1esourceroupoonw_name string = 'workspace-ormula1esourceroupoonw'
 param workspaces_workspace_ormula1esourceroupzsb4_name string = 'workspace-ormula1esourceroupzsb4'
+param location = 'West Europe'
 
 resource managedEnvironments_formula_1_app_env_name_resource 'Microsoft.App/managedEnvironments@2023-08-01-preview' = {
   name: managedEnvironments_formula_1_app_env_name
-  location: 'West Europe'
+  location: location
   properties: {
     appLogsConfiguration: {
       destination: 'log-analytics'
@@ -223,7 +224,7 @@ resource storageAccounts_f1appstorageaccount_name_resource 'Microsoft.Storage/st
 
 resource containerapps_cache_name_resource 'Microsoft.App/containerapps@2023-08-01-preview' = {
   name: containerapps_cache_name
-  location: 'West Europe'
+  location: location
   identity: {
     type: 'None'
   }
@@ -285,7 +286,7 @@ resource containerapps_cache_name_resource 'Microsoft.App/containerapps@2023-08-
 
 resource containerapps_db_name_resource 'Microsoft.App/containerapps@2023-08-01-preview' = {
   name: containerapps_db_name
-  location: 'West Europe'
+  location: location
   identity: {
     type: 'None'
   }
@@ -379,7 +380,7 @@ resource containerapps_db_name_resource 'Microsoft.App/containerapps@2023-08-01-
 
 resource containerapps_ops_name_resource 'Microsoft.App/containerapps@2023-08-01-preview' = {
   name: containerapps_ops_name
-  location: 'West Europe'
+  location: location
   identity: {
     type: 'None'
   }
@@ -476,7 +477,7 @@ resource containerapps_ops_name_resource 'Microsoft.App/containerapps@2023-08-01
 resource managedEnvironments_formula_1_app_env_name_api_formula1_darrellpoleon_c_formula_240128143608 'Microsoft.App/managedEnvironments/managedCertificates@2023-08-01-preview' = {
   parent: managedEnvironments_formula_1_app_env_name_resource
   name: 'api.formula1.darrellpoleon.c-formula--240128143608'
-  location: 'West Europe'
+  location: location
   properties: {
     subjectName: 'api.formula1.darrellpoleon.com'
     domainControlValidation: 'HTTP'
@@ -486,7 +487,7 @@ resource managedEnvironments_formula_1_app_env_name_api_formula1_darrellpoleon_c
 resource managedEnvironments_formula_1_app_env_name_api_formula1_darrellpoleon_c_formula_240128165945 'Microsoft.App/managedEnvironments/managedCertificates@2023-08-01-preview' = {
   parent: managedEnvironments_formula_1_app_env_name_resource
   name: 'api.formula1.darrellpoleon.c-formula--240128165945'
-  location: 'West Europe'
+  location: location
   properties: {
     subjectName: 'api.formula1.darrellpoleon.com'
     domainControlValidation: 'HTTP'
@@ -496,7 +497,7 @@ resource managedEnvironments_formula_1_app_env_name_api_formula1_darrellpoleon_c
 resource managedEnvironments_formula_1_app_env_name_formula1_darrellpoleon_com_formula_240127234324 'Microsoft.App/managedEnvironments/managedCertificates@2023-08-01-preview' = {
   parent: managedEnvironments_formula_1_app_env_name_resource
   name: 'formula1.darrellpoleon.com-formula--240127234324'
-  location: 'West Europe'
+  location: location
   properties: {
     subjectName: 'formula1.darrellpoleon.com'
     domainControlValidation: 'HTTP'
@@ -36108,7 +36109,7 @@ resource Microsoft_Storage_storageAccounts_tableServices_storageAccounts_f1appst
 
 resource containerapps_api_name_resource 'Microsoft.App/containerapps@2023-08-01-preview' = {
   name: containerapps_api_name
-  location: 'West Europe'
+  location: location
   identity: {
     type: 'None'
   }
@@ -36231,7 +36232,7 @@ resource containerapps_api_name_resource 'Microsoft.App/containerapps@2023-08-01
 
 resource containerapps_web_name_resource 'Microsoft.App/containerapps@2023-08-01-preview' = {
   name: containerapps_web_name
-  location: 'West Europe'
+  location: location
   identity: {
     type: 'None'
   }
