@@ -49,7 +49,7 @@ resource registries_formula1registry_name_resource 'Microsoft.ContainerRegistry/
   location: location
   sku: {
     name: 'Basic'
-    tier: 'Basic'
+    // tier: 'Basic'
   }
   properties: {
     adminUserEnabled: true
