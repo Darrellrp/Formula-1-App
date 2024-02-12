@@ -12,7 +12,7 @@ param workspaces_workspace_ormula1esourceroupfTso_name string = 'workspace-ormul
 param workspaces_workspace_ormula1esourceroupmbEl_name string = 'workspace-ormula1esourceroupmbEl'
 param workspaces_workspace_ormula1esourceroupoonw_name string = 'workspace-ormula1esourceroupoonw'
 param workspaces_workspace_ormula1esourceroupzsb4_name string = 'workspace-ormula1esourceroupzsb4'
-param location = 'West Europe'
+param location string = 'West Europe'
 
 resource managedEnvironments_formula_1_app_env_name_resource 'Microsoft.App/managedEnvironments@2023-08-01-preview' = {
   name: managedEnvironments_formula_1_app_env_name
@@ -45,7 +45,7 @@ resource managedEnvironments_formula_1_app_env_name_resource 'Microsoft.App/mana
 
 resource registries_formula1registry_name_resource 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   name: registries_formula1registry_name
-  location: 'westeurope'
+  location: location
   sku: {
     name: 'Basic'
     tier: 'Basic'
@@ -89,12 +89,12 @@ resource registries_formula1registry_name_resource 'Microsoft.ContainerRegistry/
 
 resource userAssignedIdentities_formula_1_pipline_uami_name_resource 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
   name: userAssignedIdentities_formula_1_pipline_uami_name
-  location: 'westeurope'
+  location: location
 }
 
 resource workspaces_workspace_ormula1esourceroup8kTI_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: workspaces_workspace_ormula1esourceroup8kTI_name
-  location: 'westeurope'
+  location: location
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -113,7 +113,7 @@ resource workspaces_workspace_ormula1esourceroup8kTI_name_resource 'Microsoft.Op
 
 resource workspaces_workspace_ormula1esourceroupfTso_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: workspaces_workspace_ormula1esourceroupfTso_name
-  location: 'westeurope'
+  location: location
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -132,7 +132,7 @@ resource workspaces_workspace_ormula1esourceroupfTso_name_resource 'Microsoft.Op
 
 resource workspaces_workspace_ormula1esourceroupmbEl_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: workspaces_workspace_ormula1esourceroupmbEl_name
-  location: 'westeurope'
+  location: location
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -151,7 +151,7 @@ resource workspaces_workspace_ormula1esourceroupmbEl_name_resource 'Microsoft.Op
 
 resource workspaces_workspace_ormula1esourceroupoonw_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: workspaces_workspace_ormula1esourceroupoonw_name
-  location: 'westeurope'
+  location: location
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -170,7 +170,7 @@ resource workspaces_workspace_ormula1esourceroupoonw_name_resource 'Microsoft.Op
 
 resource workspaces_workspace_ormula1esourceroupzsb4_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: workspaces_workspace_ormula1esourceroupzsb4_name
-  location: 'westeurope'
+  location: location
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -189,7 +189,7 @@ resource workspaces_workspace_ormula1esourceroupzsb4_name_resource 'Microsoft.Op
 
 resource storageAccounts_f1appstorageaccount_name_resource 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccounts_f1appstorageaccount_name
-  location: 'westeurope'
+  location: location
   sku: {
     name: 'Standard_LRS'
     tier: 'Standard'
