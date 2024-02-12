@@ -48,7 +48,7 @@ resource registries_formula1registry_name_resource 'Microsoft.ContainerRegistry/
   location: location
   sku: {
     name: 'Basic'
-    tier: 'Basic'
+    // tier: 'Basic'
   }
   properties: {
     adminUserEnabled: true
@@ -192,7 +192,7 @@ resource storageAccounts_f1appstorageaccount_name_resource 'Microsoft.Storage/st
   location: location
   sku: {
     name: 'Standard_LRS'
-    tier: 'Standard'
+    // tier: 'Standard'
   }
   kind: 'StorageV2'
   properties: {
@@ -633,7 +633,7 @@ resource storageAccounts_f1appstorageaccount_name_default 'Microsoft.Storage/sto
   name: 'default'
   sku: {
     name: 'Standard_LRS'
-    tier: 'Standard'
+    // tier: 'Standard'
   }
   properties: {
     cors: {
@@ -651,7 +651,7 @@ resource Microsoft_Storage_storageAccounts_fileServices_storageAccounts_f1appsto
   name: 'default'
   sku: {
     name: 'Standard_LRS'
-    tier: 'Standard'
+    // tier: 'Standard'
   }
   properties: {
     protocolSettings: {
