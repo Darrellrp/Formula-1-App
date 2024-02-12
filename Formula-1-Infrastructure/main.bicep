@@ -631,10 +631,6 @@ resource userAssignedIdentities_formula_1_pipline_uami_name_formula_1_cred 'Micr
 resource storageAccounts_f1appstorageaccount_name_default 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
   parent: storageAccounts_f1appstorageaccount_name_resource
   name: 'default'
-  sku: {
-    name: 'Standard_LRS'
-    // tier: 'Standard'
-  }
   properties: {
     cors: {
       corsRules: []
