@@ -45,7 +45,7 @@ resource managedEnvironments_formula_1_app_env_name_resource 'Microsoft.App/mana
 
 resource registries_formula1registry_name_resource 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   name: registries_formula1registry_name
-  location: 'westeurope'
+  // location: 'westeurope'
   sku: {
     name: 'Basic'
     tier: 'Basic'
