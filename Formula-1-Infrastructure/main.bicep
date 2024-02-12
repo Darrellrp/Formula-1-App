@@ -269,7 +269,7 @@ resource containerapps_cache_name_resource 'Microsoft.App/containerapps@2023-08-
           image: 'formula1registry.azurecr.io/formula-1-${containerapps_cache_name}:dc054c92bc256a1b9fbd0d41d1a765a655a48bf0'
           name: containerapps_cache_name
           resources: {
-            cpu: '0.25'
+            // cpu: '0.25'
             memory: '0.5Gi'
           }
           probes: []
@@ -352,7 +352,7 @@ resource containerapps_db_name_resource 'Microsoft.App/containerapps@2023-08-01-
             }
           ]
           resources: {
-            cpu: '0.25'
+            // cpu: '0.25'
             memory: '0.5Gi'
           }
           probes: []
@@ -447,7 +447,7 @@ resource containerapps_ops_name_resource 'Microsoft.App/containerapps@2023-08-01
             }
           ]
           resources: {
-            cpu: '0.5'
+            // cpu: '0.5'
             memory: '1Gi'
           }
           probes: []
@@ -785,7 +785,7 @@ resource containerapps_api_name_resource 'Microsoft.App/containerapps@2023-08-01
             }
           ]
           resources: {
-            cpu: '0.25'
+            // cpu: '0.25'
             memory: '0.5Gi'
           }
           probes: []
@@ -871,7 +871,7 @@ resource containerapps_web_name_resource 'Microsoft.App/containerapps@2023-08-01
             }
           ]
           resources: {
-            cpu: '0.5'
+            // cpu: '0.5'
             memory: '1Gi'
           }
           probes: []
