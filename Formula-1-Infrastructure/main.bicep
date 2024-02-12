@@ -193,7 +193,7 @@ resource storageAccounts_f1appstorageaccount_name_resource 'Microsoft.Storage/st
   location: location
   sku: {
     name: 'Standard_LRS'
-    tier: 'Standard'
+    // tier: 'Standard'
   }
   kind: 'StorageV2'
   properties: {
