@@ -6,7 +6,7 @@ on:
   push:
     branches: [live]
     paths:
-      - "**"
+      - "Formula-1-Web/**"
       - ".github/workflows/web-AutoDeployTrigger-2a37c845-b113-4e75-85d9-9b81bbaf6e31.yml"
 
   # Allow manual trigger
