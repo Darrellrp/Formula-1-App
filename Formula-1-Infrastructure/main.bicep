@@ -45,10 +45,10 @@ resource managedEnvironments_formula_1_app_env_name_resource 'Microsoft.App/mana
 
 resource registries_formula1registry_name_resource 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   name: registries_formula1registry_name
-  location: 'westeurope'
+  location: location
   sku: {
     name: 'Basic'
-    tier: 'Basic'
+    // tier: 'Basic'
   }
   properties: {
     adminUserEnabled: true
@@ -89,12 +89,12 @@ resource registries_formula1registry_name_resource 'Microsoft.ContainerRegistry/
 
 resource userAssignedIdentities_formula_1_pipline_uami_name_resource 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
   name: userAssignedIdentities_formula_1_pipline_uami_name
-  location: 'westeurope'
+  location: location
 }
 
 resource workspaces_workspace_ormula1esourceroup8kTI_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: workspaces_workspace_ormula1esourceroup8kTI_name
-  location: 'westeurope'
+  location: location
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -113,7 +113,7 @@ resource workspaces_workspace_ormula1esourceroup8kTI_name_resource 'Microsoft.Op
 
 resource workspaces_workspace_ormula1esourceroupfTso_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: workspaces_workspace_ormula1esourceroupfTso_name
-  location: 'westeurope'
+  location: location
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -132,7 +132,7 @@ resource workspaces_workspace_ormula1esourceroupfTso_name_resource 'Microsoft.Op
 
 resource workspaces_workspace_ormula1esourceroupmbEl_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: workspaces_workspace_ormula1esourceroupmbEl_name
-  location: 'westeurope'
+  location: location
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -151,7 +151,7 @@ resource workspaces_workspace_ormula1esourceroupmbEl_name_resource 'Microsoft.Op
 
 resource workspaces_workspace_ormula1esourceroupoonw_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: workspaces_workspace_ormula1esourceroupoonw_name
-  location: 'westeurope'
+  location: location
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -170,7 +170,7 @@ resource workspaces_workspace_ormula1esourceroupoonw_name_resource 'Microsoft.Op
 
 resource workspaces_workspace_ormula1esourceroupzsb4_name_resource 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: workspaces_workspace_ormula1esourceroupzsb4_name
-  location: 'westeurope'
+  location: location
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -189,10 +189,10 @@ resource workspaces_workspace_ormula1esourceroupzsb4_name_resource 'Microsoft.Op
 
 resource storageAccounts_f1appstorageaccount_name_resource 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccounts_f1appstorageaccount_name
-  location: 'westeurope'
+  location: location
   sku: {
     name: 'Standard_LRS'
-    tier: 'Standard'
+    // tier: 'Standard'
   }
   kind: 'StorageV2'
   properties: {
@@ -219,118 +219,6 @@ resource storageAccounts_f1appstorageaccount_name_resource 'Microsoft.Storage/st
       keySource: 'Microsoft.Storage'
     }
     accessTier: 'Hot'
-  }
-}
-
-resource containerapps_api_name_resource 'Microsoft.App/containerapps@2023-08-01-preview' = {
-  name: containerapps_api_name
-  location: location
-  identity: {
-    type: 'None'
-  }
-  properties: {
-    managedEnvironmentId: managedEnvironments_formula_1_app_env_name_resource.id
-    environmentId: managedEnvironments_formula_1_app_env_name_resource.id
-    workloadProfileName: 'Consumption'
-    configuration: {
-      secrets: [
-        {
-          name: 'formula1registryazurecrio-formula1registry'
-        }
-      ]
-      activeRevisionsMode: 'Single'
-      ingress: {
-        external: true
-        targetPort: 80
-        exposedPort: 0
-        transport: 'Auto'
-        traffic: [
-          {
-            weight: 100
-            latestRevision: true
-          }
-        ]
-        allowInsecure: true
-        clientCertificateMode: 'Ignore'
-        stickySessions: {
-          affinity: 'none'
-        }
-      }
-      registries: [
-        {
-          server: 'formula1registry.azurecr.io'
-          username: 'formula1registry'
-          passwordSecretRef: 'formula1registryazurecrio-formula1registry'
-        }
-      ]
-    }
-    template: {
-      containers: [
-        {
-          image: 'formula1registry.azurecr.io/${containerapps_api_name}:987db7c777557015c52e17917dd8059fe02023d3'
-          name: containerapps_api_name
-          command: [
-            '/bin/sh'
-            '-c'
-            'dotnet Formula-1-API.dll;'
-          ]
-          env: [
-            {
-              name: 'MYSQL_HOST'
-              value: 'db'
-            }
-            {
-              name: 'MYSQL_DATABASE'
-              value: 'Formula1App_Database'
-            }
-            {
-              name: 'MYSQL_USER'
-              value: 'admin'
-            }
-            {
-              name: 'MYSQL_PASSWORD'
-              value: 'vDQr62VsmXNV6aMmy'
-            }
-            {
-              name: 'MYSQL_ROOT_PASSWORD'
-              value: 'RJvRuyFJLssrJ8jeeDY4'
-            }
-            {
-              name: 'ASPNETCORE_ENVIRONMENT'
-              value: 'Production'
-            }
-            {
-              name: 'REDIS_CONNECTIONSTRING'
-              value: 'cache:6379'
-            }
-            {
-              name: 'FORCE_DISABLE_HTTPS'
-              value: 'true'
-            }
-            {
-              name: 'ASPNETCORE_URLS'
-              value: 'https://+:443;http://+:80'
-            }
-          ]
-          resources: {
-            cpu: '0.25'
-            memory: '0.5Gi'
-          }
-          probes: []
-        }
-      ]
-      scale: {
-        minReplicas: 0
-        maxReplicas: 1
-      }
-      volumes: [
-        {
-          name: 'f1appstorageaccount'
-          storageType: 'AzureFile'
-          storageName: 'f1appstorageaccount'
-        }
-      ]
-    }
   }
 }
 
@@ -378,10 +266,10 @@ resource containerapps_cache_name_resource 'Microsoft.App/containerapps@2023-08-
     template: {
       containers: [
         {
-          image: 'formula1registry.azurecr.io/${containerapps_cache_name}:latest'
+          image: 'formula1registry.azurecr.io/formula-1-${containerapps_cache_name}:dc054c92bc256a1b9fbd0d41d1a765a655a48bf0'
           name: containerapps_cache_name
           resources: {
-            cpu: '0.25'
+            // cpu: '0.25'
             memory: '0.5Gi'
           }
           probes: []
@@ -409,6 +297,9 @@ resource containerapps_db_name_resource 'Microsoft.App/containerapps@2023-08-01-
     configuration: {
       secrets: [
         {
+          name: 'formula1registryazurecrio-formula1registry'
+        }
+        {
           name: 'reg-pswd-cd9069eb-ac27'
         }
       ]
@@ -433,14 +324,14 @@ resource containerapps_db_name_resource 'Microsoft.App/containerapps@2023-08-01-
         {
           server: 'formula1registry.azurecr.io'
           username: 'formula1registry'
-          passwordSecretRef: 'reg-pswd-cd9069eb-ac27'
+          passwordSecretRef: 'formula1registryazurecrio-formula1registry'
         }
       ]
     }
     template: {
       containers: [
         {
-          image: 'formula1registry.azurecr.io/${containerapps_db_name}:latest'
+          image: 'formula1registry.azurecr.io/${containerapps_db_name}:dc054c92bc256a1b9fbd0d41d1a765a655a48bf0'
           name: containerapps_db_name
           env: [
             {
@@ -461,7 +352,7 @@ resource containerapps_db_name_resource 'Microsoft.App/containerapps@2023-08-01-
             }
           ]
           resources: {
-            cpu: '0.25'
+            // cpu: '0.25'
             memory: '0.5Gi'
           }
           probes: []
@@ -556,7 +447,7 @@ resource containerapps_ops_name_resource 'Microsoft.App/containerapps@2023-08-01
             }
           ]
           resources: {
-            cpu: '0.5'
+            // cpu: '0.5'
             memory: '1Gi'
           }
           probes: []
@@ -569,7 +460,7 @@ resource containerapps_ops_name_resource 'Microsoft.App/containerapps@2023-08-01
         }
       ]
       scale: {
-        minReplicas: 1
+        minReplicas: 0
         maxReplicas: 1
       }
       volumes: [
@@ -583,72 +474,33 @@ resource containerapps_ops_name_resource 'Microsoft.App/containerapps@2023-08-01
   }
 }
 
-resource containerapps_web_name_resource 'Microsoft.App/containerapps@2023-08-01-preview' = {
-  name: containerapps_web_name
+resource managedEnvironments_formula_1_app_env_name_api_formula1_darrellpoleon_c_formula_240128143608 'Microsoft.App/managedEnvironments/managedCertificates@2023-08-01-preview' = {
+  parent: managedEnvironments_formula_1_app_env_name_resource
+  name: 'api.formula1.darrellpoleon.c-formula--240128143608'
   location: location
-  identity: {
-    type: 'None'
-  }
   properties: {
-    managedEnvironmentId: managedEnvironments_formula_1_app_env_name_resource.id
-    environmentId: managedEnvironments_formula_1_app_env_name_resource.id
-    workloadProfileName: 'Consumption'
-    configuration: {
-      secrets: [
-        {
-          name: 'formula1registryazurecrio-formula1registry'
-        }
-      ]
-      activeRevisionsMode: 'Single'
-      ingress: {
-        external: true
-        targetPort: 443
-        exposedPort: 0
-        transport: 'Auto'
-        traffic: [
-          {
-            weight: 100
-            latestRevision: true
-          }
-        ]
-        allowInsecure: true
-        clientCertificateMode: 'Ignore'
-        stickySessions: {
-          affinity: 'none'
-        }
-      }
-      registries: [
-        {
-          server: 'formula1registry.azurecr.io'
-          username: 'formula1registry'
-          passwordSecretRef: 'formula1registryazurecrio-formula1registry'
-        }
-      ]
-    }
-    template: {
-      containers: [
-        {
-          image: 'formula1registry.azurecr.io/${containerapps_web_name}:latest'
-          name: containerapps_web_name
-          env: [
-            {
-              name: 'NGINX_PORT'
-              value: '443'
-            }
-          ]
-          resources: {
-            cpu: '0.5'
-            memory: '1Gi'
-          }
-          probes: []
-        }
-      ]
-      scale: {
-        minReplicas: 1
-        maxReplicas: 1
-      }
-      volumes: []
-    }
+    subjectName: 'api.formula1.darrellpoleon.com'
+    domainControlValidation: 'HTTP'
+  }
+}
+
+resource managedEnvironments_formula_1_app_env_name_api_formula1_darrellpoleon_c_formula_240128165945 'Microsoft.App/managedEnvironments/managedCertificates@2023-08-01-preview' = {
+  parent: managedEnvironments_formula_1_app_env_name_resource
+  name: 'api.formula1.darrellpoleon.c-formula--240128165945'
+  location: location
+  properties: {
+    subjectName: 'api.formula1.darrellpoleon.com'
+    domainControlValidation: 'HTTP'
+  }
+}
+
+resource managedEnvironments_formula_1_app_env_name_formula1_darrellpoleon_com_formula_240127234324 'Microsoft.App/managedEnvironments/managedCertificates@2023-08-01-preview' = {
+  parent: managedEnvironments_formula_1_app_env_name_resource
+  name: 'formula1.darrellpoleon.com-formula--240127234324'
+  location: location
+  properties: {
+    subjectName: 'formula1.darrellpoleon.com'
+    domainControlValidation: 'HTTP'
   }
 }
 
@@ -683,6 +535,18 @@ resource managedEnvironments_formula_1_app_env_name_mysql 'Microsoft.App/managed
     azureFile: {
       accountName: 'f1appstorageaccount'
       shareName: 'mysql'
+      accessMode: 'ReadWrite'
+    }
+  }
+}
+
+resource managedEnvironments_formula_1_app_env_name_nginx_conf 'Microsoft.App/managedEnvironments/storages@2023-08-01-preview' = {
+  parent: managedEnvironments_formula_1_app_env_name_resource
+  name: 'nginx-conf'
+  properties: {
+    azureFile: {
+      accountName: 'f1appstorageaccount'
+      shareName: 'nginx-conf'
       accessMode: 'ReadWrite'
     }
   }
@@ -764,4 +628,310 @@ resource userAssignedIdentities_formula_1_pipline_uami_name_formula_1_cred 'Micr
   }
 }
 
+resource storageAccounts_f1appstorageaccount_name_default 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
+  parent: storageAccounts_f1appstorageaccount_name_resource
+  name: 'default'
+  properties: {
+    cors: {
+      corsRules: []
+    }
+    deleteRetentionPolicy: {
+      allowPermanentDelete: false
+      enabled: false
+    }
+  }
+}
 
+resource Microsoft_Storage_storageAccounts_fileServices_storageAccounts_f1appstorageaccount_name_default 'Microsoft.Storage/storageAccounts/fileServices@2023-01-01' = {
+  parent: storageAccounts_f1appstorageaccount_name_resource
+  name: 'default'
+  sku: {
+    name: 'Standard_LRS'
+    // tier: 'Standard'
+  }
+  properties: {
+    protocolSettings: {
+      smb: {}
+    }
+    cors: {
+      corsRules: []
+    }
+    shareDeleteRetentionPolicy: {
+      enabled: true
+      days: 7
+    }
+  }
+}
+
+resource Microsoft_Storage_storageAccounts_queueServices_storageAccounts_f1appstorageaccount_name_default 'Microsoft.Storage/storageAccounts/queueServices@2023-01-01' = {
+  parent: storageAccounts_f1appstorageaccount_name_resource
+  name: 'default'
+  properties: {
+    cors: {
+      corsRules: []
+    }
+  }
+}
+
+resource Microsoft_Storage_storageAccounts_tableServices_storageAccounts_f1appstorageaccount_name_default 'Microsoft.Storage/storageAccounts/tableServices@2023-01-01' = {
+  parent: storageAccounts_f1appstorageaccount_name_resource
+  name: 'default'
+  properties: {
+    cors: {
+      corsRules: []
+    }
+  }
+}
+
+resource containerapps_api_name_resource 'Microsoft.App/containerapps@2023-08-01-preview' = {
+  name: containerapps_api_name
+  location: location
+  identity: {
+    type: 'None'
+  }
+  properties: {
+    managedEnvironmentId: managedEnvironments_formula_1_app_env_name_resource.id
+    environmentId: managedEnvironments_formula_1_app_env_name_resource.id
+    workloadProfileName: 'Consumption'
+    configuration: {
+      secrets: [
+        {
+          name: 'formula1registryazurecrio-formula1registry'
+        }
+      ]
+      activeRevisionsMode: 'Single'
+      ingress: {
+        external: true
+        targetPort: 80
+        exposedPort: 0
+        transport: 'Auto'
+        traffic: [
+          {
+            weight: 100
+            latestRevision: true
+          }
+        ]
+        customDomains: [
+          {
+            name: '${containerapps_api_name}.formula1.darrellpoleon.com'
+            certificateId: resourceId('Microsoft.App/managedEnvironments/managedCertificates', managedEnvironments_formula_1_app_env_name, '${containerapps_api_name}.formula1.darrellpoleon.c-formula--240128165945')
+            bindingType: 'SniEnabled'
+          }
+        ]
+        allowInsecure: true
+        clientCertificateMode: 'Ignore'
+        stickySessions: {
+          affinity: 'none'
+        }
+      }
+      registries: [
+        {
+          server: 'formula1registry.azurecr.io'
+          username: 'formula1registry'
+          passwordSecretRef: 'formula1registryazurecrio-formula1registry'
+        }
+      ]
+    }
+    template: {
+      containers: [
+        {
+          image: 'formula1registry.azurecr.io/${containerapps_api_name}:987db7c777557015c52e17917dd8059fe02023d3'
+          name: containerapps_api_name
+          command: [
+            '/bin/sh'
+            '-c'
+            'dotnet Formula-1-API.dll;'
+          ]
+          env: [
+            {
+              name: 'MYSQL_HOST'
+              value: 'db'
+            }
+            {
+              name: 'MYSQL_DATABASE'
+              value: 'Formula1App_Database'
+            }
+            {
+              name: 'MYSQL_USER'
+              value: 'admin'
+            }
+            {
+              name: 'MYSQL_PASSWORD'
+              value: 'vDQr62VsmXNV6aMmy'
+            }
+            {
+              name: 'MYSQL_ROOT_PASSWORD'
+              value: 'RJvRuyFJLssrJ8jeeDY4'
+            }
+            {
+              name: 'ASPNETCORE_ENVIRONMENT'
+              value: 'Production'
+            }
+            {
+              name: 'REDIS_CONNECTIONSTRING'
+              value: 'cache:6379'
+            }
+            {
+              name: 'FORCE_DISABLE_HTTPS'
+              value: 'true'
+            }
+            {
+              name: 'ASPNETCORE_URLS'
+              value: 'https://+:443;http://+:80'
+            }
+          ]
+          resources: {
+            // cpu: '0.25'
+            memory: '0.5Gi'
+          }
+          probes: []
+        }
+      ]
+      scale: {
+        minReplicas: 0
+        maxReplicas: 1
+      }
+      volumes: [
+        {
+          name: 'f1appstorageaccount'
+          storageType: 'AzureFile'
+          storageName: 'f1appstorageaccount'
+        }
+      ]
+    }
+  }
+  dependsOn: [
+
+    managedEnvironments_formula_1_app_env_name_api_formula1_darrellpoleon_c_formula_240128165945
+  ]
+}
+
+resource containerapps_web_name_resource 'Microsoft.App/containerapps@2023-08-01-preview' = {
+  name: containerapps_web_name
+  location: location
+  identity: {
+    type: 'None'
+  }
+  properties: {
+    managedEnvironmentId: managedEnvironments_formula_1_app_env_name_resource.id
+    environmentId: managedEnvironments_formula_1_app_env_name_resource.id
+    workloadProfileName: 'Consumption'
+    configuration: {
+      secrets: [
+        {
+          name: 'formula1registryazurecrio-formula1registry'
+        }
+      ]
+      activeRevisionsMode: 'Single'
+      ingress: {
+        external: true
+        targetPort: 80
+        exposedPort: 0
+        transport: 'Auto'
+        traffic: [
+          {
+            weight: 100
+            latestRevision: true
+          }
+        ]
+        customDomains: [
+          {
+            name: 'formula1.darrellpoleon.com'
+            certificateId: managedEnvironments_formula_1_app_env_name_formula1_darrellpoleon_com_formula_240127234324.id
+            bindingType: 'SniEnabled'
+          }
+        ]
+        allowInsecure: true
+        clientCertificateMode: 'Ignore'
+        stickySessions: {
+          affinity: 'none'
+        }
+      }
+      registries: [
+        {
+          server: 'formula1registry.azurecr.io'
+          username: 'formula1registry'
+          passwordSecretRef: 'formula1registryazurecrio-formula1registry'
+        }
+      ]
+    }
+    template: {
+      containers: [
+        {
+          image: 'formula1registry.azurecr.io/${containerapps_web_name}:dc054c92bc256a1b9fbd0d41d1a765a655a48bf0'
+          name: containerapps_web_name
+          env: [
+            {
+              name: 'NGINX_PORT'
+              value: '80'
+            }
+          ]
+          resources: {
+            // cpu: '0.5'
+            memory: '1Gi'
+          }
+          probes: []
+          volumeMounts: [
+            {
+              volumeName: 'nginx-conf'
+              mountPath: '/etc/nginx/conf.d/'
+            }
+          ]
+        }
+      ]
+      scale: {
+        minReplicas: 0
+        maxReplicas: 1
+      }
+      volumes: [
+        {
+          name: 'nginx-conf'
+          storageType: 'AzureFile'
+          storageName: 'nginx-conf'
+        }
+      ]
+    }
+  }
+}
+
+resource storageAccounts_f1appstorageaccount_name_default_f1_mysql 'Microsoft.Storage/storageAccounts/fileServices/shares@2023-01-01' = {
+  parent: Microsoft_Storage_storageAccounts_fileServices_storageAccounts_f1appstorageaccount_name_default
+  name: 'f1-mysql'
+  properties: {
+    accessTier: 'TransactionOptimized'
+    shareQuota: 5120
+    enabledProtocols: 'SMB'
+  }
+  dependsOn: [
+
+    storageAccounts_f1appstorageaccount_name_resource
+  ]
+}
+
+resource storageAccounts_f1appstorageaccount_name_default_formula_1_data 'Microsoft.Storage/storageAccounts/fileServices/shares@2023-01-01' = {
+  parent: Microsoft_Storage_storageAccounts_fileServices_storageAccounts_f1appstorageaccount_name_default
+  name: 'formula-1-data'
+  properties: {
+    accessTier: 'TransactionOptimized'
+    shareQuota: 5120
+    enabledProtocols: 'SMB'
+  }
+  dependsOn: [
+
+    storageAccounts_f1appstorageaccount_name_resource
+  ]
+}
+
+resource storageAccounts_f1appstorageaccount_name_default_nginx_conf 'Microsoft.Storage/storageAccounts/fileServices/shares@2023-01-01' = {
+  parent: Microsoft_Storage_storageAccounts_fileServices_storageAccounts_f1appstorageaccount_name_default
+  name: 'nginx-conf'
+  properties: {
+    accessTier: 'TransactionOptimized'
+    shareQuota: 5120
+    enabledProtocols: 'SMB'
+  }
+  dependsOn: [
+
+    storageAccounts_f1appstorageaccount_name_resource
+  ]
+}
