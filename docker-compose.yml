@@ -81,7 +81,7 @@ services:
     ops:
         container_name: formula-1-ops
         image: formula-1-ops
-        build: .
+        build: ./vms
         restart: always
         networks:
             - default
