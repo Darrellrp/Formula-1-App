@@ -28,8 +28,9 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v1
         with:
-          # appSourcePath: ${{ github.workspace }}
-          yamlConfigPath: .
+          # appSourcePath: ${{ github.workspace }}/
+          # yamlConfigPath: .
+          imageToDeploy: mysql:8
           registryUrl: formula1registry.azurecr.io
           registryUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}

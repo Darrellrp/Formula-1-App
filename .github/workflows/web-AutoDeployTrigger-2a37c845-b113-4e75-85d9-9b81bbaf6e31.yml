@@ -28,7 +28,6 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v1
         with:
-          # appSourcePath: ${ github.workspace }
           appSourcePath: Formula-1-Web
           registryUrl: formula1registry.azurecr.io
           registryUsername: ${{ secrets.WEB_REGISTRY_USERNAME }}
