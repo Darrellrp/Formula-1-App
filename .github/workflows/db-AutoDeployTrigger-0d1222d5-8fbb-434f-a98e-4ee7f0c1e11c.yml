@@ -29,6 +29,7 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           # appSourcePath: ${{ github.workspace }}
+          yamlConfigPath: .
           registryUrl: formula1registry.azurecr.io
           registryUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}
