@@ -36,4 +36,3 @@ jobs:
           template: ./Formula-1-Infrastructure/main.bicep
           # parameters: "storagePrefix=mystore storageSKU=Standard_LRS"
           # failOnStdErr: false
-          
