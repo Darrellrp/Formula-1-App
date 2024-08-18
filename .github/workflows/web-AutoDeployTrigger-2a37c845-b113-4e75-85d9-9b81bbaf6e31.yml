@@ -32,7 +32,7 @@ jobs:
           acrName: formula1registry
           acrUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
           acrPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}
-          containerAppName: web
+          containerAppName: test-web
           resourceGroup: Formula1ResourceGroup
           imageToBuild: formula1registry.azurecr.io/web:${{ github.sha }}
           location: ${{ secrets.AZURE_LOCATION }}
