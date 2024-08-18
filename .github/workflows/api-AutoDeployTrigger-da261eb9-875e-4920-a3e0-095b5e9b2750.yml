@@ -1,0 +1,47 @@
+name: Trigger auto deployment for api
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ live ]
+    paths:
+    - 'Formula-1-Services/Formula-1-API/**'
+    - '.github/workflows/api-AutoDeployTrigger-da261eb9-875e-4920-a3e0-095b5e9b2750.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.API_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.API_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.API_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}Formula-1-Services/Formula-1-API 
+          registryUrl: formula1registry.azurecr.io
+          registryUsername: ${{ secrets.API_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.API_REGISTRY_PASSWORD }}
+          containerAppName: api
+          resourceGroup: Formula1ResourceGroup
+          imageToBuild: formula1registry.azurecr.io/api:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
