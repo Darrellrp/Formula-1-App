@@ -28,12 +28,13 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v1
         with:
-          yamlConfigPath: ./docker-compose.yml
+          # yamlConfigPath: ./docker-compose.yml
           # registryUrl: formula1registry.azurecr.io
+          imageToDeploy: mysql:8
           acrUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
           acrPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}
           containerAppName: db
           resourceGroup: Formula1ResourceGroup
-          imageToBuild: formula1registry.azurecr.io/db:${{ github.sha }}
+          # imageToBuild: formula1registry.azurecr.io/db:${{ github.sha }}
           location: ${{ secrets.AZURE_LOCATION }}
           containerAppEnvironment: test-env
