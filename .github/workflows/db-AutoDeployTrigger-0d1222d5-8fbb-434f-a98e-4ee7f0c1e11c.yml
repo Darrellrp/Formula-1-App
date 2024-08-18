@@ -31,10 +31,10 @@ jobs:
           # yamlConfigPath: ./docker-compose.yml
           # registryUrl: formula1registry.azurecr.io
           imageToDeploy: mysql:8
+          # imageToBuild: formula1registry.azurecr.io/db:${{ github.sha }}
           acrUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
           acrPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}
           containerAppName: test-db
           resourceGroup: Formula1ResourceGroup
-          # imageToBuild: formula1registry.azurecr.io/db:${{ github.sha }}
           location: ${{ secrets.AZURE_LOCATION }}
           containerAppEnvironment: test-env
