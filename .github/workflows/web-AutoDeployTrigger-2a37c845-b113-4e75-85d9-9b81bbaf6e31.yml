@@ -29,11 +29,11 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           appSourcePath: Formula-1-Web
-          registryUrl: formula1registry.azurecr.io
-          registryUsername: ${{ secrets.WEB_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.WEB_REGISTRY_PASSWORD }}
+          acrUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
+          acrPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}
           containerAppName: web
           resourceGroup: Formula1ResourceGroup
           imageToBuild: formula1registry.azurecr.io/web:${{ github.sha }}
           location: ${{ secrets.AZURE_LOCATION }}
           containerAppEnvironment: formula-1-app-env
+          # containerAppEnvironment: test-env
