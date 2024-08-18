@@ -33,7 +33,7 @@ jobs:
           imageToDeploy: mysql:8
           acrUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
           acrPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}
-          containerAppName: db
+          containerAppName: test-db
           resourceGroup: Formula1ResourceGroup
           # imageToBuild: formula1registry.azurecr.io/db:${{ github.sha }}
           location: ${{ secrets.AZURE_LOCATION }}
