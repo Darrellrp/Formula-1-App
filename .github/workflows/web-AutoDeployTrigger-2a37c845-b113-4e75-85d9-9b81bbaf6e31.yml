@@ -38,4 +38,3 @@ jobs:
           location: ${{ secrets.AZURE_LOCATION }}
           # containerAppEnvironment: formula-1-app-env
           containerAppEnvironment: test-env
-          
