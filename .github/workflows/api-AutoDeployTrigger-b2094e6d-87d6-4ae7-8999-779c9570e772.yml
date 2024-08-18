@@ -32,7 +32,7 @@ jobs:
           acrName: formula1registry
           acrUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
           acrPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}
-          containerAppName: api
+          containerAppName: test-api
           resourceGroup: Formula1ResourceGroup
           imageToBuild: formula1registry.azurecr.io/api:${{ github.sha }}
           dockerfilePath: Dockerfile
