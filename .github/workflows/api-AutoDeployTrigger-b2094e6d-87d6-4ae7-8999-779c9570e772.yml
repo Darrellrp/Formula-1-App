@@ -29,6 +29,7 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           appSourcePath: Formula-1-Services/Formula-1-API
+          acrName: formula1registry
           acrUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
           acrPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}
           containerAppName: api
