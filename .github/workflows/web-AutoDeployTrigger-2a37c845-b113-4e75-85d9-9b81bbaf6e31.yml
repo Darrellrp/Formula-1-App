@@ -1,4 +1,4 @@
-name: formula-1-api
+name: formula-1-web
 
 # When this action will be executed
 on:
@@ -6,9 +6,9 @@ on:
   push:
     branches: [live]
     paths:
-      # - "Formula-1-Services/Formula-1-API/**"
+      # - "Formula-1-Web/**"
       - "**"
-      - ".github/workflows/api-AutoDeployTrigger-b2094e6d-87d6-4ae7-8999-779c9570e772.yml"
+      - ".github/workflows/web-AutoDeployTrigger-2a37c845-b113-4e75-85d9-9b81bbaf6e31.yml"
 
   # Allow manual trigger
   workflow_dispatch:
@@ -24,20 +24,18 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.API_AZURE_CREDENTIALS }}
+          creds: ${{ secrets.WEB_AZURE_CREDENTIALS }}
 
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v1
         with:
-          appSourcePath: Formula-1-Services/Formula-1-API
+          appSourcePath: Formula-1-Web
           acrName: formula1registry
           acrUsername: ${{ secrets.DB_REGISTRY_USERNAME }}
           acrPassword: ${{ secrets.DB_REGISTRY_PASSWORD }}
-          containerAppName: test-api
+          containerAppName: test-web
           resourceGroup: Formula1ResourceGroup
-          imageToBuild: formula1registry.azurecr.io/api:${{ github.sha }}
-          dockerfilePath: Dockerfile
+          imageToBuild: formula1registry.azurecr.io/web:${{ github.sha }}
           location: ${{ secrets.AZURE_LOCATION }}
           # containerAppEnvironment: formula-1-app-env
           containerAppEnvironment: test-env
-
