@@ -103,6 +103,7 @@ services:
             - ~/.aspnet/DataProtection-Keys:/root/.aspnet/DataProtection-Keys:rw
             #- ./data/formula-1-race-data:/app/Data
 
+
     #certbot:
     #     container_name: formula-1-certbot
     #     image: certbot/certbot
